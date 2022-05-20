@@ -1,0 +1,60 @@
+optimizer.testing.problems package
+==================================
+
+.. automodule:: optimizer.testing.problems
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.testing.problems.ackley module
+----------------------------------------
+
+.. automodule:: optimizer.testing.problems.ackley
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.testing.problems.base module
+--------------------------------------
+
+.. automodule:: optimizer.testing.problems.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.testing.problems.griewank module
+------------------------------------------
+
+.. automodule:: optimizer.testing.problems.griewank
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.testing.problems.max module
+-------------------------------------
+
+.. automodule:: optimizer.testing.problems.max
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.testing.problems.rastrigin module
+-------------------------------------------
+
+.. automodule:: optimizer.testing.problems.rastrigin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.testing.problems.sphere module
+----------------------------------------
+
+.. automodule:: optimizer.testing.problems.sphere
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

@@ -1,0 +1,5 @@
+model_reporting:
+  params_to_look: ['n_estimators','max_depth','subsample','colsample_bytree']
+  metrics_to_look: ['mape','r2']
+
+skip_models: ['fa2lg','s1','s3','s6']

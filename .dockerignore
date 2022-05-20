@@ -1,0 +1,15 @@
+# overview of the .dockerginore file setup:
+#
+# * understand .dockerginore and the docker build context before making changes to this file
+# * We follow the approach outlined here: https://youknowfordevs.com/2018/12/07/getting-control-of-your-dockerignore-files.html
+# * The base image should only deal with system dependencies so there should not
+#   be references to to optimus src code which is mounted at container run time
+# * We have several large data files and package files that are checked into our repo.
+# * The docker build context can get quite large if one of these files is read into context unnecessarly during base image build
+
+# Exclude everything:
+*
+
+# Now un-exclude any files that you want brought over to the base image with ADD/COPY:
+# !example.json
+# !example.py

@@ -1,0 +1,49 @@
+# Logger
+
+Objects implement the `LoggerMixin` interface are expected to keep track of some information in the search. The `LoggerMixin` interface is very loose, and only really expects an implementing class to have a `log` method. They are intended to be used as follows:
+
+```python
+logger = MyLogger()
+
+while not solver.stop():
+    parameters = solver.ask()
+    objective_values = f(parameters)
+    solver.tell(parameters, objective_values)
+
+    logger.log(solver)  # Exact inputs will differ between loggers.
+```
+
+Different loggers may accept differing inputs. See their definitions for more. The rest of this article explains the loggers that are implemented by Optimizer.
+
+## `BasicLogger`
+
+The `BasicLogger` keeps track of useful information during an optimization like min, max, and mean objective value (among others). Simply include it in your solver loop and when the optimization is complete call `logger.log_df` to get a DataFrame of the logged values.
+
+## `PenaltyLogger`
+
+A `PenaltyLogger` object will track useful information about penalties being calcualted during the optimization. `PenaltyLogger` will keep track of each penalty by name in a dictionary named `data_dict` of the form
+
+```python
+{
+    "penalty_name":
+    {
+        "value": [10.3, 4.56, ...],
+        "penalty": [5.3, 0, ...]
+    }
+}
+```
+
+Where `value` refers to the actual evaluated value of the constraint and `penalty` is the value of penalty applied in the objective value. If either side of a constraint can be evaluated (i.e. is a model or a callable) then these values will be logged as well.
+
+
+## `NBestLogger`
+
+`NBestLogger` keeps track of the best `n` solutions over the duration of the optimization. Include it in your solver loop and call `n_best` at the end to obtain the `n` best solutions and objective values that were found during the entire search.
+
+## File-Based Logging
+Classes which extend the `FileLoggerBase` class inherit methods for logging arrays to disk, so that progress of long-running optimizations can be 
+followed from within `tensorboard`. The constructor of file-based loggers require users to 
+specify a `log_path`, which is the directory to which results will be saved. When usin `tensorboard`, users will need to specify this directory 
+to view results for their run. 
+
+The optimizer includes file-based versions of the `BasicLogger` and `PenaltyLogger` objects.

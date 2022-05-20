@@ -1,0 +1,38 @@
+filter_params:
+  data_clean_intermediate_01:
+    col_name: "fecha"
+    # This value will be passed as "days= months * 30" on the datetime.timedelta function
+    months: 5
+
+outliers_params:
+  raw_master_table:
+    # Keep this  percentages between 0 to 1
+    top: 0.99
+    bottom: 0.01
+
+quality_assessment:
+  start_date_filter: "2020-01-01"
+  end_date_filter: "2020-09-01"
+  ignore_dates: []
+  raw_master_table:
+    ignore_tags: []
+    tag_range: []
+    filter_na_monthly: True
+    monthly_na_thresh: 90 # Max % allowed of monthly-average missing data
+    # Filter max window missing
+    filter_na_window: True
+    max_window_na_thresh: 480 # Max number allowed of consecutive missing values
+    # Filter KS stability
+    filter_ks_stability: True
+    ks_stability_thresh: 60 # Max % allowed of months that fail the KS test
+    # Filter concentrated values
+    filter_concentrated_values:
+      # Kurtosis
+      filter_kurtosis: True
+      kurtosis_thresh: 200
+      # Count unique
+      filter_count_unique: True
+      count_unique_thresh: 5
+      # Most common frequency
+      filter_mode_freq: True
+      mode_freq_thresh: 60

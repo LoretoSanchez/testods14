@@ -1,0 +1,47 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/04_user_guide/04_data_catalog.html
+
+data_dch:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/pi_mdt.csv
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["Fecha"]
+
+revestimiento:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/revestimiento.csv
+  load_args:
+    index_col: 0
+    parse_dates: ["s16_ucf", "s17_ucf"]
+  save_args:
+    index: False
+
+profit_matrices:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/matriz_ganancia.csv
+
+ramp_up_sags16_17_velocities:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/ramp_up_sag16_sag17_velocities.csv
+  load_args:
+    parse_dates: ["start_date_campaing"]
+
+stockpile_output_dashboard:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/stockpile_output_dashboard.csv
+  load_args:
+    sep: ','
+    decimal: '.'
+    parse_dates: ["fecha"]
+
+ph_standard_data:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/ph_standard.csv
+  load_args:
+    sep: ';'
+    decimal: '.'
+    parse_dates: ["StartDate"]

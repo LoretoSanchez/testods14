@@ -1,0 +1,859 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.constraint.constraint &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>optimizer.constraint.constraint</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimizer.constraint.constraint</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 - present</span>
+<span class="c1"># QuantumBlack Visual Analytics Ltd (a McKinsey company).</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software framework contains the confidential and proprietary information</span>
+<span class="c1"># of QuantumBlack, its affiliates, and its licensors. Your use of these</span>
+<span class="c1"># materials is governed by the terms of the Agreement between your organisation</span>
+<span class="c1"># and QuantumBlack, and any unauthorised use is forbidden. Except as otherwise</span>
+<span class="c1"># stated in the Agreement, this software framework is for your internal use</span>
+<span class="c1"># only and may only be shared outside your organisation with the prior written</span>
+<span class="c1"># permission of QuantumBlack.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Constraint module.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Real</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">optimizer.constraint.sets</span> <span class="kn">import</span> <span class="n">ConstraintSet</span><span class="p">,</span> <span class="n">UserDefinedSet</span>
+<span class="kn">from</span> <span class="nn">optimizer.constraint.utils</span> <span class="kn">import</span> <span class="n">ConstantCallable</span>
+<span class="kn">from</span> <span class="nn">optimizer.exceptions</span> <span class="kn">import</span> <span class="n">InvalidConstraintError</span>
+<span class="kn">from</span> <span class="nn">optimizer.types</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">,</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">optimizer.utils.functional</span> <span class="kn">import</span> <span class="n">column</span>
+<span class="kn">from</span> <span class="nn">optimizer.utils.validation</span> <span class="kn">import</span> <span class="n">check_matrix</span>
+
+
+<div class="viewcode-block" id="BaseConstraint"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint">[docs]</a><span class="k">class</span> <span class="nc">BaseConstraint</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a constraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseConstraint.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraint_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_func: Callable,</span>
+<span class="sd">            name: optional name for logging.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidConstraintError: when constraint_func is not callable or does not</span>
+<span class="sd">            have a callable predict method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">constraint_func</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">constraint_func</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span>
+                <span class="n">constraint_func</span><span class="o">.</span><span class="n">predict</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="n">InvalidConstraintError</span><span class="p">(</span>
+                    <span class="s2">&quot;Constraint value function must be callable &quot;</span>
+                    <span class="s2">&quot;or have a callable predict method.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constraint_func</span> <span class="o">=</span> <span class="n">constraint_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraint_values</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_resolve_attr</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an object&#39;s predict method if</span>
+<span class="sd">        available or the object itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">predict</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">constraint_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Resolved constraint function &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_attr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constraint_func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate the constraint on the given parameter Matrix.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix, parameters to evaluate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector of distances from the constraint boundary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_matrix</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraint_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_func</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_distances</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_values</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances</span>
+
+<div class="viewcode-block" id="BaseConstraint.calculate_distances"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.calculate_distances">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_distances</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">constraint_eval</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the distances of the evaluated constraint from</span>
+<span class="sd">        the constraint&#39;s boundaries.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_eval: Vector, result of calling constraint_func.</span>
+<span class="sd">            parameters: Matrix, parameters to evaluate.</span>
+<span class="sd">                May be required to evaluate constraint boundaries defined by functions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Nonnegative Vector of distances from the constraint&#39;s boundaries.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">violated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Determine which rows of the previously given parameter matrix violated</span>
+<span class="sd">        the constraint.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Boolean Vector.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AttributeError: when the constraint has not yet been evaluated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;Attempted to determine where a constraint was &quot;</span>
+                <span class="s2">&quot;violated without first evaluating.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="InequalityConstraint"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint">[docs]</a><span class="k">class</span> <span class="nc">InequalityConstraint</span><span class="p">(</span><span class="n">BaseConstraint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an non-strict inequality constraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="InequalityConstraint.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">constraint_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">],</span>
+        <span class="n">lower_bound</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Real</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">upper_bound</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Real</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_func: calculates the value of the constraint somehow.</span>
+<span class="sd">                             For example, if our constraint is: 0 &lt;= 4x_1 + x_2 &lt;= 3</span>
+<span class="sd">                             This object will return 4x_1 + x_2.</span>
+<span class="sd">                             - Callable: will be called directly in the evaluation.</span>
+<span class="sd">                             - Predictor: predict method will be used</span>
+<span class="sd">                             instead of calling.</span>
+<span class="sd">            lower_bound: lower bound of the constraint.</span>
+<span class="sd">                         - Real: constant value for the lower bound.</span>
+<span class="sd">                         - Callable: will be called before comparing to inputs.</span>
+<span class="sd">                         - Predictor: same as callable but using predict method.</span>
+<span class="sd">            upper_bound: upper bound of the constraint.</span>
+<span class="sd">                         - Real: constant value for the lower upper.</span>
+<span class="sd">                         - Callable: will be called before comparing to inputs.</span>
+<span class="sd">                         - Predictor: same as callable but using predict method.</span>
+<span class="sd">            name: optional name for logging.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidConstraintError: if one of lower_bound or upper_bound is not given.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InequalityConstraint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">constraint_func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Must provide some sort of constraint.</span>
+        <span class="k">if</span> <span class="n">lower_bound</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">upper_bound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidConstraintError</span><span class="p">(</span>
+                <span class="s2">&quot;A lower and/or upper bound or an &quot;</span>
+                <span class="s2">&quot;equality constraint must be specified.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lower_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NINF</span> <span class="k">if</span> <span class="n">lower_bound</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">lower_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upper_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">PINF</span> <span class="k">if</span> <span class="n">upper_bound</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">upper_bound</span>
+
+        <span class="c1"># Values for logging.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound_eval</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_eval</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Resolved upper bound &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_attr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upper_bound</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lower_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Resolved lower bound &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_attr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lower_bound</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InequalityConstraint.calculate_distances"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.calculate_distances">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_distances</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">constraint_eval</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates distance from upper and lower bound.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_eval: Vector, result of calling constraint_func.</span>
+<span class="sd">            parameters: Matrix, parameters to evaluate.</span>
+<span class="sd">                May be required to evaluate constraint boundaries defined by functions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector of distances from the constraint&#39;s boundaries.</span>
+<span class="sd">                - Values where the constraint is satisfied will be nonpositive.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound_eval</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">)</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_eval</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">)</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Distance to nearest constraint.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound_eval</span> <span class="o">-</span> <span class="n">constraint_eval</span><span class="p">,</span>
+            <span class="n">constraint_eval</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_eval</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances</span></div></div>
+
+
+<div class="viewcode-block" id="EqualityConstraint"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint">[docs]</a><span class="k">class</span> <span class="nc">EqualityConstraint</span><span class="p">(</span><span class="n">BaseConstraint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an equality constraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EqualityConstraint.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">constraint_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">],</span>
+        <span class="n">equality</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Real</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">equality_epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_func: calculates the value of the constraint somehow.</span>
+<span class="sd">                             For example, if our constraint is: x_1^2 + x_2 == 10</span>
+<span class="sd">                             This object will return x_1^2 + x_2.</span>
+<span class="sd">                             - Callable: will be called directly in the evaluation.</span>
+<span class="sd">                             - Predictor: predict method will be used</span>
+<span class="sd">                             instead of calling.</span>
+<span class="sd">            equality: equality constraint specifier.</span>
+<span class="sd">                      - Real: constant value for the equality.</span>
+<span class="sd">                      - Callable: will be called before comparing to inputs.</span>
+<span class="sd">                      - Predictor: same as callable but using predict method.</span>
+<span class="sd">            equality_epsilon: float, small number for float comparisons.</span>
+<span class="sd">            name: optional name for logging.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EqualityConstraint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">constraint_func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_equality</span> <span class="o">=</span> <span class="n">equality</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equality_epsilon</span> <span class="o">=</span> <span class="n">equality_epsilon</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">equality_eval</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">equality</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Resolved equality &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_attr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_equality</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EqualityConstraint.calculate_distances"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint.calculate_distances">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_distances</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">constraint_eval</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates distance from a particular equality value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_eval: Vector, result of calling constraint_func.</span>
+<span class="sd">            parameters: Matrix, parameters to evaluate.</span>
+<span class="sd">                May be required to evaluate constraint boundaries defined by functions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Nonnegative Vector of distances from the constraint&#39;s equality value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equality_eval</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">equality</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">equality</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">equality</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">constraint_eval</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">equality_eval</span><span class="p">)</span>
+        <span class="n">distances</span><span class="p">[</span><span class="n">distances</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">equality_epsilon</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">distances</span></div></div>
+
+
+<div class="viewcode-block" id="SetMembershipConstraint"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint">[docs]</a><span class="k">class</span> <span class="nc">SetMembershipConstraint</span><span class="p">(</span><span class="n">BaseConstraint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a set membership constraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SetMembershipConstraint.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">constraint_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">],</span>
+        <span class="n">constraint_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ConstraintSet</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Vector</span><span class="p">],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_func: calculates the value of the constraint somehow.</span>
+<span class="sd">                             For example, if our constraint is:</span>
+<span class="sd">                             x_1 * x_2  in  [1, 2, 3, 4]</span>
+<span class="sd">                             This object will return x_1 * x_2.</span>
+<span class="sd">                             - Callable: will be called directly in the evaluation.</span>
+<span class="sd">                             - Predictor: predict method will be used</span>
+<span class="sd">                             instead of calling.</span>
+<span class="sd">            constraint_set: the set describing the constraint.</span>
+<span class="sd">                            - ConstraintSet: uses the nearest method of a</span>
+<span class="sd">                            constraint set.</span>
+<span class="sd">                            - Vector/List: constructs a UserDefinedSet and applies the</span>
+<span class="sd">                            nearest method.</span>
+<span class="sd">            name: optional name for logging.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SetMembershipConstraint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">constraint_func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">constraint_set</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+            <span class="n">constraint_set</span> <span class="o">=</span> <span class="n">UserDefinedSet</span><span class="p">(</span><span class="n">constraint_set</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraint_set</span> <span class="o">=</span> <span class="n">constraint_set</span></div>
+
+<div class="viewcode-block" id="SetMembershipConstraint.calculate_distances"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint.calculate_distances">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_distances</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">constraint_eval</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates distance from the nearest value in the provided set..</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            constraint_eval: Vector, result of calling constraint_func.</span>
+<span class="sd">            parameters: Matrix, parameters to evaluate. May be required to</span>
+<span class="sd">                        evaluate constraint boundaries defined by functions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Nonnegative Vector of distances from the constraint&#39;s equality value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_set</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">constraint_eval</span><span class="p">)</span></div></div>
+
+
+<span class="n">less_than</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;=&quot;</span><span class="p">]</span>
+<span class="n">greater_than</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&gt;=&quot;</span><span class="p">]</span>
+<span class="n">equal_to</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;==&quot;</span><span class="p">]</span>
+<span class="n">set_membership</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">]</span>
+
+<span class="n">comparators</span> <span class="o">=</span> <span class="n">less_than</span> <span class="o">+</span> <span class="n">greater_than</span> <span class="o">+</span> <span class="n">equal_to</span> <span class="o">+</span> <span class="n">set_membership</span>
+
+
+<div class="viewcode-block" id="constraint"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.constraint">[docs]</a><span class="k">def</span> <span class="nf">constraint</span><span class="p">(</span>
+    <span class="n">lhs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Real</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">comp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">rhs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Real</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Predictor</span><span class="p">,</span> <span class="n">ConstraintSet</span><span class="p">,</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">equality_epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseConstraint</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Constraint factory function.</span>
+<span class="sd">    Constructs the object for a single sided constraint.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">    Inequality:</span>
+<span class="sd">    constraint(lambda x: x[&quot;column&quot;] ** 2, &quot;&lt;=&quot;, 10)</span>
+<span class="sd">    constraint(lambda x: x[&quot;column&quot;], &quot;&gt;=&quot;, lambda x: x[&quot;other_column&quot;])</span>
+<span class="sd">    constraint(my_model, &quot;&lt;=&quot;, 4500)</span>
+
+<span class="sd">    Equality:</span>
+<span class="sd">    constraint(lambda x: np.sum(x[:, [1, 2, 4]], axis=1), &quot;==&quot;, 30)</span>
+<span class="sd">    constraint(1, &quot;==&quot;, my_model)</span>
+
+<span class="sd">    Set membership:</span>
+<span class="sd">    constraint(lambda x: x[:, 0], &quot;in&quot;, MultiplesOf(3))</span>
+<span class="sd">    constraint(lambda x: x[:, 3], &quot;in&quot;, Integers())</span>
+<span class="sd">    constraint(lambda x: x[:, 4], &quot;in&quot;, [1, 2, 3, 5, 8, 13])</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lhs: left hand side of constraint.</span>
+<span class="sd">             - Real: constant value for the lower bound.</span>
+<span class="sd">             - Callable: will be called before comparing to inputs.</span>
+<span class="sd">             - Predictor: same as callable but using predict method.</span>
+<span class="sd">             - str: used to index a passed DataFrame.</span>
+<span class="sd">        comp: str, comparator or &quot;in&quot; for set inclusion logic.</span>
+<span class="sd">        rhs: right hand side of constraint.</span>
+<span class="sd">             - Real: constant value for the lower bound.</span>
+<span class="sd">             - Callable: will be called before comparing to inputs.</span>
+<span class="sd">             - Predictor: same as callable but using predict method.</span>
+<span class="sd">             - ConstraintSet: special sets to use for set membership (e.g. Integers).</span>
+<span class="sd">             - Vector, List: user defined set for set membership constraint.</span>
+<span class="sd">             - str: used to index a passed DataFrame.</span>
+<span class="sd">        equality_epsilon: float, small number for float comparisons.</span>
+<span class="sd">        name: optional constraint name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Constraint object with the expected properties.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        InvalidConstraintError: when at least one side of the constraint is not a</span>
+<span class="sd">                                callable or an object with a predict method.</span>
+<span class="sd">        ValueError: when the provided comparator is invalid.</span>
+<span class="sd">        ValueError: if user specifies a set-membership constraint lhs is a number.</span>
+<span class="sd">        ValueError: if user specifies a set-membership constraint and rhs is not a</span>
+<span class="sd">                    list or ConstraintSet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lhs</span> <span class="o">=</span> <span class="n">column</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">lhs</span>
+    <span class="n">rhs</span> <span class="o">=</span> <span class="n">column</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">rhs</span>
+
+    <span class="c1"># At least one side of the constraint must be callable.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">callable</span><span class="p">(</span><span class="n">lhs</span><span class="p">),</span> <span class="n">callable</span><span class="p">(</span><span class="n">rhs</span><span class="p">),</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">),</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">)]</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">InvalidConstraintError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;At least one side of your constraint must be a callable or &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;an object with a predict method. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Given types {type(lhs).__name__} and {type(rhs).__name__}.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">comp</span> <span class="o">=</span> <span class="n">comp</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">comp</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">comparators</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Invalid comparator &quot;</span><span class="si">{comp}</span><span class="s1">&quot; provided. &#39;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Valid comparators are: {&quot;, &quot;.join(comparators)}&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Left hand side is always passed as the constraint function.</span>
+    <span class="c1"># As a result, it must be callable. In the case that its a constant,</span>
+    <span class="c1"># we can just wrap it as a function that always returns itself as an array.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="n">lhs</span> <span class="o">=</span> <span class="n">ConstantCallable</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">less_than</span> <span class="o">+</span> <span class="n">greater_than</span><span class="p">:</span>
+        <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">greater_than</span><span class="p">:</span>
+            <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">rhs</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">rhs</span>
+
+        <span class="n">constraint_</span> <span class="o">=</span> <span class="n">InequalityConstraint</span><span class="p">(</span>
+            <span class="n">lhs</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="n">upper_bound</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">equal_to</span><span class="p">:</span>
+        <span class="n">constraint_</span> <span class="o">=</span> <span class="n">EqualityConstraint</span><span class="p">(</span>
+            <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">equality_epsilon</span><span class="o">=</span><span class="n">equality_epsilon</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Set membership constraint.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">Real</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nonsensical constraint provided: </span><span class="si">{lhs}</span><span class="s2"> in </span><span class="si">{rhs}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="p">(</span><span class="n">ConstraintSet</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;For set membership constraints, right hand side must be &quot;</span>
+                <span class="s2">&quot;a ConstraintSet or list of values.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">constraint_</span> <span class="o">=</span> <span class="n">SetMembershipConstraint</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">constraint_</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

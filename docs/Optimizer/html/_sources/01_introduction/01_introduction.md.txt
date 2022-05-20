@@ -1,0 +1,34 @@
+## What is Optimizer?
+
+Optimizer allows users to construct and find good solutions for non-convex and possibly non-differentiable optimization problems that may involve machine learning models. It enforces simple, functional definition of constraints and objectives, and offers a uniform API for interacting with a suite of solvers.
+
+## Using Optimizer
+
+Refer to the getting started section for recommendations on installation.
+
+After getting set up, take a look at the simple toy example solving a non-convex function to understand the solver API and how handling constraints works. Follow along in the provided notebooks for the best experience.
+
+Users looking to optimize problems using machine learning models should then move on to the user guide for a more in depth info.
+
+## Is Optimizer right for my problem?
+
+Optimizer is targeted for problems where little is known about the objective surface. If your problem can be well formulated (i.e. linear programming or mixed-integer linear programming) you're likely dealing with a more traditional optimization problem and you should consider tools for Python like [Pyomo](http://www.pyomo.org/). Furthermore, if you know your problem is convex and can easily define a gradient, you're better served using something like [`scipy.optmize.minimize`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html).
+
+## Assumptions
+
+A basic understanding of Python should be enough to pick things up. Also, an elementary understanding of optimization is required to get started with Optimizer. You should know things like: what parameters (or decision variables) are, what a constraint does, and some intuition around constraint handling in search algorithms. This documentation should help some with the third point. 
+
+# FAQ
+
+1. **<a name="multiobjective-faq"></a>Does Optimizer support multiobjective optimization?**
+    - The current version of Optimizer does not support multiple objectives. In order to use this package objectives will have to be somehow combined, e.g. a linear combination.
+
+2. **<a name="uncertainty-faq"></a>Can Optimizer utilize uncertainty estimates?**
+    - Yes and no. There's nothing going on overtly in any of the current solvers that uses uncertainty. However, there are ways to incorporate uncertainty in the Optimizer workflow based on the source of randomness you want to take into account.
+    - Solver: all the solvers included in Optimizer are stochastic. As a result, their best answers to a problem will likely change when given different random seeds. Multiple experiments on the same problem will give an estimate on uncertainty caused by the randomness in the solver.
+    - Data: when building a model to use as an objective or constraint, one could simply use the error in predictions as an uncertainty estimate. This can help for cases where a solution must be robust to a certain constraint. See [here](https://en.wikipedia.org/wiki/Robust_optimization) for more on robust optimization.
+    - Model: consider using a Bayesian model as the objective for an optimization problem (e.g. a Gaussian process). These models have uncertainty estimates for parameters and predictions. One could easily use this to reformulate their objective into something like an acquisition function.
+     
+3. **<a name="multiprocessing-faq"></a>Do solvers support multiprocessing?**
+    - Out of the box, the operations that solvers carry out have no reason to be multiprocessed. Everything that happens inside a solver is matrix algebra that would not benefit from multiprocessing.
+    - However, the objective function could benefit from multiprocessing. For example, the objective being used is a long running simulation or perhaps even training a machine learning model. A simple way to parallelize these cases would be to use Python's `multiprocessing` library to map the evaluation across multiple cores. Before doing this, be sure that your evaluation is something that cannot be vectorized and does require this sort of parallelism.

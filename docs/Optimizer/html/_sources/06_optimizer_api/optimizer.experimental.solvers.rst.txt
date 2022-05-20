@@ -1,0 +1,36 @@
+optimizer.experimental.solvers package
+======================================
+
+.. automodule:: optimizer.experimental.solvers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.experimental.solvers.adaptive\_differential\_evolution module
+-----------------------------------------------------------------------
+
+.. automodule:: optimizer.experimental.solvers.adaptive_differential_evolution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.experimental.solvers.monte\_carlo\_solver module
+----------------------------------------------------------
+
+.. automodule:: optimizer.experimental.solvers.monte_carlo_solver
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.experimental.solvers.random\_search module
+----------------------------------------------------
+
+.. automodule:: optimizer.experimental.solvers.random_search
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

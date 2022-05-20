@@ -1,0 +1,25 @@
+data_dch:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/pi_mdt.csv
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["Fecha"]
+
+revestimiento:
+  type: pandas.CSVDataSet
+  filepath:
+    data/01_raw/revestimiento.csv
+    #data/01_raw/revestimiento.csv
+  load_args:
+    index_col: 0
+  save_args:
+    index: False
+
+# TODO Solve the credentials issue in test environment.
+stockpile_output_dashboard:
+  type: kedro.extras.datasets.pandas.SQLTableDataSet
+  credentials: mercury_credentials
+  table_name: stockpile_output_dashboard
+  save_args:
+    if_exists: append

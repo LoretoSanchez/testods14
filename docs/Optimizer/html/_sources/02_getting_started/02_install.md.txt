@@ -1,0 +1,11 @@
+# Installation guide
+
+Optimizer is not registered in any package manager, so there is no way to install it remotely. However, Pip supports local installs. With this, Optimizer can be used like in the usual way. 
+
+First, activate your virtual environment. Then clone the repo into and navigate to your desired project location. Then run:
+
+```
+pip install -e optimizer
+```
+
+The `-e` option will install Optimizer in "editable" mode, meaning it will work like a normal package in your environment but is not necessarily hosted on PiPy. To be sure this worked, start a Python shell and attempt to `import optimizer`.

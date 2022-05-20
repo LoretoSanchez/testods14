@@ -1,0 +1,44 @@
+optimizer.utils package
+=======================
+
+.. automodule:: optimizer.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.utils.diagnostics module
+----------------------------------
+
+.. automodule:: optimizer.utils.diagnostics
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.utils.functional module
+---------------------------------
+
+.. automodule:: optimizer.utils.functional
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.utils.initializer module
+----------------------------------
+
+.. automodule:: optimizer.utils.initializer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.utils.validation module
+---------------------------------
+
+.. automodule:: optimizer.utils.validation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

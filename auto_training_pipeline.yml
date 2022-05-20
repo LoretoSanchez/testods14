@@ -1,0 +1,281 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+schedules:
+- cron: "0 12 1,15 * *"
+  displayName: Bi-weekly build
+  branches:
+    include:
+    - master
+  always: true
+
+pool:
+  name: agpool-modelos
+
+jobs:
+- job: Start_Dev
+  timeoutInMinutes: 0
+  displayName: Spin-up Dev Agent
+  pool:
+    vmimage: 'ubuntu-latest'
+  steps:
+  - checkout: none
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az vm start -g rg-devops-dev-eastus2-001 -n vm-devops-dev-eastus2-001
+        sleep 10
+
+- job: trainning_phase
+  timeoutInMinutes: 0
+  displayName: Dev Training
+  pool: agpool-modelos
+  dependsOn: Start_Dev
+  steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        # Generate Image and Install Dependencies
+        make base-build
+        make dependencies-install
+
+        # Copy needed files
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/01_raw/pi_mdt.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/01_raw/pi_mdt_history.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/01_raw/matriz_ganancia.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/01_raw/matriz_ganancia.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/01_raw/ph_standard.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/01_raw/ph_standard.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/01_raw/ramp_up_sag16_sag17_velocities.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/01_raw/ramp_up_sag16_sag17_velocities.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/01_raw/revestimiento.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/01_raw/revestimiento.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/02_intermediate/hist_mdt_tph_sags16_17.csv --name /modelos/DCH/minco/kedro_dch_plantas/data/02_intermediate/hist_mdt_tph_sags16_17.csv
+        az storage blob download --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/08_reporting/data_quality/data_qa_table.xlsx --name /modelos/DCH/minco/kedro_dch_plantas/data/08_reporting/data_quality/data_qa_table.xlsx
+        ls $(Build.SourcesDirectory)/data/01_raw/
+
+        # Create temporary credentials
+        touch $(Build.SourcesDirectory)/conf/$(training_context)/credentials.yml
+        printf "mercury_credentials:\n  con: $(sql_creds)" > $(Build.SourcesDirectory)/conf/$(training_context)/credentials.yml
+
+        touch $(Build.SourcesDirectory)/conf/cloud_recommend_dev/credentials.yml
+        printf "mercury_credentials:\n  con: $(sql_creds)" > $(Build.SourcesDirectory)/conf/cloud_recommend_dev/credentials.yml
+
+        touch $(Build.SourcesDirectory)/conf/local/credentials.yml
+        printf "mercury_credentials:\n  con: $(sql_creds)" > $(Build.SourcesDirectory)/conf/local/credentials.yml
+
+        # Run training pipeline
+        make pipeline-run-name-env PIPE_NAME=ds_cloud ENV_NAME=$(training_context)
+
+        # Run recommendation pipeline for testing new models
+        make pipeline-run-name-env PIPE_NAME=cuf_a0_rec ENV_NAME=cloud_recommend_dev
+        make pipeline-run-name-env PIPE_NAME=cuf_a1_rec ENV_NAME=cloud_recommend_dev
+        make pipeline-run-name-env PIPE_NAME=cuf_a2_rec ENV_NAME=cloud_recommend_dev
+
+        # Copy trained models to datalake
+        # A2
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s16/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s16/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s17/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s17/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa2l1/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa2l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa2l2/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa2l2/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa2l3/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa2l3/train_model.pkl
+
+        # A1
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s13/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s13/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s14/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s14/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s15/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s15/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa1l1/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa1l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa1l2/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa1l2/train_model.pkl
+
+        # A0
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s2/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s2/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s4/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s4/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s5/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s5/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s7/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s7/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s8/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s8/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s9/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s9/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s10/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s10/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/s11/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/s11/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa0l1/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa0l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/data/06_models/fa0l2/train_model.pkl --name /modelos/DCH/minco/kedro_dch_plantas/data/06_models/tmp/fa0l2/train_model.pkl
+
+  - task: ArchiveFiles@2
+    displayName: Compress Models
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/data/06_models'
+      includeRootFolder: true
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/models.zip'
+      replaceExistingArchive: true
+
+  - task: ArchiveFiles@2
+    displayName: Compress Performance Reports
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/data/08_reporting'
+      includeRootFolder: true
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/reporting.zip'
+      replaceExistingArchive: true
+
+  - task: ArchiveFiles@2
+    displayName: Create Single Zip
+    inputs:
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.SourcesDirectory)/models_and_metrics.zip'
+      replaceExistingArchive: true
+
+  - task: Bash@3
+    displayName: Sanity Check
+    inputs:
+      targetType: 'inline'
+      script: 'ls $(Build.SourcesDirectory)/*'
+
+  - task: AzureCLI@2
+    displayName: Single Zip to Datalake
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        # Copy trained models to datalake
+        time_stamp=$(date +%Y-%m-%d)
+        new_folder_datalake=/refined/modelos/DCH/minco/kedro_dch_plantas_test/data/06_models_backup/$time_stamp
+        az storage fs directory create -n $new_folder_datalake -f refined --account-name lakecoreeastus2dev01 --auth-mode login
+        az storage blob upload --container-name refined --account-name lakecoreeastus2dev01 --auth-mode login --file $(Build.SourcesDirectory)/models_and_metrics.zip --name $new_folder_datalake/models_and_metrics.zip
+
+  - task: AzureCLI@2
+    displayName: Create Sharepoint Folder
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        time_stamp=$(date +%Y-%m-%d)
+        new_folder_sharepoint="/DIVISION/PROYECTO/$time_stamp"
+        curl -X POST -H "Content-Type:application/json" -d "{'folder':'$new_folder_sharepoint', 'list':'Documents', 'site':'$(sharepoint_url)'}" "$(create_folder_sharepoint_endpoint)"
+        echo "{'folder':'$new_folder_sharepoint', 'list':'Documents', 'site':'$(sharepoint_url)'}"
+        sleep 20
+
+  - task: AzureCLI@2
+    displayName: Post to Sharepoint
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        time_stamp=$(date +%Y-%m-%d)
+        folder_for_saving="/Documentos compartidos/DIVISION/PROYECTO/$time_stamp"
+        new_folder_datalake=/refined/modelos/DCH/minco/kedro_dch_plantas_test/data/06_models_backup/$time_stamp/
+        curl -X POST -H "Content-Type:application/json" -d "{'base_path':'$new_folder_datalake', 'file_name':'$(filename)', 'sharepoint_url':'$(sharepoint_url)', 'sharepoint_path':'$folder_for_saving'}" "$(lake_to_sharepoint_endpoint)"
+        echo "{'base_path':'$new_folder_datalake', 'file_name':'$(filename)', 'sharepoint_url':'$(sharepoint_url)', 'sharepoint_path':'$folder_for_saving'}"
+
+  - task: Bash@3
+    displayName: Remove project
+    inputs:
+      targetType: 'inline'
+      script: 'sudo rm -rf $(Build.SourcesDirectory)/*'
+  
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/models.zip'
+      ArtifactName: 'models'
+      publishLocation: 'Container'
+
+- job: Stop_Dev
+  displayName: Spin-down Dev Agent
+  dependsOn: trainning_phase
+  pool:
+    vmimage: 'ubuntu-latest'
+  steps:
+  - checkout: none
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-dev'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az vm stop -g rg-devops-dev-eastus2-001 -n vm-devops-dev-eastus2-001'
+
+- job: Start_Prod
+  displayName: Spin-up Prod Agent
+  dependsOn: Stop_Dev
+  pool:
+    vmimage: 'ubuntu-latest'
+  steps:
+  - checkout: none
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-prod'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az vm start -g rg-devops-prod-eastus2-001 -n vm-devops-prod-eastus2-001'
+
+- job: copy_to_prod
+  displayName: Copy to Prod
+  dependsOn: Start_Prod
+  pool: agpool-modelos-prod
+  steps:
+  - checkout: none
+  - task: DownloadBuildArtifacts@1
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'models'
+      downloadPath: '$(System.ArtifactsDirectory)'
+
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-prod'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        cd $(Build.SourcesDirectory) && sudo rm -rf * && cd
+        unzip -d $(Build.SourcesDirectory) -o $(System.ArtifactsDirectory)/models/models.zip
+  
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-prod'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        # Copy trained models to datalake
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s16/train_model.pkl --name /modelos/MLOPS/s16/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s17/train_model.pkl --name /modelos/MLOPS/s17/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa2l1/train_model.pkl --name /modelos/MLOPS/fa2l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa2l2/train_model.pkl --name /modelos/MLOPS/fa2l2/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa2l3/train_model.pkl --name /modelos/MLOPS/fa2l3/train_model.pkl
+        
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s13/train_model.pkl --name /modelos/MLOPS/s13/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s14/train_model.pkl --name /modelos/MLOPS/s14/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s15/train_model.pkl --name /modelos/MLOPS/s15/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa1l1/train_model.pkl --name /modelos/MLOPS/fa1l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa1l2/train_model.pkl --name /modelos/MLOPS/fa1l2/train_model.pkl
+
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s2/train_model.pkl --name /modelos/MLOPS/s2/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s4/train_model.pkl --name /modelos/MLOPS/s4/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s5/train_model.pkl --name /modelos/MLOPS/s5/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s7/train_model.pkl --name /modelos/MLOPS/s7/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s8/train_model.pkl --name /modelos/MLOPS/s8/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s9/train_model.pkl --name /modelos/MLOPS/s9/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s10/train_model.pkl --name /modelos/MLOPS/s10/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/s11/train_model.pkl --name /modelos/MLOPS/s11/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa0l1/train_model.pkl --name /modelos/MLOPS/fa0l1/train_model.pkl
+        az storage blob upload --container-name refined --account-name lakecoreeastus2prod01 --auth-mode login --file $(Build.SourcesDirectory)/06_models/fa0l2/train_model.pkl --name /modelos/MLOPS/fa0l2/train_model.pkl
+
+- job: End_Prod
+  displayName: Spin-down Prod Agent
+  dependsOn: copy_to_prod
+  pool:
+    vmimage: 'ubuntu-latest'
+  steps:
+  - checkout: none
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'spn-iac-prod'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az vm stop -g rg-devops-prod-eastus2-001 -n vm-devops-prod-eastus2-001'

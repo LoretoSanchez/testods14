@@ -1,0 +1,76 @@
+optimizer.constraint package
+============================
+
+.. automodule:: optimizer.constraint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.constraint.constraint module
+--------------------------------------
+
+.. automodule:: optimizer.constraint.constraint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.handler module
+-----------------------------------
+
+.. automodule:: optimizer.constraint.handler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.helpers module
+-----------------------------------
+
+.. automodule:: optimizer.constraint.helpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.penalties module
+-------------------------------------
+
+.. automodule:: optimizer.constraint.penalties
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.penalty module
+-----------------------------------
+
+.. automodule:: optimizer.constraint.penalty
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.repair module
+----------------------------------
+
+.. automodule:: optimizer.constraint.repair
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.sets module
+--------------------------------
+
+.. automodule:: optimizer.constraint.sets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.constraint.utils module
+---------------------------------
+
+.. automodule:: optimizer.constraint.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

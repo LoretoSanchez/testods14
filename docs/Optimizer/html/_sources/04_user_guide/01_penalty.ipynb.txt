@@ -1,0 +1,447 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Penalty"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To recap the [constraints tutorial](../03_tutorial/03_constraints.ipynb), a penalty reformulates an optimization problem like\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "&\\min & f(\\mathbf{x}) \\\\\n",
+    "&\\text{s.t.} & g(\\mathbf{x}) \\leq c \\\\\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "into the form\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "& \\min & f(\\mathbf{x}) + \\lambda P(\\mathbf{x}) \\\\\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "Where $P(\\mathbf{x})$ is our penalty function and $\\lambda > 0$. This notebook go over the different options for constructing penalties in Optimizer and give some intuition on their use."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Constraint types\n",
+    "\n",
+    "Penalties allow inequality, equality, and set-membership constraints. The `penalty` function is used to define one-sided formulations of these constraints -- i.e., constraints of the form $g(\\mathbf{x}) \\leq c$ or $h(\\mathbf{x}) = d$. The syntax for this definition is:\n",
+    "```python\n",
+    "penalty(lhs, comp, rhs)\n",
+    "```\n",
+    "\n",
+    "Where `lhs` and `rhs` can be numbers, functions, models (objects with a `predict` method), and strings (a single column in a `pd.DataFrame`). The argument `comp` is the \"comparator\" and can be `\"<=\"`, `\">=\"`, `\"==\"`, or `\"in\"`. The logical operators work as expected and `\"in\"` defines a set-membership constraint.\n",
+    "\n",
+    "The following are all valid calls to `penalty`:\n",
+    "\n",
+    "```python\n",
+    "penalty(10, \"<=\", g)\n",
+    "penalty(my_model, \">=\", 65)\n",
+    "penalty(\"column_1\", \"==\", lambda df: df[\"column_1\"] + 2 * df[\"column_2\"])\n",
+    "penalty(\"column_3\", \"in\", MultiplesOf(10))\n",
+    "```\n",
+    "\n",
+    "Where `g` is some function that will be called on the parameter matrix that is passed to the penalty object and `my_model` is an object with a callable `predict` method that will be used when passed a parameter matrix.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Equality constraints\n",
+    "\n",
+    "\n",
+    "Equality constraints are implemented internally by `penalty` as tight inequality constraints. Meaning $h(\\mathbf{x}) = d$ has the same effect as the constraint $\\vert h(\\mathbf{x}) - d \\vert \\leq \\epsilon$. The `equality_epsilon` keyword in `penalty` controls the tightness of this constraint. By default it is very small and only exists to deal with floating point imprecision. Note that the penalty is still calculated as the distance from $d$, not $d \\pm \\epsilon$. For example:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "from optimizer import penalty"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "equals_3 = penalty(lambda x: x[:, 0], \"==\", 3)\n",
+    "\n",
+    "parameters = np.array([1, 2, 3, 4, 5])[:, np.newaxis]  # Inputs to penalties must be 2-dimensional."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([2., 1., 0., 1., 2.])"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "equals_3(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can see the effect of `equality_epsilon` by constructing a penalty with a large $\\epsilon$ value:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([2., 0., 0., 0., 2.])"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "equals_3_big_e = penalty(lambda x: x[:, 0], \"==\", 3, equality_epsilon=1)\n",
+    "equals_3_big_e(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Model-based constraints\n",
+    "\n",
+    "The `penalty` function will also seamlessly construct a penalty for a constraint defined by a model. Throughout the Optimizer package, a model is referred to as a `Predictor` function and method type hints. This means what its name suggests: an object with a `predict` method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class MockModel:\n",
+    "    def predict(self, x): return x[:, 0] + 1\n",
+    "\n",
+    "model_penalty = penalty(MockModel(), \"<=\", 2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([0., 1., 2., 3., 4.])"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "No extra work is necessary to construct any model-based constraints."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Dealing with a computationally expensive constraint"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "It may be the case that you have a constraint of the form $c_l \\leq g(\\mathbf{x}) \\leq c_u$ where $g$ is some complicated constraint that takes a non-trivial amount of time to evaluate. In this case, it is recommended to work directly with the `InequalityConstraint` object constructor. The constructor has the syntax:\n",
+    "\n",
+    "```python\n",
+    "InequalityConstraint(\n",
+    "    long_running_function,\n",
+    "    lower_bound=c_l,\n",
+    "    upper_bound=c_u\n",
+    ")\n",
+    "```\n",
+    "\n",
+    "The constructor also accepts the usual keyword arguments that can be passed to `penalty` as well. In this case, one can avoid constructing two penalties for both sides of the constraint and also only evaluate `long_running_function` once."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from optimizer.constraint import InequalityConstraint\n",
+    "\n",
+    "def my_complex_function(x):\n",
+    "    return np.sum(x, axis=1)\n",
+    "\n",
+    "efficient_penalty = penalty(InequalityConstraint(my_complex_function, lower_bound=1, upper_bound=3))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([0., 0., 0., 1., 2.])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "efficient_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Penalty options"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "By default, the `penalty` function applies a penalty that scales linearly with the distance from a constraint boundary. This behavior controlled by the `penalty_function` keyword argument. Options for this argument are:\n",
+    "\n",
+    "- `str`: uses a builtin method.\n",
+    "    - 'linear': the default, scales with absolute distance.\n",
+    "    - 'quadratic': scales quadratically with distance.\n",
+    "- `callable`: a function to calculate a custom penalty.\n",
+    "- `Real`: the penalty will be constant for any constraint violation.\n",
+    "\n",
+    "For example, if we wanted a cubic penalty, we could define:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([  1.,   8.,  27.,  64., 125.])"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "def cubic(x):\n",
+    "    return x ** 3\n",
+    "\n",
+    "cubic_penalty = penalty(lambda x: x[:, 0], \"<=\", 0, penalty_function=cubic)\n",
+    "cubic_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Changing the penalty multiplier ($\\lambda$)\n",
+    "\n",
+    "We can also modify the penalty multiplier, or lambda from the penalized objective definition: $f(\\mathbf{x}) + \\lambda P(\\mathbf{x})$. This is useful for balancing multiple penalties against each other in the objective value. For example, this may be useful to scale a penalty that has a larger range than the objective function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 5., 10., 15., 20., 25.])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "multiplied_penalty = penalty(lambda x: x[:, 0], \"<=\", 0, penalty_multiplier=5)\n",
+    "multiplied_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Set-based constraints\n",
+    "\n",
+    "A set-based constraint can be defined with the `\"in\"` comparator in the `penalty` function. There are two rules for this type of constraint. Namely:\n",
+    "1. The `lhs`  can either be the `column` function from `optimizer.utils.functional` or a string if one is using DataFrames.\n",
+    "2. The `rhs` argument must be a list of values or a special `ConstraintSet` object.\n",
+    "\n",
+    "When a set membership constraint is penalized, the penalty will be calculated from the closest element in the set. For example, if we wanted to penalize values that were not multiples of 4, we can specify:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1., 2., 1., 0., 1.])"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from optimizer.constraint.sets import Integers, MultiplesOf\n",
+    "\n",
+    "fours_penalty = penalty(lambda x: x[:, 0], \"in\", MultiplesOf(4))\n",
+    "fours_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can also use the `Integers` class to penalize non-integer solutions:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([0.1, 0.1, 0.1, 0.1, 0.1])"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "integer_penalty = penalty(lambda x: x[:, 0], \"in\", Integers())\n",
+    "integer_penalty(parameters + 0.1)  # Parameters is all integer, so add 0.1 to see the effect of this penalty."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Finally, any list of values can be provided to the `rhs` argument."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([0., 0., 0., 1., 0.])"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fibonacci_penalty = penalty(lambda x: x[:, 0], \"in\", [1, 2, 3, 5, 8, 13])\n",
+    "fibonacci_penalty(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here, all of `parameters` was a Fibonacci number except `4`. Four had its penalty value calculated from the nearest Fibonacci number which returned `1`.\n",
+    "\n",
+    "#### A comment on set constraints:\n",
+    "\n",
+    "Special care should be taken when using these constraints as they will likely be small and not have much influence on your search if `penalty_multiplier` isn't carefully tuned. Furthermore, because these constraints are distance based, a constant penalty is ill advised. In general, a constant penalty gives no information other than if a constraint is violated or not, which is especially unhelpful in this case. Also consider using [repair](./02_repair.ipynb) for this case."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

@@ -1,0 +1,191 @@
+
+# TODO: create grinding optimization for A1
+#--- optimization grinding A1 ---#
+
+# #--- optimization input ---#
+# ma2.data_input_optim_uuid:
+#     type: pickle.PickleDataSet
+#     filepath: data/05_model_input/optimization/data_input_optim_uuid.pkl
+
+# ma2.optimization_function:
+#     type: pickle.PickleDataSet
+#     filepath: data/06_models/optimization/ma2/optimization_function.pkl
+
+# #--- optimization output ---#
+# ma2.recommendations:
+#     type: pandas.JSONDataSet
+#     filepath: data/07_model_output/ma2/recommendations.json
+#     layer: recommend
+#     save_args:
+#         orient: records
+#     load_args:
+#         orient: records
+
+# ma2.bulk_state:
+#     type: pandas.CSVDataSet
+#     filepath: data/07_model_output/ma2/bulk_state.csv
+#     save_args:
+#         index: True
+#     load_args:
+#         index_col: 0
+#         header: [0, 1]
+#         parse_dates: True
+#     layer: uplift_report
+
+# ma2.bulk_ctrl:
+#     type: pandas.CSVDataSet
+#     filepath: data/07_model_output/ma2/bulk_ctrl.csv
+#     save_args:
+#         index: True
+#     load_args:
+#         index_col: 0
+#         header: [0, 1]
+#         parse_dates: True
+#     layer: uplift_report
+
+# ma2.bulk_output:
+#     type: pandas.CSVDataSet
+#     filepath: data/07_model_output/ma2/bulk_output.csv
+#     save_args:
+#         index: True
+#     load_args:
+#         index_col: 0
+#         header: [0, 1]
+#         parse_dates: True
+#     layer: uplift_report
+
+# ma2.rep_optim_objective:
+#     type: pandas.CSVDataSet
+#     filepath: data/08_reporting/optimization/ma2/rep_optim_objective.csv
+#     save_args:
+#         index: True
+
+# ma2.rep_recommendations:
+#     type: pandas.CSVDataSet
+#     filepath: data/08_reporting/optimization/ma2/rep_recommendations.csv
+#     save_args:
+#         index: True
+
+# ma2.sensitivity_plot_df:
+#     type: pandas.CSVDataSet
+#     filepath: data/08_reporting/optimization/ma2/sensitivity_plot_data.csv
+#     layer: sensitivity
+
+# ma2.model_sensitivity:
+#     type: matplotlib.MatplotlibWriter
+#     filepath: data/08_reporting/optimization/ma2/sensitivity/
+#     save_args:
+#         bbox_inches: 'tight'
+
+# #--- END optimization grinding A1 ---#
+
+#--- optimization cuf A1 per line---#
+
+#--- optimization input ---#
+ca1xl.data_input_optim_uuid:
+    type: pickle.PickleDataSet
+    filepath: data/05_model_input/optimization/ca1xl/data_input_optim_uuid.pkl
+
+ca1xl.optimization_function:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/optimization/ca1xl/optimization_function.pkl
+
+#--- optimization output ---#
+ca1xl.recommendations:
+    type: pandas.JSONDataSet
+    filepath: data/07_model_output/ca1xl/recommendations.json
+    layer: recommend
+    save_args:
+        orient: records
+    load_args:
+        orient: records
+
+ca1xl.traj_plot:
+    type: pickle.PickleDataSet
+    filepath: data/05_model_input/optimization/data_traj_plot.pkl
+
+ca1xl.bulk_state:
+    type: pandas.CSVDataSet
+    filepath: data/07_model_output/ca1xl/bulk_state.csv
+    save_args:
+        index: True
+    load_args:
+        index_col: 0
+        header: [0, 1]
+        parse_dates: True
+    layer: uplift_report
+
+ca1xl.bulk_ctrl:
+    type: pandas.CSVDataSet
+    filepath: data/07_model_output/ca1xl/bulk_ctrl.csv
+    save_args:
+        index: True
+    load_args:
+        index_col: 0
+        header: [0, 1]
+        parse_dates: True
+    layer: uplift_report
+
+ca1xl.bulk_output:
+    type: pandas.CSVDataSet
+    filepath: data/07_model_output/ca1xl/bulk_output.csv
+    save_args:
+        index: True
+    load_args:
+        index_col: 0
+        header: [0, 1]
+        parse_dates: True
+    layer: uplift_report
+
+ca1xl.rep_optim_objective:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/rep_optim_objective.csv
+    save_args:
+        index: True
+
+ca1xl.rep_recommendations:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/rep_recommendations.csv
+    save_args:
+        index: True
+
+ca1xl.sensitivity_plot_df:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/sensitivity_plot_data.csv
+    layer: sensitivity
+
+ca1xl.model_sensitivity:
+    type: matplotlib.MatplotlibWriter
+    filepath: data/08_reporting/optimization/ca1xl/sensitivity/
+    save_args:
+        bbox_inches: 'tight'
+
+ca1xl.traj_plot_outputs:
+    type: matplotlib.MatplotlibWriter
+    filepath: data/08_reporting/optimization/ca1xl/trajectory/
+    save_args:
+        bbox_inches: 'tight'
+
+
+ca1xl.df_dropped_control_tags_report:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/dropped_control_tags_report.csv
+    save_args:
+        index: True
+
+ca1xl.df_suboptimal_targets_report_Curr_Eq_Opt:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/suboptimal_targets_report_Curr_Eq_Opt.csv
+    save_args:
+        index: True
+
+ca1xl.df_suboptimal_targets_report_Opt_LT_Pred:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/optimization/ca1xl/suboptimal_targets_report_Opt_LT_Pred.csv
+    save_args:
+        index: True
+        
+#--- END optimization cuf A1 per line ---#
+      
+
+     

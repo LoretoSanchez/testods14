@@ -1,0 +1,51 @@
+# Solver API
+
+Before diving into the tutorial take a moment to understand the philosophy of our solver API. All `Solver` classes in Optimizer fulfill the Ask and Tell pattern to search for good solutions to a problem.
+
+## Ask and Tell pattern
+
+### Standard solve pattern
+
+In the usual case, most optimization libraries enforce that the user carefully structures constraints and objective of their optimizaiton problem `f` to conform with their API. The user then (possibly) provides initial information about the problem (`x_initial`) and executes something like:
+
+```python
+x_best, f_x = solve(f, x_initial)
+```
+
+Where `x_best` and `f_x` are the best found solution and its objective value. This has a few issues in practice:
+
+- Constraint handling is taken out of the hands of users.
+- Local search that might happen after the main optimization is opaque to users.
+- The objective and constraints in `f` must take different forms depending on `solve`'s library.
+
+### Solving with Ask and Tell
+
+In the Ask and Tell pattern, `f` and `solve` operate in the same scope. Meaning the problem is not passed to the solver, but rather the solver generates solutions for a problem which are then evaluated independent of the solver. This takes the form:
+
+```python
+while not solver.stop():
+    x = solver.ask()
+    f_x = f(x)
+    solver.tell(x, f_x)
+```
+
+This loop is "open-heart" for a reason. Changes can easily be made to `x` before evaluation (e.g. a repair function) and the solver will operate as expected. Once the search is finished, the best found solution can then be obtained by calling something like:
+
+```python
+x_best, f_x = solver.best()
+```
+
+In contrast to the traditional approach, this pattern:
+
+- Allows any constraint type.
+- Explicit control over constraint handling in `f` (or elsewhere).
+- Enforces a "what you see is what you get" paradigm on the optimization -- local search is now explicit.
+- The objects `f` and `solver` are plug and play since they must enforce this paradigm.
+
+The last point here is particularly useful, as it doesn't matter if `f` is a simulation distributed across a computing cluster or a simple test function running on a laptop. The Ask and Tell pattern simply abstracts the actual mechanics into a simple loop in both cases.
+
+See the the toy problem notebook for more.
+
+## Further reading
+
+See [Collette 2010](http://www.cmap.polytechnique.fr/~nikolaus.hansen/collette2010Chap14.pdf) for more on the Ask and Tell pattern as well as more discussion and examples of object oriented programming in the context of optimization.

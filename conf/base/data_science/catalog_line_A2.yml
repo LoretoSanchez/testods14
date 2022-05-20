@@ -1,0 +1,392 @@
+#--- train_model TPH S16 Train Model Catalog ---#
+
+#--- model input ---#
+s16.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/s16/master_filtered.pkl
+
+s16.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s16/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+s16.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s16/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+s16.regressor:
+    type: MemoryDataSet
+
+s16.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+s16.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/s16/train_model.pkl
+
+s16.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+s16.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s16/train_set_feature_importance.pkl
+
+s16.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s16/test_set_predictions.pkl
+
+s16.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s16/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+s16.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s16/train_set_predictions.pkl
+
+s16.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s16/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH S16 Train Model Catalog ---#
+
+#--- model input ---#
+s17.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/s17/master_filtered.pkl
+
+s17.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s17/train_set.csv
+
+s17.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s17/test_set.csv
+
+s17.regressor:
+    type: MemoryDataSet
+
+s17.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+s17.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/s17/train_model.pkl
+
+s17.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+s17.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s17/train_set_feature_importance.pkl
+
+s17.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s17/test_set_predictions.pkl
+
+s17.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s17/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+s17.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s17/train_set_predictions.pkl
+
+s17.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s17/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA2L1 Train Model Catalog ---#
+
+#--- model input ---#
+fa2l1.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa2l1/master_filtered.pkl
+
+fa2l1.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l1/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa2l1.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l1/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa2l1.regressor:
+    type: MemoryDataSet
+
+fa2l1.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa2l1.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa2l1/train_model.pkl
+
+fa2l1.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa2l1.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l1/train_set_feature_importance.pkl
+
+fa2l1.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l1/test_set_predictions.pkl
+
+fa2l1.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l1/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa2l1.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l1/train_set_predictions.pkl
+
+fa2l1.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l1/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA2L2 Train Model Catalog ---#
+
+#--- model input ---#
+fa2l2.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa2l2/master_filtered.pkl
+
+fa2l2.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l2/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa2l2.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l2/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa2l2.regressor:
+    type: MemoryDataSet
+
+fa2l2.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa2l2.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa2l2/train_model.pkl
+
+fa2l2.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa2l2.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l2/train_set_feature_importance.pkl
+
+fa2l2.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l2/test_set_predictions.pkl
+
+fa2l2.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l2/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa2l2.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l2/train_set_predictions.pkl
+
+fa2l2.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l2/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA2L3 Train Model Catalog ---#
+
+#--- model input ---#
+fa2l3.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa2l3/master_filtered.pkl
+
+fa2l3.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l3/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa2l3.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2l3/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa2l3.regressor:
+    type: MemoryDataSet
+
+fa2l3.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa2l3.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa2l3/train_model.pkl
+
+fa2l3.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa2l3.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l3/train_set_feature_importance.pkl
+
+fa2l3.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l3/test_set_predictions.pkl
+
+fa2l3.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l3/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa2l3.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2l3/train_set_predictions.pkl
+
+fa2l3.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2l3/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA2LG Train Model Catalog ---#
+
+#--- model input ---#
+fa2lg.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa2lg/master_filtered.pkl
+
+fa2lg.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2lg/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa2lg.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa2lg/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa2lg.regressor:
+    type: MemoryDataSet
+
+fa2lg.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa2lg.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa2lg/train_model.pkl
+
+fa2lg.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa2lg.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2lg/train_set_feature_importance.pkl
+
+fa2lg.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2lg/test_set_predictions.pkl
+
+fa2lg.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2lg/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa2lg.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa2lg/train_set_predictions.pkl
+
+fa2lg.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa2lg/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True

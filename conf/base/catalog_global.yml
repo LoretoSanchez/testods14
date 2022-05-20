@@ -1,0 +1,7 @@
+tag_dict_master:
+    type: pandas.CSVDataSet
+    filepath: data/09_data_dictionaries/tag_dict_master.csv
+
+td:
+    type: pickle.PickleDataSet
+    filepath: data/09_data_dictionaries/td.pkl

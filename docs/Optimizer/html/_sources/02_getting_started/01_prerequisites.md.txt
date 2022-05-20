@@ -1,0 +1,20 @@
+# Installation prerequisites
+
+Optimizer relies on Python 3.x. Before installing Optimizer, we recommend you first install the Anaconda package manager. See [here](https://www.anaconda.com/distribution/#windows) for Windows and [here](https://www.anaconda.com/distribution/#macos) for macOS / Linux installations (Python 3.x version).
+
+
+## Python virtual environments
+
+Before installing requirements, use `conda` to create a new virtual environment for your project.
+
+### Using `conda`
+
+If you haven't used it before, see the `conda` getting started guide [here](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#starting-conda) for instructions on how to create a new environment. Otherwise, just activate your environment as usual.
+
+#### Installing requirements
+
+Anaconda will come with the Pip package manager, which can be used to install the Optimizer requirements:
+
+```
+pip install -r optimizer/requirements.txt
+```

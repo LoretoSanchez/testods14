@@ -1,0 +1,69 @@
+Welcome to optimizer's docs and tutorials!
+
+Introduction
+=============
+
+.. toctree::
+   :maxdepth: 0
+
+   01_introduction/01_introduction
+
+Getting Started
+================
+
+.. toctree::
+   :maxdepth: 1
+
+   02_getting_started/01_prerequisites
+   02_getting_started/02_install
+
+Tutorials
+================
+
+.. toctree::
+   :maxdepth: 1
+
+   03_tutorial/01_solver_api
+   03_tutorial/02_toy_problem
+   03_tutorial/03_constraints
+   03_tutorial/04_optimization_problem
+
+User Guide
+================
+
+.. toctree::
+   :maxdepth: 1
+
+   04_user_guide/01_penalty
+   04_user_guide/02_repair
+   04_user_guide/03_solver
+   04_user_guide/04_stopper
+   04_user_guide/05_logger
+   04_user_guide/06_plotting
+   04_user_guide/07_diagnostic
+   04_user_guide/08_history_penalty
+   04_user_guide/09_adaptive_differential_evolution
+
+Examples
+================
+
+.. toctree::
+   :maxdepth: 1
+
+   05_examples/warm_start
+   05_examples/de_hyperparameters
+
+Optimizer Package
+====================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: API Docs
+
+   06_optimizer_api/modules
+
+---------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

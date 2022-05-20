@@ -1,0 +1,1445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.constraint package &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="optimizer.experimental package" href="optimizer.experimental.html" />
+    <link rel="prev" title="optimizer package" href="optimizer.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimizer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimizer.html">optimizer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimizer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">optimizer</a> &raquo;</li>
+        
+          <li><a href="optimizer.html">optimizer package</a> &raquo;</li>
+        
+      <li>optimizer.constraint package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://git.mckinsey-solutions.com/opm/optimus" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-optimizer.constraint">
+<span id="optimizer-constraint-package"></span><h1>optimizer.constraint package<a class="headerlink" href="#module-optimizer.constraint" title="Permalink to this headline">¶</a></h1>
+<p>Constraint handling package.</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-optimizer.constraint.constraint">
+<span id="optimizer-constraint-constraint-module"></span><h2>optimizer.constraint.constraint module<a class="headerlink" href="#module-optimizer.constraint.constraint" title="Permalink to this headline">¶</a></h2>
+<p>Constraint module.</p>
+<dl class="class">
+<dt id="optimizer.constraint.constraint.BaseConstraint">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.constraint.</code><code class="descname">BaseConstraint</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#BaseConstraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.BaseConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Represents a constraint.</p>
+<dl class="method">
+<dt id="optimizer.constraint.constraint.BaseConstraint.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#BaseConstraint.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.BaseConstraint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>]) – Callable,</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – optional name for logging.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidConstraintError</span></code> – when constraint_func is not callable or does not</li>
+<li>have a callable predict method.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.constraint.BaseConstraint.calculate_distances">
+<code class="descname">calculate_distances</code><span class="sig-paren">(</span><em>constraint_eval</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#BaseConstraint.calculate_distances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.BaseConstraint.calculate_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the distances of the evaluated constraint from
+the constraint’s boundaries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_eval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector, result of calling constraint_func.</li>
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix, parameters to evaluate.
+May be required to evaluate constraint boundaries defined by functions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Nonnegative Vector of distances from the constraint’s boundaries.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.constraint.BaseConstraint.constraint_func">
+<code class="descname">constraint_func</code><a class="headerlink" href="#optimizer.constraint.constraint.BaseConstraint.constraint_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved constraint function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.constraint.BaseConstraint.violated">
+<code class="descname">violated</code><a class="headerlink" href="#optimizer.constraint.constraint.BaseConstraint.violated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine which rows of the previously given parameter matrix violated
+the constraint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean Vector.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code> – when the constraint has not yet been evaluated.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.constraint.EqualityConstraint">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.constraint.</code><code class="descname">EqualityConstraint</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>equality=None</em>, <em>equality_epsilon=1e-06</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#EqualityConstraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.EqualityConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.constraint.BaseConstraint</span></code></a></p>
+<p>Represents an equality constraint.</p>
+<dl class="method">
+<dt id="optimizer.constraint.constraint.EqualityConstraint.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>equality=None</em>, <em>equality_epsilon=1e-06</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#EqualityConstraint.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.EqualityConstraint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>constraint_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>]) – calculates the value of the constraint somehow.
+For example, if our constraint is: x_1^2 + x_2 == 10
+This object will return x_1^2 + x_2.
+- Callable: will be called directly in the evaluation.
+- Predictor: predict method will be used
+instead of calling.</li>
+<li><strong>equality</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – equality constraint specifier.
+- Real: constant value for the equality.
+- Callable: will be called before comparing to inputs.
+- Predictor: same as callable but using predict method.</li>
+<li><strong>equality_epsilon</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – float, small number for float comparisons.</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – optional name for logging.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.constraint.EqualityConstraint.calculate_distances">
+<code class="descname">calculate_distances</code><span class="sig-paren">(</span><em>constraint_eval</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#EqualityConstraint.calculate_distances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.EqualityConstraint.calculate_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates distance from a particular equality value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_eval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector, result of calling constraint_func.</li>
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix, parameters to evaluate.
+May be required to evaluate constraint boundaries defined by functions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Nonnegative Vector of distances from the constraint’s equality value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.constraint.EqualityConstraint.equality">
+<code class="descname">equality</code><a class="headerlink" href="#optimizer.constraint.constraint.EqualityConstraint.equality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved equality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.constraint.InequalityConstraint">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.constraint.</code><code class="descname">InequalityConstraint</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>lower_bound=None</em>, <em>upper_bound=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#InequalityConstraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.InequalityConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.constraint.BaseConstraint</span></code></a></p>
+<p>Represents an non-strict inequality constraint.</p>
+<dl class="method">
+<dt id="optimizer.constraint.constraint.InequalityConstraint.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>lower_bound=None</em>, <em>upper_bound=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#InequalityConstraint.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.InequalityConstraint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>]) – calculates the value of the constraint somehow.
+For example, if our constraint is: 0 &lt;= 4x_1 + x_2 &lt;= 3
+This object will return 4x_1 + x_2.
+- Callable: will be called directly in the evaluation.
+- Predictor: predict method will be used
+instead of calling.</li>
+<li><strong>lower_bound</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – lower bound of the constraint.
+- Real: constant value for the lower bound.
+- Callable: will be called before comparing to inputs.
+- Predictor: same as callable but using predict method.</li>
+<li><strong>upper_bound</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – upper bound of the constraint.
+- Real: constant value for the lower upper.
+- Callable: will be called before comparing to inputs.
+- Predictor: same as callable but using predict method.</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – optional name for logging.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidConstraintError</span></code> – if one of lower_bound or upper_bound is not given.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.constraint.InequalityConstraint.calculate_distances">
+<code class="descname">calculate_distances</code><span class="sig-paren">(</span><em>constraint_eval</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#InequalityConstraint.calculate_distances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.InequalityConstraint.calculate_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates distance from upper and lower bound.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_eval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector, result of calling constraint_func.</li>
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix, parameters to evaluate.
+May be required to evaluate constraint boundaries defined by functions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><dl class="docutils">
+<dt>Vector of distances from the constraint’s boundaries.</dt>
+<dd><ul class="first last simple">
+<li>Values where the constraint is satisfied will be nonpositive.</li>
+</ul>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.constraint.InequalityConstraint.lower_bound">
+<code class="descname">lower_bound</code><a class="headerlink" href="#optimizer.constraint.constraint.InequalityConstraint.lower_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved lower bound</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.constraint.InequalityConstraint.upper_bound">
+<code class="descname">upper_bound</code><a class="headerlink" href="#optimizer.constraint.constraint.InequalityConstraint.upper_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved upper bound</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.constraint.SetMembershipConstraint">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.constraint.</code><code class="descname">SetMembershipConstraint</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>constraint_set</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#SetMembershipConstraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.SetMembershipConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.constraint.BaseConstraint</span></code></a></p>
+<p>Represents a set membership constraint.</p>
+<dl class="method">
+<dt id="optimizer.constraint.constraint.SetMembershipConstraint.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_func</em>, <em>constraint_set</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#SetMembershipConstraint.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.SetMembershipConstraint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>constraint_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>]) – calculates the value of the constraint somehow.
+For example, if our constraint is:
+x_1 * x_2  in  [1, 2, 3, 4]
+This object will return x_1 * x_2.
+- Callable: will be called directly in the evaluation.
+- Predictor: predict method will be used
+instead of calling.</li>
+<li><strong>constraint_set</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstraintSet</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[~T], <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – the set describing the constraint.
+- ConstraintSet: uses the nearest method of a
+constraint set.
+- Vector/List: constructs a UserDefinedSet and applies the
+nearest method.</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – optional name for logging.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.constraint.SetMembershipConstraint.calculate_distances">
+<code class="descname">calculate_distances</code><span class="sig-paren">(</span><em>constraint_eval</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#SetMembershipConstraint.calculate_distances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.SetMembershipConstraint.calculate_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates distance from the nearest value in the provided set..</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint_eval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector, result of calling constraint_func.</li>
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix, parameters to evaluate. May be required to
+evaluate constraint boundaries defined by functions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Nonnegative Vector of distances from the constraint’s equality value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.constraint.constraint.constraint">
+<code class="descclassname">optimizer.constraint.constraint.</code><code class="descname">constraint</code><span class="sig-paren">(</span><em>lhs</em>, <em>comp</em>, <em>rhs</em>, <em>equality_epsilon=1e-06</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/constraint.html#constraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.constraint.constraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint factory function.
+Constructs the object for a single sided constraint.</p>
+<p>Usage:
+Inequality:
+constraint(lambda x: x[“column”] ** 2, “&lt;=”, 10)
+constraint(lambda x: x[“column”], “&gt;=”, lambda x: x[“other_column”])
+constraint(my_model, “&lt;=”, 4500)</p>
+<p>Equality:
+constraint(lambda x: np.sum(x[:, [1, 2, 4]], axis=1), “==”, 30)
+constraint(1, “==”, my_model)</p>
+<p>Set membership:
+constraint(lambda x: x[:, 0], “in”, MultiplesOf(3))
+constraint(lambda x: x[:, 3], “in”, Integers())
+constraint(lambda x: x[:, 4], “in”, [1, 2, 3, 5, 8, 13])</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lhs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – left hand side of constraint.
+- Real: constant value for the lower bound.
+- Callable: will be called before comparing to inputs.
+- Predictor: same as callable but using predict method.
+- str: used to index a passed DataFrame.</li>
+<li><strong>comp</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – str, comparator or “in” for set inclusion logic.</li>
+<li><strong>rhs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstraintSet</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[~T], <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – right hand side of constraint.
+- Real: constant value for the lower bound.
+- Callable: will be called before comparing to inputs.
+- Predictor: same as callable but using predict method.
+- ConstraintSet: special sets to use for set membership (e.g. Integers).
+- Vector, List: user defined set for set membership constraint.
+- str: used to index a passed DataFrame.</li>
+<li><strong>equality_epsilon</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – float, small number for float comparisons.</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – optional constraint name.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConstraint</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Constraint object with the expected properties.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidConstraintError</span></code> – when at least one side of the constraint is not a
+callable or an object with a predict method.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – when the provided comparator is invalid.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if user specifies a set-membership constraint lhs is a number.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if user specifies a set-membership constraint and rhs is not a
+list or ConstraintSet.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.handler">
+<span id="optimizer-constraint-handler-module"></span><h2>optimizer.constraint.handler module<a class="headerlink" href="#module-optimizer.constraint.handler" title="Permalink to this headline">¶</a></h2>
+<p>Handler module.</p>
+<dl class="class">
+<dt id="optimizer.constraint.handler.BaseHandler">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.handler.</code><code class="descname">BaseHandler</code><span class="sig-paren">(</span><em>constraint_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/handler.html#BaseHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Represents a constraint handling class.</p>
+<dl class="method">
+<dt id="optimizer.constraint.handler.BaseHandler.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/handler.html#BaseHandler.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>constraint</strong> – BaseConstraint object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.handler.BaseHandler.constraint_func">
+<code class="descname">constraint_func</code><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler.constraint_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the handler’s constraint function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Callable.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.handler.BaseHandler.constraint_values">
+<code class="descname">constraint_values</code><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler.constraint_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the handler’s constraint values from the last evaluation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of constraint values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.handler.BaseHandler.distances">
+<code class="descname">distances</code><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler.distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the handler’s constraint distances.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of distance values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.constraint.handler.BaseHandler.name">
+<code class="descname">name</code><a class="headerlink" href="#optimizer.constraint.handler.BaseHandler.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the handler’s constraint name with the type of handler appended.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.helpers">
+<span id="optimizer-constraint-helpers-module"></span><h2>optimizer.constraint.helpers module<a class="headerlink" href="#module-optimizer.constraint.helpers" title="Permalink to this headline">¶</a></h2>
+<p>Constraint helper functions.</p>
+<dl class="function">
+<dt id="optimizer.constraint.helpers.make_boundary_penalties">
+<code class="descclassname">optimizer.constraint.helpers.</code><code class="descname">make_boundary_penalties</code><span class="sig-paren">(</span><em>bounds</em>, <em>columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/helpers.html#make_boundary_penalties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.helpers.make_boundary_penalties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a list of Penalties describing the boundary of a problem.</p>
+<p>This function OR the boundary argument to a Solver should be used to enforce
+boundary conditions. When using both, the behavior will be the same as with solver
+boundaries, only, since Solvers will usually clip values.</p>
+<p>Use this when your boundary conditions seem to be overly restrictive or you’re using
+a sampling based solver like CMA-Evolutionary Strategies. Also consider tightening
+these boundary penalties over time for improved results.</p>
+<p>This will output 2 * len(bounds) penalties each with the name
+&lt;column&gt;_lower and &lt;column&gt;_upper.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bounds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>]) – list of tuples describing the boundaries of the problem.</li>
+<li><strong>columns</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]) – list of columns corresponding to each penalty.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#optimizer.constraint.penalty.Penalty" title="optimizer.constraint.penalty.Penalty"><code class="xref py py-class docutils literal notranslate"><span class="pre">Penalty</span></code></a>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of Penalties.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if bounds and columns have different lengths.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.penalties">
+<span id="optimizer-constraint-penalties-module"></span><h2>optimizer.constraint.penalties module<a class="headerlink" href="#module-optimizer.constraint.penalties" title="Permalink to this headline">¶</a></h2>
+<p>Holds penalty functions.</p>
+<dl class="function">
+<dt id="optimizer.constraint.penalties.linear">
+<code class="descclassname">optimizer.constraint.penalties.</code><code class="descname">linear</code><span class="sig-paren">(</span><em>bound_distance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalties.html#linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalties.linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear constraint penalty.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bound_distance</strong> – Vector, non-negative vector of distances.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector, equal to input vector, no change made.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.constraint.penalties.quadratic">
+<code class="descclassname">optimizer.constraint.penalties.</code><code class="descname">quadratic</code><span class="sig-paren">(</span><em>bound_distance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalties.html#quadratic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalties.quadratic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quadratic constraint penalty.
+Penalty increases quadratically as distance increases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bound_distance</strong> – Vector, non-negative vector of distances.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector, penalties assigned to these distances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.penalty">
+<span id="optimizer-constraint-penalty-module"></span><h2>optimizer.constraint.penalty module<a class="headerlink" href="#module-optimizer.constraint.penalty" title="Permalink to this headline">¶</a></h2>
+<p>Penalty module.</p>
+<dl class="class">
+<dt id="optimizer.constraint.penalty.Penalty">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.penalty.</code><code class="descname">Penalty</code><span class="sig-paren">(</span><em>constraint_</em>, <em>penalty_function='linear'</em>, <em>penalty_multiplier=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalty.html#Penalty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalty.Penalty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.handler.BaseHandler" title="optimizer.constraint.handler.BaseHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.handler.BaseHandler</span></code></a></p>
+<p>Represents a penalty function.</p>
+<dl class="method">
+<dt id="optimizer.constraint.penalty.Penalty.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_</em>, <em>penalty_function='linear'</em>, <em>penalty_multiplier=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalty.html#Penalty.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalty.Penalty.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint</strong> – BaseConstraint object representing the
+constraint being penalized.</li>
+<li><strong>penalty_function</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>]) – how to calculate the penalty from the constraint value.
+- str: uses a builtin method.
+– ‘linear’: penalty scales with absolute distance.
+– ‘quadratic’: penalty scales quadratically
+with distance.
+- callable: a function to calculate a custom penalty.
+This function will accept a Vector of distances from the
+boundaries of the constraint and return a Vector of
+the same shape.
+- Real: constant penalty for violating the constraint.</li>
+<li><strong>penalty_multiplier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – Real, constant to multiply the penalty.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code> – if the provided penalty function string is not defined.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidConstraintError</span></code> – if the penalty function is not a valid type.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.constraint.penalty.history_penalty">
+<code class="descclassname">optimizer.constraint.penalty.</code><code class="descname">history_penalty</code><span class="sig-paren">(</span><em>historical_data</em>, <em>penalty_multiplier=1.0</em>, <em>pipeline=None</em>, <em>name=None</em>, <em>score_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalty.html#history_penalty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalty.history_penalty" title="Permalink to this definition">¶</a></dt>
+<dd><p>History penalty factory: this function creates a Penalty object that based on
+historical data will penalize solutions that are far from historical values.</p>
+<p>By adjusting the penalty_multiplier one can explicitly balance the trade-off
+between staying close to historical ranges and exploring the broader search space.</p>
+<p>By using the pipeline one can restrict the dimensions taken into account for
+historical deviations. This is useful if we’re optimizing a 60-dimensional problem
+but in one part of the operation we’re stumbling into non-clear constraints, and
+these constraints only are related to say 5 dimensions. By restricting our penalty
+to those 5 dimensions we won’t suffer the course of dimensionality. Also, if we have
+some feature engineering in our modeling pipeline, we can pass this pipeline as
+parameter in order to look for anomalies on the engineered columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historical_data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix containing the historical values</li>
+<li><strong>pipeline</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code>]) – A fit sklearn pipeline that has a set of Transformer objects</li>
+<li><strong>penalty_multiplier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – Real, the value by which the anomaly score is multiplied</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – str, name of the penalty</li>
+<li><strong>score_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>]) – callable, optional, if provided will use this callable for
+computing the score with which a solution will be penalized. This callable
+has to return values &lt; 0 if a penalty is to be applied. If a value &gt;= 0 is
+returned, then no penalty will be applied (this is compliant with the interface
+of sklearn.ensemble.IsolationForest.decision_function). Also, note that if a
+pipeline is given as a parameter, then this function will receive whatever
+the output of pipeline.transform is. The signature of this callable must be
+Matrix -&gt; Vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#optimizer.constraint.penalty.Penalty" title="optimizer.constraint.penalty.Penalty"><code class="xref py py-class docutils literal notranslate"><span class="pre">Penalty</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Penalty</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.constraint.penalty.penalty">
+<code class="descclassname">optimizer.constraint.penalty.</code><code class="descname">penalty</code><span class="sig-paren">(</span><em>lhs_or_constraint</em>, <em>comp=None</em>, <em>rhs=None</em>, <em>penalty_function='linear'</em>, <em>penalty_multiplier=1.0</em>, <em>name=None</em>, <em>equality_epsilon=1e-06</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/penalty.html#penalty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.penalty.penalty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Penalty factory function.
+Constructs a the penalty function for a single sided constraint.</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd><dl class="first last docutils">
+<dt>Inequality:</dt>
+<dd>penalty(lambda x: x[“column”] ** 2, “&lt;=”, 10)
+penalty(lambda x: x[“column”], “&gt;=”, lambda x: x[“other_column”])
+penalty(my_model, “&lt;=”, 4500)</dd>
+<dt>Equality:</dt>
+<dd>penalty(lambda x: np.sum(x[:, [1, 2, 4]], axis=1), “==”, 30)
+penalty(1, “==”, my_model)</dd>
+<dt>Set membership:</dt>
+<dd>penalty(lambda x: x[:, 0], “in”, MultiplesOf(3))
+penalty(lambda x: x[:, 3], “in”, Integers())
+penalty(lambda x: x[:, 4], “in”, [1, 2, 3, 5, 8, 13])</dd>
+</dl>
+</dd>
+<dt>Or a BaseConstraint object may simply be specified:</dt>
+<dd>penalty(my_constraint)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lhs_or_constraint</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConstraint</span></code></a>]) – <p>left hand side of constraint.</p>
+<ul>
+<li>Real: constant value for the lower bound.</li>
+<li>Callable: will be called before comparing to inputs.</li>
+<li>Predictor: same as callable but using predict method.</li>
+<li>str: used to index a passed DataFrame.</li>
+<li>BaseConstraint: used as the constraint object rather than constructing
+a new one. Note this will be deepcopied before passing to Penalty.</li>
+</ul>
+</li>
+<li><strong>comp</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – str, comparator or “in” for set inclusion logic.</li>
+<li><strong>rhs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <a class="reference internal" href="optimizer.html#optimizer.types.Predictor" title="optimizer.types.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, <a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstraintSet</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[~T], <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – <p>right hand side of constraint.</p>
+<ul>
+<li>Real: constant value for the lower bound.</li>
+<li>Callable: will be called before comparing to inputs.</li>
+<li>Predictor: same as callable but using predict method.</li>
+<li>ConstraintSet: special sets to use for set membership (e.g. Integers).</li>
+<li>Vector, List: user defined set for set membership constraint.</li>
+<li>str: used to index a passed DataFrame.</li>
+</ul>
+</li>
+<li><strong>penalty_function</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>]) – <p>typing.Union[str, typing.Callable, Real], how to calculate
+the penalty from the constraint value.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>str: uses a builtin method.</dt>
+<dd><ul class="first last">
+<li>’linear’: penalty scales with absolute distance.</li>
+<li>’quadratic’: penalty scales quadratically with distance.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>typing.Callable: a function to calculate a custom penalty. This
+function will accept a Vector of distances from the boundaries of
+the constraint and return a Vector of the same shape.</li>
+<li>Real: constant penalty for violating the constraint.</li>
+</ul>
+</li>
+<li><strong>penalty_multiplier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – Real, constant to multiply the penalty.</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – <p>str, optional name for logging.</p>
+<ul>
+<li>Passed to the constraint function.</li>
+<li>Ignored if a Constraint object is provided.
+equality_epsilon: float, small number for float comparisons.</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#optimizer.constraint.penalty.Penalty" title="optimizer.constraint.penalty.Penalty"><code class="xref py py-class docutils literal notranslate"><span class="pre">Penalty</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Penalty object with the expected properties.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if a Constraint object is provided as lhs with any comp and rhs.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.repair">
+<span id="optimizer-constraint-repair-module"></span><h2>optimizer.constraint.repair module<a class="headerlink" href="#module-optimizer.constraint.repair" title="Permalink to this headline">¶</a></h2>
+<p>Repair module.</p>
+<dl class="class">
+<dt id="optimizer.constraint.repair.Repair">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.repair.</code><code class="descname">Repair</code><span class="sig-paren">(</span><em>constraint_</em>, <em>repair_func</em>, <em>repair_column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/repair.html#Repair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.repair.Repair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.handler.BaseHandler" title="optimizer.constraint.handler.BaseHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.handler.BaseHandler</span></code></a></p>
+<p>Represents a repair function for a single column.</p>
+<dl class="method">
+<dt id="optimizer.constraint.repair.Repair.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>constraint_</em>, <em>repair_func</em>, <em>repair_column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/repair.html#Repair.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.repair.Repair.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>constraint</strong> – BaseConstraint object representing the
+constraint being repaired.</li>
+<li><strong>repair_func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>) – function to apply as a repair.</li>
+<li><strong>repair_column</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – which column index to select for repair.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidConstraintError</span></code> – if repair_func is not callable.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.constraint.repair.repair">
+<code class="descclassname">optimizer.constraint.repair.</code><code class="descname">repair</code><span class="sig-paren">(</span><em>lhs_or_constraint</em>, <em>comp=None</em>, <em>rhs=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/repair.html#repair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.repair.repair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repair factory function.
+Constructs a repair function for a set membership constraint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lhs_or_constraint</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#optimizer.constraint.constraint.BaseConstraint" title="optimizer.constraint.constraint.BaseConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConstraint</span></code></a>]) – <p>left hand side of the constraint.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Callable: the partial returned from optimizer.utils.functional.column.</dt>
+<dd>This cannot be a general callable.</dd>
+</dl>
+</li>
+<li>str: used to index a passed DataFrame.</li>
+<li><dl class="first docutils">
+<dt>BaseConstraint: used as the constraint object rather than constructing</dt>
+<dd>a new one. Note this will be deepcopied before passing to Penalty.</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li><strong>comp</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – comparator string, must be “in” for now.</li>
+<li><strong>rhs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstraintSet</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[~T], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – <p>right hand side of constraint.</p>
+<ul>
+<li>ConstraintSet: uses the nearest method of a constraint set.</li>
+<li>Vector/List: constructs a UserDefinedSet and applies the nearest method.</li>
+</ul>
+</li>
+<li><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – <p>optional constraint name.</p>
+<ul>
+<li>Passed to the constraint function.</li>
+<li>Ignored if a Constraint object is provided.</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Repair object with expected properties.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if lhs is not a string or the partial
+from optimizer.utils.functional.column.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – when comp is an comparator other than “in”.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.sets">
+<span id="optimizer-constraint-sets-module"></span><h2>optimizer.constraint.sets module<a class="headerlink" href="#module-optimizer.constraint.sets" title="Permalink to this headline">¶</a></h2>
+<p>Constraint set module.</p>
+<dl class="class">
+<dt id="optimizer.constraint.sets.ConstraintSet">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.sets.</code><code class="descname">ConstraintSet</code><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#ConstraintSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.ConstraintSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>ConstraintSet abstract base class.</p>
+<dl class="method">
+<dt id="optimizer.constraint.sets.ConstraintSet.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#ConstraintSet.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.ConstraintSet.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the distance of the column to its closest element in the set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>column</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – single column from a matrix of parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Vector, same shape as column, the distances to closest elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.sets.ConstraintSet.nearest">
+<code class="descname">nearest</code><span class="sig-paren">(</span><em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#ConstraintSet.nearest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.ConstraintSet.nearest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the closest element in the set for each element in column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>column</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – single column from a matrix of parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Vector, same shape as column, the closest elements in the set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.sets.Integers">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.sets.</code><code class="descname">Integers</code><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#Integers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.Integers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.sets.MultiplesOf" title="optimizer.constraint.sets.MultiplesOf"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.sets.MultiplesOf</span></code></a></p>
+<p>Set representing the integers.</p>
+<dl class="method">
+<dt id="optimizer.constraint.sets.Integers.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#Integers.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.Integers.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.sets.MultiplesOf">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.sets.</code><code class="descname">MultiplesOf</code><span class="sig-paren">(</span><em>multiple</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#MultiplesOf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.MultiplesOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.sets.ConstraintSet</span></code></a></p>
+<p>Constraint set describing the a multiple of a particular number.</p>
+<dl class="method">
+<dt id="optimizer.constraint.sets.MultiplesOf.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>multiple</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#MultiplesOf.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.MultiplesOf.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>multiple</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – multiple to enforce.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if multiple equals zero.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.sets.MultiplesOf.nearest">
+<code class="descname">nearest</code><span class="sig-paren">(</span><em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#MultiplesOf.nearest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.MultiplesOf.nearest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the nearest multiple of each element in the column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>column</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – single column from a matrix of parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Vector, nearest multiple for each element in the column.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.constraint.sets.UserDefinedSet">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.sets.</code><code class="descname">UserDefinedSet</code><span class="sig-paren">(</span><em>collection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#UserDefinedSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.UserDefinedSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.constraint.sets.ConstraintSet" title="optimizer.constraint.sets.ConstraintSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.constraint.sets.ConstraintSet</span></code></a></p>
+<p>Allows any collection to be passed.</p>
+<dl class="method">
+<dt id="optimizer.constraint.sets.UserDefinedSet.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>collection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#UserDefinedSet.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.UserDefinedSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>collection</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[~T], <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – collection to enforce membership.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if elements in collection are not Reals.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.constraint.sets.UserDefinedSet.nearest">
+<code class="descname">nearest</code><span class="sig-paren">(</span><em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/sets.html#UserDefinedSet.nearest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.sets.UserDefinedSet.nearest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the nearest element in the given set for each element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>column</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – a single column from a matrix of parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Vector, the nearest elements in the given set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.constraint.utils">
+<span id="optimizer-constraint-utils-module"></span><h2>optimizer.constraint.utils module<a class="headerlink" href="#module-optimizer.constraint.utils" title="Permalink to this headline">¶</a></h2>
+<p>Constraint utility functions.</p>
+<dl class="class">
+<dt id="optimizer.constraint.utils.ConstantCallable">
+<em class="property">class </em><code class="descclassname">optimizer.constraint.utils.</code><code class="descname">ConstantCallable</code><span class="sig-paren">(</span><em>const</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/utils.html#ConstantCallable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.utils.ConstantCallable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper class to wrap a constant object.</p>
+<dl class="method">
+<dt id="optimizer.constraint.utils.ConstantCallable.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>const</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/constraint/utils.html#ConstantCallable.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.constraint.utils.ConstantCallable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>const</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – Real.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="optimizer.experimental.html" class="btn btn-neutral float-right" title="optimizer.experimental package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="optimizer.html" class="btn btn-neutral float-left" title="optimizer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

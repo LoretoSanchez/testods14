@@ -1,0 +1,1342 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Index &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Index</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://git.mckinsey-solutions.com/opm/optimus" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.__init__">__init__() (optimizer.constraint.constraint.BaseConstraint method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint.__init__">(optimizer.constraint.constraint.EqualityConstraint method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.__init__">(optimizer.constraint.constraint.InequalityConstraint method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint.__init__">(optimizer.constraint.constraint.SetMembershipConstraint method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler.__init__">(optimizer.constraint.handler.BaseHandler method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalty.Penalty.__init__">(optimizer.constraint.penalty.Penalty method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.repair.Repair.__init__">(optimizer.constraint.repair.Repair method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.Integers.__init__">(optimizer.constraint.sets.Integers method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.MultiplesOf.__init__">(optimizer.constraint.sets.MultiplesOf method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.UserDefinedSet.__init__">(optimizer.constraint.sets.UserDefinedSet method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.utils.ConstantCallable.__init__">(optimizer.constraint.utils.ConstantCallable method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.hss.html#optimizer.experimental.hss.neighbourhood_calcs.NeighbourhoodCalculator.__init__">(optimizer.experimental.hss.neighbourhood_calcs.NeighbourhoodCalculator method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.__init__">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.__init__">(optimizer.experimental.solvers.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.Crossover method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.Mutator method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.__init__">(optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.__init__">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.__init__">(optimizer.experimental.solvers.random_search.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.BasicLogger.__init__">(optimizer.loggers.BasicLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.NBestLogger.__init__">(optimizer.loggers.NBestLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.PenaltyLogger.__init__">(optimizer.loggers.PenaltyLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.basic.BasicLogger.__init__">(optimizer.loggers.basic.BasicLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger.__init__">(optimizer.loggers.best_trajectory.BestTrajectoryLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.n_best.NBestLogger.__init__">(optimizer.loggers.n_best.NBestLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.penalty.PenaltyLogger.__init__">(optimizer.loggers.penalty.PenaltyLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.problem.OptimizationProblem.__init__">(optimizer.problem.problem.OptimizationProblem method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.__init__">(optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_problem.StatefulOptimizationProblem.__init__">(optimizer.problem.stateful_problem.StatefulOptimizationProblem method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.ScaledSolver.__init__">(optimizer.solvers.base.ScaledSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.__init__">(optimizer.solvers.base.Solver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.__init__">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.__init__">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.__init__">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.__init__">(optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.__init__">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.MultiStopper.__init__">(optimizer.stoppers.base.MultiStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.no_improvement.NoImprovementStopper.__init__">(optimizer.stoppers.no_improvement.NoImprovementStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.__init__">(optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.wall_time.WallTimeStopper.__init__">(optimizer.stoppers.wall_time.WallTimeStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.Negated.__init__">(optimizer.testing.problems.base.Negated method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.ackley.Ackley">Ackley (class in optimizer.testing.problems.ackley)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver">AdaptiveDifferentialEvolutionSolver (class in optimizer.experimental.solvers)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver">(class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter">AdaptiveParameter (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy">AdaptiveStrategy (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.problem.OptimizationProblem.apply_penalties">apply_penalties() (optimizer.problem.problem.OptimizationProblem method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.problem.OptimizationProblem.apply_repairs">apply_repairs() (optimizer.problem.problem.OptimizationProblem method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.ask">ask() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.ask">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.ask">(optimizer.experimental.solvers.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.ask">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.ask">(optimizer.experimental.solvers.random_search.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.ask">(optimizer.solvers.base.Solver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.ask">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.ask">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.ask">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.ask">(optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.ask">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint">BaseConstraint (class in optimizer.constraint.constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler">BaseHandler (class in optimizer.constraint.handler)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.BaseStopper">BaseStopper (class in optimizer.stoppers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.BasicLogger">BasicLogger (class in optimizer.loggers)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.basic.BasicLogger">(class in optimizer.loggers.basic)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.best">best() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.best">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.best">(optimizer.experimental.solvers.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.best">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.best">(optimizer.experimental.solvers.random_search.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.best">(optimizer.solvers.base.Solver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.best">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.best">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.best">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.best">(optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.best">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.ackley.Ackley.best">(optimizer.testing.problems.ackley.Ackley static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.Negated.best">(optimizer.testing.problems.base.Negated method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.TestProblem.best">(optimizer.testing.problems.base.TestProblem static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.griewank.Griewank.best">(optimizer.testing.problems.griewank.Griewank static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.max.Max.best">(optimizer.testing.problems.max.Max static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.rastrigin.Rastrigin.best">(optimizer.testing.problems.rastrigin.Rastrigin static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.sphere.Sphere.best">(optimizer.testing.problems.sphere.Sphere static method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Best1Mutator">Best1Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Best2Mutator">Best2Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#optimizer.plotting.trajectory.best_trajectory_plot">best_trajectory_plot() (in module optimizer.plotting.trajectory)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#optimizer.plotting.trajectory.best_trajectory_problem_plot">best_trajectory_problem_plot() (in module optimizer.plotting.trajectory)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger">BestTrajectoryLogger (class in optimizer.loggers.best_trajectory)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.BinomialCrossover">BinomialCrossover (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.bounds">bounds (optimizer.solvers.base.Solver attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.bounds">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.ackley.Ackley.bounds">bounds() (optimizer.testing.problems.ackley.Ackley static method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.Negated.bounds">(optimizer.testing.problems.base.Negated method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.TestProblem.bounds">(optimizer.testing.problems.base.TestProblem static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.griewank.Griewank.bounds">(optimizer.testing.problems.griewank.Griewank static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.max.Max.bounds">(optimizer.testing.problems.max.Max static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.rastrigin.Rastrigin.bounds">(optimizer.testing.problems.rastrigin.Rastrigin static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.sphere.Sphere.bounds">(optimizer.testing.problems.sphere.Sphere static method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.calculate_distances">calculate_distances() (optimizer.constraint.constraint.BaseConstraint method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint.calculate_distances">(optimizer.constraint.constraint.EqualityConstraint method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.calculate_distances">(optimizer.constraint.constraint.InequalityConstraint method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint.calculate_distances">(optimizer.constraint.constraint.SetMembershipConstraint method)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.functional.chain">chain() (in module optimizer.utils.functional)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.validation.check_matrix">check_matrix() (in module optimizer.utils.validation)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.validation.check_vector">check_vector() (in module optimizer.utils.validation)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.functional.column">column() (in module optimizer.utils.functional)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter">ConstantAdaptiveParameter (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.utils.ConstantCallable">ConstantCallable (class in optimizer.constraint.utils)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.constraint">constraint() (in module optimizer.constraint.constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.constraint_func">constraint_func (optimizer.constraint.constraint.BaseConstraint attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler.constraint_func">(optimizer.constraint.handler.BaseHandler attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler.constraint_values">constraint_values (optimizer.constraint.handler.BaseHandler attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.ConstraintSet">ConstraintSet (class in optimizer.constraint.sets)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.context_data">context_data (optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#optimizer.plotting.convergence.convergence_plot">convergence_plot() (in module optimizer.plotting.convergence)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover">Crossover (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.CurrentToBest1Mutator">CurrentToBest1Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.utils.NumpyEncoder.default">default() (optimizer.loggers.utils.NumpyEncoder method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver">DifferentialEvolutionSolver (class in optimizer.solvers.differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.ackley.Ackley.discrete_domain">discrete_domain() (optimizer.testing.problems.ackley.Ackley static method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.TestProblem.discrete_domain">(optimizer.testing.problems.base.TestProblem static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.griewank.Griewank.discrete_domain">(optimizer.testing.problems.griewank.Griewank static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.max.Max.discrete_domain">(optimizer.testing.problems.max.Max static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.rastrigin.Rastrigin.discrete_domain">(optimizer.testing.problems.rastrigin.Rastrigin static method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.sphere.Sphere.discrete_domain">(optimizer.testing.problems.sphere.Sphere static method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver">DiscreteLocalSearchSolver (class in optimizer.solvers.discrete_localsearch)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.ConstraintSet.distance">distance() (optimizer.constraint.sets.ConstraintSet method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler.distances">distances (optimizer.constraint.handler.BaseHandler attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint.equality">equality (optimizer.constraint.constraint.EqualityConstraint attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.EqualityConstraint">EqualityConstraint (class in optimizer.constraint.constraint)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.diagnostics.evaluate_on_historic_data">evaluate_on_historic_data() (in module optimizer.utils.diagnostics)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver">EvolutionaryStrategiesSolver (class in optimizer.solvers.evolutionary_strategies)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.utils.get_best_maximize">get_best_maximize() (in module optimizer.stoppers.utils)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.utils.get_best_minimize">get_best_minimize() (in module optimizer.stoppers.utils)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.hss.html#optimizer.experimental.hss.neighbourhood_calcs.NeighbourhoodCalculator.get_points">get_points() (optimizer.experimental.hss.neighbourhood_calcs.NeighbourhoodCalculator method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.get_strategy">get_strategy() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.get_strategy">(optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.give_feedback">give_feedback() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.give_feedback">(optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.give_feedback">(optimizer.experimental.solvers.adaptive_differential_evolution.Crossover method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.give_feedback">(optimizer.experimental.solvers.adaptive_differential_evolution.Mutator method)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.griewank.Griewank">Griewank (class in optimizer.testing.problems.griewank)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalty.history_penalty">history_penalty() (in module optimizer.constraint.penalty)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.ScaledSolver.in_zero_one">in_zero_one() (optimizer.solvers.base.ScaledSolver static method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint">InequalityConstraint (class in optimizer.constraint.constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.initial_x">initial_x (optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.exceptions.InitializationError">InitializationError</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.Integers">Integers (class in optimizer.constraint.sets)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.exceptions.InvalidConstraintError">InvalidConstraintError</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.exceptions.InvalidObjectiveError">InvalidObjectiveError</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.initializer.latin_hypercube">latin_hypercube() (in module optimizer.utils.initializer)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalties.linear">linear() (in module optimizer.constraint.penalties)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.base.LoggerMixin.log">log() (optimizer.loggers.base.LoggerMixin method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.BasicLogger.log">(optimizer.loggers.BasicLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.NBestLogger.log">(optimizer.loggers.NBestLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.PenaltyLogger.log">(optimizer.loggers.PenaltyLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.basic.BasicLogger.log">(optimizer.loggers.basic.BasicLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger.log">(optimizer.loggers.best_trajectory.BestTrajectoryLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.n_best.NBestLogger.log">(optimizer.loggers.n_best.NBestLogger method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.penalty.PenaltyLogger.log">(optimizer.loggers.penalty.PenaltyLogger method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.basic.BasicLogger.log_df">log_df (optimizer.loggers.basic.BasicLogger attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.BasicLogger.log_df">(optimizer.loggers.BasicLogger attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger.log_df">(optimizer.loggers.best_trajectory.BestTrajectoryLogger attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.base.LoggerMixin">LoggerMixin (class in optimizer.loggers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.lower_bound">lower_bound (optimizer.constraint.constraint.InequalityConstraint attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.helpers.make_boundary_penalties">make_boundary_penalties() (in module optimizer.constraint.helpers)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.max.Max">Max (class in optimizer.testing.problems.max)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.exceptions.MaxIterationError">MaxIterationError</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.mean">mean (optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver">MonteCarloSolver (class in optimizer.experimental.solvers.monte_carlo_solver)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.MultiplesOf">MultiplesOf (class in optimizer.constraint.sets)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.MultiStopper">MultiStopper (class in optimizer.stoppers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator">Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.n_best.NBestLogger.n_best">n_best() (optimizer.loggers.n_best.NBestLogger method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.NBestLogger.n_best">(optimizer.loggers.NBestLogger method)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.handler.BaseHandler.name">name (optimizer.constraint.handler.BaseHandler attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.NBestLogger">NBestLogger (class in optimizer.loggers)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.n_best.NBestLogger">(class in optimizer.loggers.n_best)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.ConstraintSet.nearest">nearest() (optimizer.constraint.sets.ConstraintSet method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.MultiplesOf.nearest">(optimizer.constraint.sets.MultiplesOf method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.UserDefinedSet.nearest">(optimizer.constraint.sets.UserDefinedSet method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.Negated">Negated (class in optimizer.testing.problems.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.hss.html#optimizer.experimental.hss.neighbourhood_calcs.NeighbourhoodCalculator">NeighbourhoodCalculator (class in optimizer.experimental.hss.neighbourhood_calcs)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.no_improvement.NoImprovementStopper">NoImprovementStopper (class in optimizer.stoppers.no_improvement)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter">NormalAdaptiveParameter (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.utils.NumpyEncoder">NumpyEncoder (class in optimizer.loggers.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.problem.OptimizationProblem.objective">objective (optimizer.problem.problem.OptimizationProblem attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.objective">(optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger.objective_values">objective_values (optimizer.loggers.best_trajectory.BestTrajectoryLogger attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.objective_values">(optimizer.solvers.base.Solver attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.optimizable_columns">optimizable_columns (optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_problem.StatefulOptimizationProblem.optimizable_columns">(optimizer.problem.stateful_problem.StatefulOptimizationProblem attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.problem.OptimizationProblem">OptimizationProblem (class in optimizer.problem.problem)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#module-optimizer">optimizer (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint">optimizer.constraint (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.constraint">optimizer.constraint.constraint (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.handler">optimizer.constraint.handler (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.helpers">optimizer.constraint.helpers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.penalties">optimizer.constraint.penalties (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.penalty">optimizer.constraint.penalty (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.repair">optimizer.constraint.repair (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.sets">optimizer.constraint.sets (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#module-optimizer.constraint.utils">optimizer.constraint.utils (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.html#module-optimizer.experimental">optimizer.experimental (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.hss.html#module-optimizer.experimental.hss">optimizer.experimental.hss (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.hss.html#module-optimizer.experimental.hss.neighbourhood_calcs">optimizer.experimental.hss.neighbourhood_calcs (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.loggers.html#module-optimizer.experimental.loggers">optimizer.experimental.loggers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#module-optimizer.experimental.solvers">optimizer.experimental.solvers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#module-optimizer.experimental.solvers.adaptive_differential_evolution">optimizer.experimental.solvers.adaptive_differential_evolution (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#module-optimizer.experimental.solvers.monte_carlo_solver">optimizer.experimental.solvers.monte_carlo_solver (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#module-optimizer.experimental.solvers.random_search">optimizer.experimental.solvers.random_search (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers">optimizer.loggers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.base">optimizer.loggers.base (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.basic">optimizer.loggers.basic (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.best_trajectory">optimizer.loggers.best_trajectory (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.n_best">optimizer.loggers.n_best (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.penalty">optimizer.loggers.penalty (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#module-optimizer.loggers.utils">optimizer.loggers.utils (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#module-optimizer.plotting">optimizer.plotting (module)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#module-optimizer.plotting.constraint">optimizer.plotting.constraint (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#module-optimizer.plotting.convergence">optimizer.plotting.convergence (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#module-optimizer.plotting.trajectory">optimizer.plotting.trajectory (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#module-optimizer.problem">optimizer.problem (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#module-optimizer.problem.problem">optimizer.problem.problem (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#module-optimizer.problem.stateful_contextual_problem">optimizer.problem.stateful_contextual_problem (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#module-optimizer.problem.stateful_problem">optimizer.problem.stateful_problem (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers">optimizer.solvers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.base">optimizer.solvers.base (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.differential_evolution">optimizer.solvers.differential_evolution (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.discrete_localsearch">optimizer.solvers.discrete_localsearch (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.evolutionary_strategies">optimizer.solvers.evolutionary_strategies (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.particle_swarm">optimizer.solvers.particle_swarm (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#module-optimizer.solvers.simulated_annealing">optimizer.solvers.simulated_annealing (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers">optimizer.stoppers (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers.base">optimizer.stoppers.base (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers.no_improvement">optimizer.stoppers.no_improvement (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers.satisfied_constraint">optimizer.stoppers.satisfied_constraint (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers.utils">optimizer.stoppers.utils (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#module-optimizer.stoppers.wall_time">optimizer.stoppers.wall_time (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.html#module-optimizer.testing">optimizer.testing (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems">optimizer.testing.problems (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.ackley">optimizer.testing.problems.ackley (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.base">optimizer.testing.problems.base (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.griewank">optimizer.testing.problems.griewank (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.max">optimizer.testing.problems.max (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.rastrigin">optimizer.testing.problems.rastrigin (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#module-optimizer.testing.problems.sphere">optimizer.testing.problems.sphere (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#module-optimizer.utils">optimizer.utils (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#module-optimizer.utils.diagnostics">optimizer.utils.diagnostics (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#module-optimizer.utils.functional">optimizer.utils.functional (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#module-optimizer.utils.initializer">optimizer.utils.initializer (module)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#module-optimizer.utils.validation">optimizer.utils.validation (module)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.parameters">parameters (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.parameters">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.parameters">(optimizer.experimental.solvers.RandomSearchSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.parameters">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.parameters">(optimizer.experimental.solvers.random_search.RandomSearchSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.parameters">(optimizer.solvers.base.Solver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.parameters">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.parameters">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.parameters">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.parameters">(optimizer.solvers.particle_swarm.ParticleSwarmSolver attribute)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.parameters">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver">ParticleSwarmSolver (class in optimizer.solvers.particle_swarm)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalty.Penalty">Penalty (class in optimizer.constraint.penalty)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalty.penalty">penalty() (in module optimizer.constraint.penalty)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.plotting.html#optimizer.plotting.constraint.penalty_plot">penalty_plot() (in module optimizer.plotting.constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.PenaltyLogger">PenaltyLogger (class in optimizer.loggers)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.penalty.PenaltyLogger">(class in optimizer.loggers.penalty)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.types.Predictor.predict">predict() (optimizer.types.Predictor method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.types.Predictor">Predictor (class in optimizer.types)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.penalties.quadratic">quadratic() (in module optimizer.constraint.penalties)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Rand1Mutator">Rand1Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.Rand2Mutator">Rand2Mutator (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy">RandomAdaptiveStrategy (class in optimizer.experimental.solvers.adaptive_differential_evolution)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver">RandomSearchSolver (class in optimizer.experimental.solvers)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver">(class in optimizer.experimental.solvers.random_search)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.rastrigin.Rastrigin">Rastrigin (class in optimizer.testing.problems.rastrigin)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.repair.Repair">Repair (class in optimizer.constraint.repair)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.repair.repair">repair() (in module optimizer.constraint.repair)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.functional.safe_assign">safe_assign() (in module optimizer.utils.functional)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.functional.safe_subset">safe_subset() (in module optimizer.utils.functional)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper">SatisfiedConstraintsStopper (class in optimizer.stoppers.satisfied_constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.ScaledSolver">ScaledSolver (class in optimizer.solvers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.SetMembershipConstraint">SetMembershipConstraint (class in optimizer.constraint.constraint)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver">SimulatedAnnealingSolver (class in optimizer.solvers.simulated_annealing)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.html#optimizer.exceptions.SolutionNotFoundError">SolutionNotFoundError</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.loggers.html#optimizer.loggers.best_trajectory.BestTrajectoryLogger.solutions">solutions (optimizer.loggers.best_trajectory.BestTrajectoryLogger attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver">Solver (class in optimizer.solvers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.sphere.Sphere">Sphere (class in optimizer.testing.problems.sphere)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.state">state (optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem attribute)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_problem.StatefulOptimizationProblem.state">(optimizer.problem.stateful_problem.StatefulOptimizationProblem attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem">StatefulContextualOptimizationProblem (class in optimizer.problem.stateful_contextual_problem)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_problem.StatefulOptimizationProblem">StatefulOptimizationProblem (class in optimizer.problem.stateful_problem)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.stop">stop() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.stop">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.stop">(optimizer.experimental.solvers.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.stop">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.stop">(optimizer.experimental.solvers.random_search.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.stop">(optimizer.solvers.base.Solver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.stop">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.stop">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.stop">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.stop">(optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.stop">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.BaseStopper.stop">(optimizer.stoppers.base.BaseStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.MultiStopper.stop">(optimizer.stoppers.base.MultiStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.wall_time.WallTimeStopper.stop">(optimizer.stoppers.wall_time.WallTimeStopper method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.substitute_parameters">substitute_parameters() (optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_problem.StatefulOptimizationProblem.substitute_parameters">(optimizer.problem.stateful_problem.StatefulOptimizationProblem method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.tell">tell() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.tell">(optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomSearchSolver.tell">(optimizer.experimental.solvers.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.tell">(optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.random_search.RandomSearchSolver.tell">(optimizer.experimental.solvers.random_search.RandomSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.Solver.tell">(optimizer.solvers.base.Solver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.differential_evolution.DifferentialEvolutionSolver.tell">(optimizer.solvers.differential_evolution.DifferentialEvolutionSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.tell">(optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.tell">(optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.tell">(optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver.tell">(optimizer.solvers.simulated_annealing.SimulatedAnnealingSolver method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.testing.problems.html#optimizer.testing.problems.base.TestProblem">TestProblem (class in optimizer.testing.problems.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.base.to_limits">to_limits() (in module optimizer.solvers.base)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.utils.top_n_indices">top_n_indices() (in module optimizer.stoppers.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.utils.html#optimizer.utils.initializer.uniform_random">uniform_random() (in module optimizer.utils.initializer)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.BaseStopper.update">update() (optimizer.stoppers.base.BaseStopper method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.base.MultiStopper.update">(optimizer.stoppers.base.MultiStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.no_improvement.NoImprovementStopper.update">(optimizer.stoppers.no_improvement.NoImprovementStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.update">(optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.wall_time.WallTimeStopper.update">(optimizer.stoppers.wall_time.WallTimeStopper method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.update_best_positions">update_best_positions() (optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.update_eigen_decomposition">update_eigen_decomposition() (optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver.update_elites_and_bests">update_elites_and_bests() (optimizer.solvers.evolutionary_strategies.EvolutionaryStrategiesSolver method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.solvers.html#optimizer.solvers.particle_swarm.ParticleSwarmSolver.update_velocities">update_velocities() (optimizer.solvers.particle_swarm.ParticleSwarmSolver method)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.InequalityConstraint.upper_bound">upper_bound (optimizer.constraint.constraint.InequalityConstraint attribute)</a>
+</li>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.sets.UserDefinedSet">UserDefinedSet (class in optimizer.constraint.sets)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.value">value() (optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter method)</a>
+
+      <ul>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.value">(optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter method)</a>
+</li>
+        <li><a href="06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.value">(optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.constraint.html#optimizer.constraint.constraint.BaseConstraint.violated">violated (optimizer.constraint.constraint.BaseConstraint attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="06_optimizer_api/optimizer.stoppers.html#optimizer.stoppers.wall_time.WallTimeStopper">WallTimeStopper (class in optimizer.stoppers.wall_time)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

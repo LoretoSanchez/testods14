@@ -1,0 +1,10 @@
+model_report:
+  type: pandas.CSVDataSet
+  filepath: data/08_reporting/model_report/model_report.csv
+
+# model_report_db:
+#   type: pandas.SQLTableDataSet
+#   credentials: reporting_credentials
+#   table_name: models_health
+#   save_args:
+#     if_exists: append

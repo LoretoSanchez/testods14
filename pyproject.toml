@@ -1,0 +1,91 @@
+[tool.poetry]
+name = "OptimusAI"
+version = "0.1.0"
+description = "Tools for process plant diagnosis and optimization."
+authors = ["QuantumBlack"]
+# repository = "https://git.mckinsey-solutions.com/opm/optimus"
+# documentation = "one.quantumblack.com/docs/optimus"
+
+
+[tool.poetry.dependencies]
+python = "3.7.*"
+optimizer = {path = "packages/optimizer-1.2.1-py3-none-any.whl" }
+kedro = {version = ">=0.16.4", extras = ["pandas"]}
+kedro-great-expectations = {path = "packages/kedro_great_expectations-0.3.0-py3-none-any.whl"}
+# optimus_pkg = { path = "pipeline/src", develop = true }
+
+# Pipeline
+
+ipython = { version=">=7.0.0" }
+jupyter = { version="^1.0.0" }
+jupyter_client = { version="^5.1.0" }
+jupyterlab = { version="0.35.6" }
+pandas = { version="^1.0" }
+wheel = { version="^0.32" }
+matplotlib = { version="^3.0.3" }
+nbstripout = { version="^0.3.3" }
+pytz = { version=">=2019.3" }
+scikit-learn = { version=">=0.21.3" }
+seaborn = { version="^0.10.1" }
+shap = { version="^0.35" }
+tqdm = { version="^4.0" }
+xgboost = { version="^0.90" }
+mlflow = { version="^1.11" }
+
+# optimus control room advisor
+tensorflow = {version = ">2.*"}
+jsonref = {version = ">=0.2"}
+adtk = "^0.6.2"
+ray = "^0.8.6"
+m2r = "0.2"
+
+# Utilities
+twine = "^3.2.0"
+streamlit = "^0.65.2"
+xlrd = ">=1.0.0"
+xlsxwriter = ">=1.0,<2.0"
+simplejson = "^3.17.2"
+azure-servicebus = "^7.0.1"
+SQLAlchemy = "1.3.1"
+psycopg2 = "^2.9.1"
+
+[tool.poetry.dev-dependencies]
+# Testing
+pytest = "^4.3.0"
+pytest-mock = "^1.7.1"
+pytest-cov = "^2.5"
+
+# Dev Tools
+kedro-viz = "^3"
+flake8 = "^3.5"
+isort = "^4.3.16"
+black = "^19.3b0"
+mock = "^2.0.0"
+
+# more recent versions of pylint have introduced regressions and known bugs
+# related to a newer version of pylint dependency astroid
+# https://github.com/PyCQA/pylint/issues/3318
+pylint = "<2.4.4"
+astroid = "<2.3.3"
+
+# Docs
+awscli = "^1.18"
+ipykernel = ">=4.8"
+jupyter_client = "^5.1"
+nbsphinx = "0.6.1"
+patchy = "^1.5"
+recommonmark = "0.5.0"
+sphinx-autodoc-typehints = "^1.6.0"
+sphinx-markdown-tables = ">=0.0.12"
+sphinx = "^1.8.4"
+sphinx_copybutton = "0.2.5"
+sphinx_rtd_theme = "0.4.3"
+nbsphinx_link = "1.3"
+m2r = "0.2"
+
+# Utils
+click = "^7"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

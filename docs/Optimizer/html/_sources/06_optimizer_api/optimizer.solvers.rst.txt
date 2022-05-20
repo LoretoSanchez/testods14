@@ -1,0 +1,60 @@
+optimizer.solvers package
+=========================
+
+.. automodule:: optimizer.solvers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.solvers.base module
+-----------------------------
+
+.. automodule:: optimizer.solvers.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.solvers.differential\_evolution module
+------------------------------------------------
+
+.. automodule:: optimizer.solvers.differential_evolution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.solvers.discrete\_localsearch module
+----------------------------------------------
+
+.. automodule:: optimizer.solvers.discrete_localsearch
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.solvers.evolutionary\_strategies module
+-------------------------------------------------
+
+.. automodule:: optimizer.solvers.evolutionary_strategies
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.solvers.particle\_swarm module
+----------------------------------------
+
+.. automodule:: optimizer.solvers.particle_swarm
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.solvers.simulated\_annealing module
+---------------------------------------------
+
+.. automodule:: optimizer.solvers.simulated_annealing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

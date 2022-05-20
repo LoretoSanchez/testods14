@@ -1,0 +1,7 @@
+data_dch:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/pi_mdt.csv
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["Fecha"]

@@ -1,0 +1,36 @@
+optimizer.plotting package
+==========================
+
+.. automodule:: optimizer.plotting
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.plotting.constraint module
+------------------------------------
+
+.. automodule:: optimizer.plotting.constraint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.plotting.convergence module
+-------------------------------------
+
+.. automodule:: optimizer.plotting.convergence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.plotting.trajectory module
+------------------------------------
+
+.. automodule:: optimizer.plotting.trajectory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

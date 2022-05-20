@@ -1,0 +1,272 @@
+# -------------------- Flotation Parameters -----------------#
+fa1_flotation_config:
+  n_lines: 2    # Number of flotation lines in the model
+  n_celdas: 6   # Number of celdas in each line
+  n_bancos: 3
+
+fa1_flotation_tags:
+  flujo_aire_l1_tags: [
+          "fa1_7fc1211",
+          "fa1_7fc1212",
+          "fa1_7fc1214",
+          "fa1_7fc1215",
+          "fa1_7fc1217",
+          "fa1_7fc1218"
+  ]
+  flujo_aire_l2_tags: [
+          "fa1_7fc1220",
+          "fa1_7fc1221",
+          "fa1_7fc1223",
+          "fa1_7fc1224",
+          "fa1_7fc1226",
+          "fa1_7fc1227"
+  ]
+  vel_burbujas_l1_tags: [
+          "fa1_7ais1211",
+          "fa1_7ais1212",
+          "fa1_7ais1214",
+          "fa1_7ais1215",
+          "fa1_7ais1217",
+          "fa1_7ais1218"
+  ]
+  vel_burbujas_l2_tags: [
+          "fa1_7ais1220",
+          "fa1_7ais1221",
+          "fa1_7ais1223",
+          "fa1_7ais1224",
+          "fa1_7ais1226",
+          "fa1_7ais1227"
+  ]
+  nivel_espuma_l1_tags: [
+    #      "fa1_7li1211",
+    #      "fa1_7li1212",
+    #      "fa1_7li1214",
+    #      "fa1_7li1215",
+    #      "fa1_7li1217",
+    #      "fa1_7li1218"
+  ]
+  nivel_espuma_l2_tags: [
+    #      "fa1_7li1220",
+    #      "fa1_7li1221",
+    #      "fa1_7li1223",
+    #      "fa1_7li1224",
+    #      "fa1_7li1226",
+    #      "fa1_7li1227"
+  ]
+  nivel_pulpa_l1_tags: [
+  ]
+  nivel_pulpa_l2_tags: [
+  ]
+  tam_burbujas_l1_tags: [
+          "fa1_7aiz1211",
+          "fa1_7aiz1212",
+          "fa1_7aiz1214",
+          "fa1_7aiz1215",
+          "fa1_7aiz1217",
+          "fa1_7aiz1218"
+  ]
+  tam_burbujas_l2_tags: [
+          "fa1_7aiz1220",
+          "fa1_7aiz1221",
+          "fa1_7aiz1223",
+          "fa1_7aiz1224",
+          "fa1_7aiz1226",
+          "fa1_7aiz1227"
+  ]
+
+fa1_flotation_target:
+    ley_alim_tag: ["rx_co_a1_cur402"]
+    ley_conc_tf_tag: ["fa1_7a0107cu"]
+    ley_conc_rx_tag: ["rx_ap_cuc131_rx"]
+    ley_cola_rx_tags: ["rx_cp_cuc113", "rx_cp_cuc114"]  # L1, L2
+    ley_cola_tf_tags: ["fa1_7a0121cu", "fa1_7a0122cu"] # Analizadores L1, L2
+    weights_colas: [0.60, 0.40]  # Sum of entries must be = 1
+    tph_tags: ["ma1_xwc1304", "ma1_xwc1404", "ma1_xwc1506"]
+    recup_wt_name: "calc_fa1_recup_ponder"
+    cuf_obj_name: "calc_cuf_a1_xl"
+    ley_alim_bounds: [0.5, 2]
+
+fa1_fe_over_cu:
+  ley_fe_alim: "rx_co_a1_fer402"
+  ley_cu_alim: "rx_co_a1_cur402"
+
+fa1_sol_analizadores: [   # L1, L2 (L3 has no data 14/10/2020)]
+    "fa1_7a0121ps",
+    "fa1_7a0122ps"
+]
+
+fa1_reactivos:
+  tph: ["ma1_xwc1304", "ma1_xwc1404", "ma1_xwc1506"]
+  react:
+    petroleo: "re_8fic33"
+    espumante: "re_8fic13"
+    xantato: "re_8fic83"
+
+# -------------------- Grinding Parameters -----------------#
+
+ma1_target_name: "calc_tph_ma1_total"
+
+ma1_presion_bhc: ["ma1_xpi1312", "ma1_xpi1412", "ma1_xpi1515"]
+ma1_sol_a_flot: ["ma1_xps1313", "ma1_xps1413", "ma1_xps1513"]
+ma1_densidad_bhc: ["ma1_xdc1305", "ma1_xdc1405", "ma1_xdc1516"]
+ma1_tamano_a_flot: ["ma1_xai1313", "ma1_xai1413","ma1_xai1513"]
+
+mbar_13:
+    tonelaje: ['ma1_xwc1304']
+    potencia: ['ma1_xji1317']
+
+mbar_14:
+    tonelaje: ['ma1_xwc1404']
+    potencia: ['ma1_xji1417'] 
+
+mbar_15:
+    tonelaje: ['ma1_xwc1506']
+    potencia: ['ma1_xji1517'] 
+
+mb13_temp: ['ma1_xti13203', 'ma1_xti13204']
+mb14_temp: ['ma1_xti14203', 'ma1_xti14204']
+mb15_temp: ['ma1_xti15263', 'ma1_xti15264']
+
+s13_sol:
+    water: ["ma1_xfc1308", "ma1_xfc1306"]
+    sol: ["ma1_xwc1304"]
+
+s14_sol:
+    water: ["ma1_xfc1408"]
+    sol: ["ma1_xwc1404"]
+
+s15_sol:
+    water: ["ma1_xfc1510", "ma1_xfc1508"]
+    sol: ["ma1_xwc1506"]
+
+ma1_sol: ["calc_s13_sol", "calc_s14_sol", "calc_s15_sol", "ma1_xps1313", "ma1_xpsc1325", "ma1_xps1413", "ma1_xpsc1425",
+          "ma1_xps1513", "ma1_xpsc1531", "calc_pot_esp_mbar_13", "calc_pot_esp_mbar_14", "calc_pot_esp_mbar_15"]
+
+ma1_splits: ["ch23_ct_136c_fino", "ch23_ct_136c_grueso", "ch23_ct_136c_inter_grueso", "ch23_ct_136c_intermedio",
+"ch23_ct_144_fino", "ch23_ct_144_grueso", "ch23_ct_144_inter_grueso", "ch23_ct_144_intermedio"]
+
+ma1_correa_RT: ["ch1_srt_wit_270_out_pv"]
+
+fa1_agitadores: ['fa1_7kl1211', 'fa1_7kl1212', 'fa1_7kl1214', 'fa1_7kl1215', 
+                'fa1_7kl1217','fa1_7kl1218', 'fa1_7kl1220', 'fa1_7kl1221', 
+                'fa1_7kl1223', 'fa1_7kl1224','fa1_7kl1226', 'fa1_7kl1227']
+
+fa1_l1_agitadores: ['fa1_7kl1211', 'fa1_7kl1212', 'fa1_7kl1214', 'fa1_7kl1215', 
+                    'fa1_7kl1217',]
+fa1_l2_agitadores: ['fa1_7kl1218', 'fa1_7kl1220', 'fa1_7kl1221', 'fa1_7kl1223', 
+                    'fa1_7kl1224','fa1_7kl1226', 'fa1_7kl1227']
+
+on_off_A1:
+    corr_13:
+        tag: 'ma1_xji1317'
+        off_when: 'less_than'    #'greater_than'
+        value: 68
+    corr_14:
+        tag: 'ma1_xji1417'
+        off_when: 'less_than'    #'greater_than'
+        value: 72
+    corr_15:
+        tag: 'ma1_xji1517'
+        off_when: 'less_than'    #'greater_than'
+        value: 99
+    linea_13:
+        tag: 'ma1_xwc1304'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s13.range_min}"
+    linea_14:
+        tag: 'ma1_xwc1404'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s14.range_min}"
+    linea_15:
+        tag: 'ma1_xwc1506'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s15.range_min}"
+    fa1_l1c1:
+        tag: 'fa1_7kl1211'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l1c2:
+        tag: 'fa1_7kl1212'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l1c3:
+        tag: 'fa1_7kl1214'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l1c4:
+        tag: 'fa1_7kl1215'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l1c5:
+        tag: 'fa1_7kl1217'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l1c6:
+        tag: 'fa1_7kl1218'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c7:
+        tag: 'fa1_7kl1220'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c8:
+        tag: 'fa1_7kl1221'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c9:
+        tag: 'fa1_7kl1223'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c10:
+        tag: 'fa1_7kl1224'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c11:
+        tag: 'fa1_7kl1226'
+        off_when: 'less_than'
+        value: 0.5
+    fa1_l2c12:
+        tag: 'fa1_7kl1227'
+        off_when: 'less_than'
+        value: 0.5
+    ma1_agua_s13:
+        tag: 'ma1_xfc1306_op'
+        off_when: 'greater_than'
+        value: 98
+    ma1_agua_s14:
+        tag: 'ma1_xfc1406_op'
+        off_when: 'greater_than'
+        value: 98
+    ma1_agua_s15:
+        tag: 'ma1_xfc1508_op'
+        off_when: 'greater_than'
+        value: 98
+    fa1_all_off:
+        tag: 'calc_mean_fa1_agitadores'
+        off_when: 'less_than'
+        value: 0.3
+    linea_1_fa1:
+        tag: 'calc_mean_fa1_l1_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+    linea_2_fa1:
+        tag: 'calc_mean_fa1_l2_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+
+
+s13_psi_malla: ['ma1_xai1313v']
+s14_psi_malla: ['ma1_xai1413v']
+s15_psi_malla: ['ma1_xai1513v']
+
+s13_psi_sensor: ['ma1_xai1313']
+s14_psi_sensor: ['ma1_xai1413']
+s15_psi_sensor: ['ma1_xai1513']
+
+
+on_off_A1_PSIsensors:
+    perc_error_th: 0.10
+    sections:
+        s13: ['ma1_xai1313', 'ma1_xai1313v']
+        s14: ['ma1_xai1413', 'ma1_xai1413v']
+        s15: ['ma1_xai1513', 'ma1_xai1513v']

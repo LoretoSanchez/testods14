@@ -1,0 +1,9 @@
+data_primary:
+  type: pickle.PickleDataSet
+  filepath: data/03_primary/data_primary.pkl
+
+profit_matrices_clean:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/matriz_ganacia_fixed.csv
+
+

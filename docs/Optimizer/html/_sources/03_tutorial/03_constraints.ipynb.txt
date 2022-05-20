@@ -1,0 +1,396 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Constraints\n",
+    "\n",
+    "Consider the optimization problem:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "&\\min & f(\\mathbf{x}) \\\\\n",
+    "&\\text{s.t.} & g(\\mathbf{x}) \\leq c \\\\\n",
+    "&& x_i \\in S\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "for some set $S$. Optimizer's syntax makes a clear distinction between a constraint and how it is handled. You're encouraged to write out your optimization problem in a form that looks like the one written above. However, in code we offer two methods for _handling_ constraints:\n",
+    "\n",
+    "- `penalty`: adds a constraint-dependent penalty term to the problem's objective function.\n",
+    "- `repair`: converts an infeasible solution to a feasible one through some transformation.\n",
+    "\n",
+    "This notebook will give a high level overview of both. See the [penalty user guide](../04_user_guide/01_penalty.ipynb) and the [repair user guide](../04_user_guide/02_repair.ipynb) for more details."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Constraints as penalty functions\n",
+    "\n",
+    "If we take the same optimization problem above, we can reformulate the constraint $g(\\mathbf{x}) \\leq c$ as a penalty term in the objective:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "&\\min & f(\\mathbf{x}) + \\lambda P(\\mathbf{x}) \\\\\n",
+    "& \\text{s.t.} & x_i \\in S\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "Where $P(\\mathbf{x})$ can take many forms and $\\lambda > 0$. An example of a linear penalty is $P(\\mathbf{x}) = \\max(0, g(\\mathbf{x}) - c)$.\n",
+    "\n",
+    "Let's say our $g(\\mathbf{x}) = \\sum_i x_i$ and $c = 10$. We can formulate this as a penalty in Optimizer using the `penalty` function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "from optimizer import penalty\n",
+    "\n",
+    "def row_sum(x_):\n",
+    "    return np.sum(x_, axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sum_penalty = penalty(row_sum, \"<=\", 10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "optimizer.constraint.penalty.Penalty"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(sum_penalty)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `penalty` function returns a callable `Penalty` object. We can then apply `sum_penalty` to a matrix of decision variables:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 0.,  5., 20.])"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "matrix = np.array([\n",
+    "    [1, 1, 1],\n",
+    "    [5, 5, 5],\n",
+    "    [10, 10, 10]\n",
+    "])\n",
+    "sum_penalty(matrix)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 3, 15, 30])"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sum_penalty.constraint_func(matrix)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The penalty is of course only applied when the constraint is violated, so the first row has a penalty of $0$. The other two rows are penalized based on their distance from the constraint boundary.\n",
+    "\n",
+    "See the [user guide](../04_user_guide/01_penalty.ipynb) for more information on `penalty`."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Constraints as repair functions"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Generally speaking, penalties are for situations when the function applied to the decision variables of an optimization problem are complicated. For example, a penalty function would be useful if one's constraint function is a machine learning model.\n",
+    "\n",
+    "For set membership constraints like $x_i \\in S$, it is clear how to modify $\\mathbf{x}$ to ensure it satisfies the given constraint. We can simply set $x_i$ to its nearest neighbor in the set $S$.\n",
+    "\n",
+    "Let's use a more concrete example where $S = \\mathbb{Z}$, the set of all integers and $i = 1$."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from optimizer import repair\n",
+    "from optimizer.utils.functional import column\n",
+    "from optimizer.constraint.sets import Integers"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "int_repair = repair(column(0), \"in\", Integers())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Optimizer provides the `column` function for indexing Numpy arrays. When using Pandas a `DataFrame`, simply specify the column:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "int_repair_pd = repair(\"column_0\", \"in\", Integers())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In both cases, `repair` returns a callable `Repair` object which performs the expected operation. In this case, both objects round the first column."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[-1.60627998, -0.04633282,  0.47282095],\n",
+       "       [-1.20208229,  1.91362058, -0.67340728],\n",
+       "       [-0.4805631 ,  0.70138002,  1.2221266 ],\n",
+       "       [ 1.54376503, -1.06853452, -0.01964278],\n",
+       "       [ 0.79009644, -0.0605226 ,  0.99631888]])"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data = np.random.randn(5, 3)\n",
+    "data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[-2.        , -0.04633282,  0.47282095],\n",
+       "       [-1.        ,  1.91362058, -0.67340728],\n",
+       "       [-0.        ,  0.70138002,  1.2221266 ],\n",
+       "       [ 2.        , -1.06853452, -0.01964278],\n",
+       "       [ 1.        , -0.0605226 ,  0.99631888]])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "int_repair(data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.DataFrame(data, columns=[\"column_{}\".format(i) for i in range(data.shape[-1])])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>column_0</th>\n",
+       "      <th>column_1</th>\n",
+       "      <th>column_2</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>-2.0</td>\n",
+       "      <td>-0.046333</td>\n",
+       "      <td>0.472821</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>-1.0</td>\n",
+       "      <td>1.913621</td>\n",
+       "      <td>-0.673407</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>-0.0</td>\n",
+       "      <td>0.701380</td>\n",
+       "      <td>1.222127</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>-1.068535</td>\n",
+       "      <td>-0.019643</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>-0.060523</td>\n",
+       "      <td>0.996319</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   column_0  column_1  column_2\n",
+       "0      -2.0 -0.046333  0.472821\n",
+       "1      -1.0  1.913621 -0.673407\n",
+       "2      -0.0  0.701380  1.222127\n",
+       "3       2.0 -1.068535 -0.019643\n",
+       "4       1.0 -0.060523  0.996319"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "int_repair_pd(df)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For more on repairs, see the [user guide](../04_user_guide/02_repair.ipynb)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Warning about pickling constraints\n",
+    "\n",
+    "If you're going to be working with Python's `multiprocessing`, note that all of your constraints will need to be pickleable. This (among other things) means you cannot pickle constraint that uses a lambda function in the constraint definition -- see the [Python docs](https://docs.python.org/3.7/library/pickle.html#what-can-be-pickled-and-unpickled) for more on objects that can be pickled. There are three options to get around this:\n",
+    "\n",
+    "1. Use fully qualified functions defined at the top level of a module.\n",
+    "2. If you're just indexing one column, consider using the `column` utility function in `optimizer.utils.functional` or simply provide a string to `constraint` for `DataFrame` objects.\n",
+    "3. Switch to a multiprocessing solution that can handle lambdas like `Dask.distributed`."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

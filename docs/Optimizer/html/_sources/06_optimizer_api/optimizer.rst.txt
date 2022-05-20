@@ -1,0 +1,43 @@
+optimizer package
+=================
+
+.. automodule:: optimizer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    optimizer.constraint
+    optimizer.experimental
+    optimizer.loggers
+    optimizer.plotting
+    optimizer.problem
+    optimizer.solvers
+    optimizer.stoppers
+    optimizer.testing
+    optimizer.utils
+
+Submodules
+----------
+
+optimizer.exceptions module
+---------------------------
+
+.. automodule:: optimizer.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.types module
+----------------------
+
+.. automodule:: optimizer.types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

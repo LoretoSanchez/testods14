@@ -1,0 +1,23 @@
+stat_na:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/stat_na.csv
+
+tags_low_quality:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/tags_low_quality.csv
+
+concentrated_data:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/concentrated_data.csv
+
+null_data:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/null_data.csv
+
+ks_test_sum:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/ks_test_sum.csv
+
+data_qa_table:
+  type: pandas.ExcelDataSet
+  filepath: data/08_reporting/data_quality/data_qa_table.xlsx

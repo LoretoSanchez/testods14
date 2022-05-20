@@ -1,0 +1,15 @@
+optimizer.testing package
+=========================
+
+.. automodule:: optimizer.testing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    optimizer.testing.problems
+

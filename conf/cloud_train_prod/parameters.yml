@@ -1,0 +1,8 @@
+backend_api:
+  REACT_APP_OPTIMUS_ANALYTICS_API: "https://minco-dch-dev08.azurewebsites.net/api/v1/process_data/"
+  REACT_APP_OPTIMUS_DATA_INSIGHT_API: "https://minco-dch-dev09.azurewebsites.net/api/v1/process_data/"
+  model_to_api_map:
+    ca2xl: "a2"
+    ca1xl: "a1"
+    ma2: "ma2"
+    ca0xl: "a0"

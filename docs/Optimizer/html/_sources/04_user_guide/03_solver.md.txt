@@ -1,0 +1,66 @@
+# Solver
+
+Before taking a look at specific solvers, be sure to first understand the [solver API](../03_tutorial/01_solver_api.md). This will give a good overview of methods that all solvers have and how they are meant to interact with an optimization problem. This document will point users to resources on each solver and discuss the behavior of important hyperparameters.
+
+The default hyperparameters for all solvers should not be assumed as good values for a general problem. Every problem is different and these values will always have to be tuned. In general, choosing these values is non-trivial and is an active area of research.
+
+## `BaseSolver`
+
+`BaseSolver` is an abstract base class for all solvers to extend. It defines the Ask and Tell interface and handles some (but not all) sense checking. Internally, all solvers are assumed to be minimizing their problem. Sense checking allows one to maximize a problem by setting `sense="maximize"` in a solver's constructor.
+
+Most solvers have the `maxiter` keyword argument that can be thought of as a hyperparameter. This is often the easiest to tune since it will be clear when a search will need to run longer. Rely on logging and convergence plots included in the `loggers` and `plotting` packages to determine this.
+
+## `ScaledSolver`
+
+`ScaledSolver` is another abstract base class. All instances of `ScaledSolver` work by converting parameters that are passed to the solver from their original domain to be between in `[0, 1]`. This class abstracts the operations required to scale parameters back to their original domain. Scaling the domain helps with hyperparameter choices for things like step sizes. This way a step of, say, `0.1` means the same thing internally, but externally it could mean many things based on the domain. 
+
+## `DifferentialEvolutionSolver`
+
+`DifferentialEvolutionSolver` is a wrapper around the `Scipy` implementation of differential evolution (DE). This solver uses the same scaling scheme as `ScaledSolver`, but the internal `Scipy` package handles this rather than `ScaledSolver`. The [`Scipy` implementation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html) covers many mutation strategies, including the original strategy from Storn and Prince (1997). The [wikipedia article](https://en.wikipedia.org/wiki/Differential_evolution) gives a great outline of the algorithm.
+
+The hyperparameters in the optimizer `DifferentialEvolutionSolver` are `popsize`, `mutation`, `recombination`, and `strategy`.
+
+- `popsize`: the population size of the search. This is the number of rows in the matrix returned from the `ask` method. Too small of a population size may lead to premature convergence. Too large will lead to performance issues. Population size will often have to increase as problem dimensionality increases to get a good coverage of the solution space.
+- `mutation`: the mutation factor. Often denoted as `F` in literature. This can be thought of as the step size in the search. Too small an `F` will cause fast convergence to a (possibly) poor solution. Too large an `F` is likely to cause the search to not be able to converge at all. The `Scipy` implementation allows a tuple to be provided for this argument which will cause the mutation rate used at each generation to be sampled uniformly from the range provided. This is called "dithering" and often improves search convergence.
+- `recombination`: the recombination (or crossover) rate. Often denoted as `C_r` in literature. This controls how much new information is used in newly created solutions. `C_r` is always in `[0, 1]` and usually is high in order to create sufficiently different new solutions.
+- `strategy`: the mutation strategy used to create new solutions. Strategies that incorporate the best solution (e.g., the default `best1bin`) will often converge faster to an solution. The strategy implemented in Storn and Price (1997), called `rand1bin`, has been proven to be a good general strategy. See all the options in the [`Scipy` docs](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html).
+
+## `EvolutionaryStrategiesSolver`
+
+`EvolutionaryStrategiesSolver` is a `ScaledSolver` that implements the Covariance Matrix Adaptation Evolutionary Strategy (CMA-ES). The [wikipedia article](https://en.wikipedia.org/wiki/CMA-ES) gives a good overview of CMA-ES. However, a basic understanding of evolutionary strategies is enough to use this algorithm. This [gist](https://gist.github.com/karpathy/77fbb6a8dac5395f1b73e7a89300318d) implements a simple ES and is a good starting point to understand the idea of sampling a population to estimate a distribution for optimization.
+
+The main hyperparameters for CMA-ES are `mu`, `lam`, and `sigma`.
+- `mu`: the number of solutions to select from the `lam` samples based on objective value. These `mu` points are used to re-estimate the covariance of the multivariate normal being estimated in CMA-ES. If `mu` is too small, the covariance may become rank deficient. If it is too large, the matrix estimated will tend toward the original covariance matrix in the normal distribution from which we sampled the original `mu` points. In other words, it will be uninformative. Default is set to `lam // 2`.
+- `lam`: the number of solutions generated from the current estimated multivariate normal distribution. This will be the number of rows in the matrix returned from `ask`. Similar to a population size, small values of `lam` will cause the samples to be uninformative to the search. Large values will cause performance issues.
+- `sigma`: the initial standard deviation of the multivariate normal being sampled in CMA-ES. This can be thought of as a step size parameter. If this is too large or too small, the search will have a hard time finding good solutions.
+
+## `ParticleSwarmSolver`
+
+`ParticleSwarmSolver` is a `ScaledSolver` that implements the standard particle swarm optimization (PSO) algorithm described in Kennedy and Eberhart (1995). The [wikipedia article](https://en.wikipedia.org/wiki/Particle_swarm_optimization) on PSO is enough to get started. 
+
+The important hyperparameters for PSO are `popsize`, `intertia`, `social_parameter`, and `cognitive_parameter`:
+- `popsize`: the population size of the search. This is the number of rows in the matrix returned by the `ask` method. Similar to other population based methods, too small of a population will lead to premature convergence and too large will lead to performance issues. Population size will often have to increase if the dimensionality of the optimization problem increases.
+- `inertia`: the amount of the previous velocity to consider during the velocity update. Balances how "easy" it is to change directions in the search. Setting to 0 will cause the update to take in past velocity history into account. This is similar to momentum in a gradient based search. 
+- `social_parameter`: controls how much to consider the global best solution a particle's velocity update. If this is too large, the search will likely be pulled into a local optimum quickly.
+- `cognitive_parameter`: controls how much to consider the particle's previous best position in its velocity update. If you suspect the search space is highly multimodal, consider increasing this parameter to have more diverse solutions.
+
+## `SimulatedAnnealingSolver`
+
+`SimulatedAnnealingSolver` is a `ScaledSolver` implements simulated annealing (SA) for continuous spaces. The original algorithm is outlined in [this paper](https://www.researchgate.net/publication/220492522). SA is a point based algorithm, meaning it returns a single rowed matrix from the `ask` method. This SA implementation operates with a term called "cycles". One cycle refers to one step in each dimension.
+
+The important hyperparameters for SA are `initial_temp`, `final_temp`, `initial_neighborhood`, `update_scale_steps`, and `reduce_temp_steps`:
+- `initial_temp` and `final_temp`: the initial and final temperatures control how likely it is to accept a worse solution in the Metropolis acceptance criterion. Through the duration of the search, the temperature decreases based on an exponential decay. Difficult problems often have to start with a large `initial_temp`.
+- `initial_neighborhood`: this parameter controls the values in the initial step vector. This is how far SA is allowed to step in any direction. Remember this is scaled to the domain, so a value of `0.5` the search can - at a maximum - take a step the size of half of the domain.
+- `update_scale_steps`: the amount of cycles required to update the step vector. This update takes into account how successful the steps are in each direction. Updating too often will not accumulate enough information, updating too infrequently may cause the search to be misled to a local optimum.
+- `update_temp_steps`: the amount of step vector updates required to update the temperature. For an `n` dimensional problem, the temperature will be updated every `update_scale_steps * n` iterations of the `ask` and `tell` loop.
+
+## `DiscreteLocalSearchSolver`
+
+`DiscreteLocalSearchSolver` implements a discrete local search algorithm. In contrast with continuous solvers that are initialized with min/max bounds for each dimension, this solver is initialized with a list of values that each variable can take in the `domain` parameter. This algorithm is well suited for cases when the domain for each variable is coarse, this means that it has few possible options. If the domain is a granular mesh, then a continuous algorithm might be a better option. 
+
+The algorithm is initialized with a random solution and it iteratively evaluates moves in different dimensions as given by the options in the discrete domain. Specifically, it attempts moves to adjacent positions in a dimension/coordinate-wise fashion (one dimension at a time). If a movement improves the objective value, the algorithm updates the current solution and continues the search. If a solution cannot be further improved, the algorithm generates a new random solution and starts over. The best historical solution is always stored in memory. The implementation is fully vectorized, meaning that in each iteration the algorithm explores `popsize` moves simultaneously.
+ 
+The important hyperparameters for DLS are `popsize` and `maxiter`. It strongly depends on the `domain` of the variables:
+- `popsize`: the number of solutions explored at each iteration. This is the number of rows in the matrix returned by the `ask` method. Too small of a population will require a larger number of iterations to find good solutions. Larger population implies that we explore more candidate solutions per iteration, thus increasing the likelihood of finding a good solution in less iterations. 
+- `maxiter`: the maximum number of iterations allowed to run. An iteration in this algorithm is the evaluation of a single move. Thus, a small number of iterations will not guarantee that a solution is a local optima. Note that if the dimension of the problem is large and/or the possible values in the domains is large, then a larger amount of iterations is needed to find locally optimal solutions.
+- `domain`: the values each variable can take. The less granular this domain is, the more sense it makes to use this algorithm. If the domain is too granular (with a large amount of options per dimension), then we recommend using a continuous algorithm with repairs. To get a better feeling of this: consider the case where 10 variables have 500 options each, and the goal is to maximize their sum. In the worst case scenario we would need at least 5000 iterations to find one local optima for this simple objective function. If the objective function is more complex, then we might need several resets, and thus effectively requiring above tens of thousands of iterations, which can be prohibitively expensive.

@@ -1,0 +1,11 @@
+data_curation_stats:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/data_curation/curation_stats.csv
+
+data_curation_stats_nan:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/data_curation/curation_stats_nan.csv
+
+data_corrected:
+    type: pickle.PickleDataSet
+    filepath: data/04_feature/data_corrected.pkl

@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.problem.stateful_contextual_problem &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>optimizer.problem.stateful_contextual_problem</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimizer.problem.stateful_contextual_problem</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 - present</span>
+<span class="c1"># QuantumBlack Visual Analytics Ltd (a McKinsey company).</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software framework contains the confidential and proprietary information</span>
+<span class="c1"># of QuantumBlack, its affiliates, and its licensors. Your use of these</span>
+<span class="c1"># materials is governed by the terms of the Agreement between your organisation</span>
+<span class="c1"># and QuantumBlack, and any unauthorised use is forbidden. Except as otherwise</span>
+<span class="c1"># stated in the Agreement, this software framework is for your internal use</span>
+<span class="c1"># only and may only be shared outside your organisation with the prior written</span>
+<span class="c1"># permission of QuantumBlack.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Holds definitions for the StatefulContextualOptimizationProblem</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.api.types</span> <span class="kn">import</span> <span class="n">is_numeric_dtype</span>
+
+<span class="kn">from</span> <span class="nn">optimizer.constraint.penalty</span> <span class="kn">import</span> <span class="n">Penalty</span>
+<span class="kn">from</span> <span class="nn">optimizer.constraint.repair</span> <span class="kn">import</span> <span class="n">Repair</span>
+<span class="kn">from</span> <span class="nn">optimizer.problem.problem</span> <span class="kn">import</span> <span class="n">OptimizationProblem</span>
+<span class="kn">from</span> <span class="nn">optimizer.types</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">optimizer.utils.functional</span> <span class="kn">import</span> <span class="n">safe_subset</span>
+<span class="kn">from</span> <span class="nn">optimizer.utils.validation</span> <span class="kn">import</span> <span class="n">check_matrix</span>
+
+
+<div class="viewcode-block" id="StatefulContextualOptimizationProblem"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem">[docs]</a><span class="k">class</span> <span class="nc">StatefulContextualOptimizationProblem</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimization problem representing the case where both optimizable and</span>
+<span class="sd">    non-optimizable parameters must be handled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StatefulContextualOptimizationProblem.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">objective</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span>
+        <span class="n">context_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">optimizable_columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">],</span>
+        <span class="n">penalties</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Union</span><span class="p">[</span><span class="n">Penalty</span><span class="p">,</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Penalty</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">repairs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Repair</span><span class="p">,</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Repair</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sense</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;minimize&quot;</span><span class="p">,</span>
+        <span class="n">objective_kwargs</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_opt_blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new instance of a Stateful Contextual Problem..</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            objective: callable object representing the objective function.</span>
+<span class="sd">            state: Vector representing the current state of the problem.</span>
+<span class="sd">            optimizable_columns: list of columns/dimensions that can be optimized.</span>
+<span class="sd">            penalties: optional Penalty or list of Penalties.</span>
+<span class="sd">            repairs: optional Repairs or callable or list of Repairs and/or callables.</span>
+<span class="sd">            sense: &#39;minimize&#39; or &#39;maximize&#39;, how to optimize the objective.</span>
+<span class="sd">            n_opt_blocks: int (1 by default). How many timesteps to optimize</span>
+<span class="sd">            over (constraining to be the same value). When value is 1, only</span>
+<span class="sd">             most recent timestep is optimized.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StatefulContextualOptimizationProblem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">objective</span><span class="p">,</span> <span class="n">penalties</span><span class="o">=</span><span class="n">penalties</span><span class="p">,</span> <span class="n">repairs</span><span class="o">=</span><span class="n">repairs</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">sense</span>
+        <span class="p">)</span>
+        <span class="c1"># An internal current state will save us time for any processing</span>
+        <span class="c1"># we might need to apply to the current state before subbing in</span>
+        <span class="c1"># the optimizable variables in the __call__ method.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizable_columns</span> <span class="o">=</span> <span class="n">optimizable_columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context_data</span> <span class="o">=</span> <span class="n">context_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_opt_blocks</span> <span class="o">=</span> <span class="n">n_opt_blocks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_kwargs</span> <span class="o">=</span> <span class="n">objective_kwargs</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Returns callable objective function.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective</span>
+
+        <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tiled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Predict on values relevant for a single time period.</span>
+<span class="sd">            Args:</span>
+<span class="sd">                df:</span>
+<span class="sd">                tiled: boolean, controls if each row of `df` should be</span>
+<span class="sd">                predicted with the same context data.</span>
+
+<span class="sd">            Returns: A dataframe of the same dimensionality as df,</span>
+<span class="sd">            provided predict returns a single value for a time-series of</span>
+<span class="sd">            values.</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">tiled</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_internal_state</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitute_parameters</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizable_columns</span><span class="p">])</span>
+                <span class="c1"># Now return predictions on self._internal_state</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">obj_kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_predict</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">optimizable_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Optimizable columns getter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List or pd.Series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span>
+
+    <span class="nd">@optimizable_columns</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">optimizable_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Optimizable columns setter.</span>
+<span class="sd">        Resets internal state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_columns: list of columns/dimensions that can be optimized.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span> <span class="o">=</span> <span class="n">new_columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Reset internal state.</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current (actual) state</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            vector representing the current state of the problem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span>
+
+    <span class="nd">@state</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set actual state and reset internal state. The new state can be</span>
+<span class="sd">        one of three things:</span>
+<span class="sd">            - a single-row dataframe</span>
+<span class="sd">            - a pandas series with a numeric dtype</span>
+<span class="sd">            - a numpy array</span>
+<span class="sd">        pandas series with other dtypes are not allowed to protect users from</span>
+<span class="sd">        potential dtype errors that arrise when a dataframe&#39;s row is converted</span>
+<span class="sd">        into a series.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_state: vector representing the new state of the problem</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: in case of wrong input type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_state</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span>
+
+        <span class="n">type_error_msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;`state` must be a single-row dataframe, &quot;</span>
+            <span class="s2">&quot;a numeric series, or a numpy array. &quot;</span>
+            <span class="s2">&quot;Got </span><span class="si">{}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_state</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">new_state</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="n">type_error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a series of type </span><span class="si">{new_state.dtype}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">new_state</span> <span class="o">=</span> <span class="n">new_state</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">all_columns</span> <span class="o">=</span> <span class="n">new_state</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_state</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="n">type_error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a dataframe with {len(new_state)} rows&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">all_columns</span> <span class="o">=</span> <span class="n">new_state</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_state</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">all_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_state</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="n">type_error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;an object of type {str(type(new_state))}&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check that the new state contains the given columns</span>
+        <span class="n">difference</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">difference</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Provided optimizable columns not found in provided state: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;{sorted(list(difference))}&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_data</span><span class="p">,</span> <span class="n">new_state</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Context Data getter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2d data array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_data</span>
+
+    <span class="nd">@context_data</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Optimizable columns setter.</span>
+<span class="sd">        Resets internal state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            Context Data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context_data</span> <span class="o">=</span> <span class="n">new_data</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+        <span class="n">skip_penalties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">skip_repairs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Vector</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate the OptimizationProblem on a Matrix of parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameters to evaluate.</span>
+<span class="sd">            skip_penalties: if True, evaluate without applying penalties.</span>
+<span class="sd">            skip_repairs: if True, evaluate without applying repairs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector of objective values and (possibly repaired) parameter matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_matrix</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="n">params_plus_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitute_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">repairs</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">skip_repairs</span><span class="p">:</span>
+            <span class="n">params_plus_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_repairs</span><span class="p">(</span><span class="n">params_plus_state</span><span class="p">)</span>
+        <span class="n">objectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">(</span><span class="n">params_plus_state</span><span class="p">,</span> <span class="n">tiled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">penalties</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">skip_penalties</span><span class="p">:</span>
+            <span class="n">objectives</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_penalties</span><span class="p">(</span><span class="n">params_plus_state</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">stride</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># N.B.-&gt;Firsts entry of objectives starts to prediction at</span>
+        <span class="c1"># parameters.iloc[start]</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">objectives</span><span class="p">,</span>
+            <span class="n">safe_subset</span><span class="p">(</span>
+                <span class="n">params_plus_state</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">::</span><span class="n">stride</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="StatefulContextualOptimizationProblem.substitute_parameters"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.problem.html#optimizer.problem.stateful_contextual_problem.StatefulContextualOptimizationProblem.substitute_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">substitute_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Substitute the optimizable parameters into the current state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameters to substitute into the current state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Matrix of parameters with non-optimizable parameters appended</span>
+<span class="sd">            in correct order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_shape</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="c1"># N context rows end at index N-1.</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">stride</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># Removes possible collisions with indexes.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_opt_blocks</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span><span class="p">[</span>
+                    <span class="nb">max</span><span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">::</span> <span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_opt_blocks</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                    <span class="nb">max</span><span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">::</span> <span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizable_columns</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the shape of the parameters matrix.</span>
+<span class="sd">        Update the internal params_shape and internal current state if</span>
+<span class="sd">        the shape of the parameters matrix has changed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameters to evaluate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_internal_state</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_internal_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the internal current state variable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameters to use to update the internal state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">n_tile</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span><span class="p">,</span> <span class="p">(</span><span class="n">n_tile</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_state</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_tile</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+# -------------------- Flotation Parameters -----------------#
+fa0_flotation_config:
+  n_lines: 2    # Number of flotation lines in the model
+  n_celdas: 6   # Number of celdas in each line
+  n_bancos: 3
+
+fa0_flotation_tags:  
+  flujo_aire_l1_tags: [   # flujo aire
+            "fa0_4fic0111",
+            "fa0_4fic0116",
+            "fa0_4fic0121",
+            "fa0_4fic0126",
+            "fa0_4fic0131",
+            "fa0_4fic0136",
+    ]
+  flujo_aire_l2_tags: [
+            "fa0_4fic0141",
+            "fa0_4fic0146",
+            "fa0_4fic0151",
+            "fa0_4fic0156",
+            "fa0_4fic0161",
+            "fa0_4fic0166",
+    ]
+  vel_burbujas_l1_tags: [  #velocidad espuma
+            "fa0_4ais0001",
+            "fa0_4ais0002",
+            "fa0_4ais0003",
+            "fa0_4ais0004",
+            "fa0_4ais0005",
+            "fa0_4ais0006",
+    ]
+  vel_burbujas_l2_tags: [
+            "fa0_4ais0007",
+            "fa0_4ais0008",
+            "fa0_4ais0009",
+            "fa0_4ais0010",
+            "fa0_4ais0011",
+            "fa0_4ais0012",
+    ]
+  nivel_espuma_l1_tags: [
+    ]
+  nivel_espuma_l2_tags: [
+    ]
+  nivel_pulpa_l1_tags: [
+            "fa0_4lic0112",
+            "fa0_4lic0117",
+            "fa0_4lic0122",
+            "fa0_4lic0127",
+            "fa0_4lic0132",
+            "fa0_4lic0137",
+    ]
+  nivel_pulpa_l2_tags: [
+            "fa0_4lic0142",
+            "fa0_4lic0147",
+            "fa0_4lic0152",
+            "fa0_4lic0157",
+            "fa0_4lic0162",
+            "fa0_4lic0167",
+    ]
+  tam_burbujas_l1_tags: [
+    ]
+  tam_burbujas_l2_tags: [
+    ]
+
+fa0_flotation_target:
+    ley_alim_tag: ["rx_co_a0_cur101"]
+    ley_conc_tag: ["rx_cop_cur118_rx"]
+    ley_cola_rx_tags: ["rx_cp_cuc101_rx"]  #, "rx_cp_cuc102_rx"
+    ley_cola_tf_tags: ["fa0_4a0309cu", "rx_cp_cuc102_rx"] # Analizadores L1, L2 , "fa0_4a0310cu"
+    weights_colas: [0.50, 0.50]  # Sum of entries must be = 1
+    tph_tags: ["calc_sum_s1_tph", "calc_sum_s2_tph", "calc_sum_s3_tph",  "calc_sum_s4_tph",  
+              "calc_sum_s5_tph",   "calc_sum_s6_tph",   "calc_sum_s7_tph",  "calc_sum_s8_tph", 
+              "calc_sum_s9_tph",  "calc_sum_s10_tph","calc_sum_s11_tph"]
+    recup_wt_name: "calc_fa0_recup_ponder"
+    cuf_obj_name: "calc_cuf_a0_xl"
+    ley_alim_bounds: [0.5, 2]
+
+fa0_fe_over_cu:
+    ley_fe_alim: "rx_co_a0_fer401"
+    ley_cu_alim: "rx_co_a0_cur401"
+
+fa0_sol_analizadores: [ 
+    "fa0_4a0309ps",
+    "fa0_4a0310ps"    
+    ]
+
+fa0_reactivos:
+    tph: ['ma0_2wi15z', 'ma0_2wi16z', 'ma0_2wi15a', 'ma0_2wi16a', 'ma0_2wi15b', 'ma0_2wi16b', 'ma0_2wi15d', 'ma0_2wi16d',
+          'ma0_2wi15e', 'ma0_2wi16e', 'ma0_2wi15f', 'ma0_2wi16f', 'ma0_2wi15g', 'ma0_2wi16g', 'ma0_2wi15h', 'ma0_2wi16h',
+          'ma0_2wi15j', 'ma0_2wi16j', 'ma0_2wi15k', 'ma0_2wi16k', 'ma0_2wi15l', 'ma0_2wi16l', 'ma0_2wi15m', 'ma0_2wi16m']
+    react:
+        petroleo: "re_8fic31"
+        espumante: "re_8fic11"
+        xantato: "re_8fic91" 
+
+# -------------------- Grinding Parameters -----------------#
+ma0_lineas: 13
+
+ma0_target_name: "calc_tph_ma0_total"
+ma0_sol_flota: "calc_ma0_sol_flota"
+ma0_psi_malla: "calc_ma0_psi_malla"
+ma0_pres_bhc: "calc_ma0_pres_bhc"
+
+# TODO: Refractor names conventions
+
+s0_tph: ['ma0_2wi15z', 'ma0_2wi16z']
+s1_tph: ['ma0_2wi15a', 'ma0_2wi16a']
+s2_tph: ['ma0_2wi15b', 'ma0_2wi16b']
+s3_tph: ['ma0_2wi15c', 'ma0_2wi16c']
+s4_tph: ['ma0_2wi15d', 'ma0_2wi16d']
+s5_tph: ['ma0_2wi15e', 'ma0_2wi16e']
+s6_tph: ['ma0_2wi15f', 'ma0_2wi16f']
+s7_tph: ['ma0_2wi15g', 'ma0_2wi16g']
+s8_tph: ['ma0_2wi15h', 'ma0_2wi16h']
+s9_tph: ['ma0_2wi15j', 'ma0_2wi16j']
+s10_tph: ['ma0_2wi15k', 'ma0_2wi16k']
+s11_tph: ['ma0_2wi15l', 'ma0_2wi16l']
+s12_tph: ['ma0_2wi15m', 'ma0_2wi16m']
+
+s0_sol_flota: ['ma0_2ps29z']
+s1_sol_flota: ['ma0_2ps29a']
+s2_sol_flota: ['ma0_2ps29b']
+s3_sol_flota: ['ma0_2ps29c']
+s4_sol_flota: ['ma0_2ps29d']
+s5_sol_flota: ['ma0_2ps29e']
+s6_sol_flota: ['ma0_2ps29f']
+s7_sol_flota: ['ma0_2ps29g']
+s8_sol_flota: ['ma0_2ps29h']
+s9_sol_flota: ['ma0_2ps29j']
+s10_sol_flota: ['ma0_2ps29k']
+s11_sol_flota: ['ma0_2ps29l']
+s12_sol_flota: ['ma0_2ps29m']
+
+s0_psi_malla: ['ma0_2ai29zv']
+s1_psi_malla: ['ma0_2ai29av']
+s2_psi_malla: ['ma0_2ai29bv']
+s3_psi_malla: ['ma0_2ai29cv']
+s4_psi_malla: ['ma0_2ai29dv']
+s5_psi_malla: ['ma0_2ai29ev']
+s6_psi_malla: ['ma0_2ai29fv']
+s7_psi_malla: ['ma0_2ai29gv']
+s8_psi_malla: ['ma0_2ai29hv']
+s9_psi_malla: ['ma0_2ai29jv']
+s10_psi_malla: ['ma0_2ai29kv']
+s11_psi_malla: ['ma0_2ai29lv']
+s12_psi_malla: ['ma0_2ai29mv']
+
+s0_pres_bhc: ['ma0_2pic27z']
+s1_pres_bhc: ['ma0_2pic27a']
+s2_pres_bhc: ['ma0_2pic27b']
+s3_pres_bhc: ['ma0_2pic27c']
+s4_pres_bhc: ['ma0_2pic27d']
+s5_pres_bhc: ['ma0_2pic27e']
+s6_pres_bhc: ['ma0_2pic27f']
+s7_pres_bhc: ['ma0_2pic27g']
+s8_pres_bhc: ['ma0_2pic27h']
+s9_pres_bhc: ['ma0_2pic27j']
+s10_pres_bhc: ['ma0_2pic27k']
+s11_pres_bhc: ['ma0_2pic27l']
+s12_pres_bhc: ['ma0_2pic27m']
+
+s1_pot_bomba: ['ma0_2ji63a', 'ma0_2ji64a']
+s2_pot_bomba: ['ma0_2ji63b', 'ma0_2ji64b']
+s3_pot_bomba: ['ma0_2ji63c', 'ma0_2ji64c']
+s5_pot_bomba: ['ma0_2ji63e', 'ma0_2ji64e']
+s6_pot_bomba: ['ma0_2ji63f', 'ma0_2ji64f']
+s8_pot_bomba: ['ma0_2ji63h', 'ma0_2ji64h']
+s10_pot_bomba: ['ma0_2ji63k', 'ma0_2ji64k']
+s11_pot_bomba: ['ma0_2ji63l', 'ma0_2ji64l']
+s12_pot_bomba: ['ma0_2ji63m', 'ma0_2ji64m']
+
+
+s1_vel_vdf_bhc: ['ma0_2hc60a', 'ma0_2hc61a']
+s2_vel_vdf_bhc: ['ma0_2hc60b', 'ma0_2hc61b']
+s3_vel_vdf_bhc: ['ma0_2hc60c', 'ma0_2hc61c']
+s4_vel_vdf_bhc: ['ma0_2hc60d', 'ma0_2hc61d']
+s5_vel_vdf_bhc: ['ma0_2hc60e', 'ma0_2hc61e']
+s6_vel_vdf_bhc: ['ma0_2hc60f', 'ma0_2hc61f']
+s7_vel_vdf_bhc: ['ma0_2hc60g', 'ma0_2hc61g']
+s8_vel_vdf_bhc: ['ma0_2hc60h', 'ma0_2hc61h']
+s9_vel_vdf_bhc: ['ma0_2hc60j', 'ma0_2hc61j']
+s11_vel_vdf_bhc: ['ma0_2hc60l', 'ma0_2hc61l']
+s12_vel_vdf_bhc: ['ma0_2hc60m', 'ma0_2hc61m']
+
+pot_mol_bolas:
+  tag_prefix: 'calc_binary_pot_bolas_'
+  threshold: 400  # Minimo valor que se considera encendido
+  s0: ['ma0_2ji19z']
+  s1: ['ma0_2ji28a', 'ma0_2ji19a']
+  s2: ['ma0_2ji28b', 'ma0_2ji19b']
+  s3: ['ma0_2ji28c', 'ma0_2ji19c']
+  s4: ['ma0_2ji28d', 'ma0_2ji19d']
+  s5: ['ma0_2ji28e', 'ma0_2ji19e']
+  s6: ['ma0_2ji28f', 'ma0_2ji19f']
+  s7: ['ma0_2ji28g', 'ma0_2ji19g']
+  s8: ['ma0_2ji28h', 'ma0_2ji19h']
+  s9: ['ma0_2ji28j', 'ma0_2ji19j']
+  s10: ['ma0_2ji28k', 'ma0_2ji19k']
+  s11: ['ma0_2ji28l', 'ma0_2ji19l']
+  s12: ['ma0_2ji28m', 'ma0_2ji19m']
+
+fa0_agitadores: ['fa0_4kl0001hs', 'fa0_4kl0002hs','fa0_4kl0003hs', 'fa0_4kl0004hs', 
+                'fa0_4kl0005hs', 'fa0_4kl0006hs', 'fa0_4kl0007hs', 'fa0_4kl0008hs',
+                'fa0_4kl0009hs','fa0_4kl0010hs','fa0_4kl0011hs','fa0_4kl0012hs']
+
+fa0_l1_agitadores: ['fa0_4kl0001hs', 'fa0_4kl0002hs', 'fa0_4kl0003hs', 
+                    'fa0_4kl0004hs', 'fa0_4kl0005hs', 'fa0_4kl0006hs']
+fa0_l2_agitadores: ['fa0_4kl0007hs', 'fa0_4kl0008hs', 'fa0_4kl0009hs',
+                    'fa0_4kl0010hs','fa0_4kl0011hs','fa0_4kl0012hs']
+
+on_off_A0:
+    linea_1:
+        tag: 'calc_sum_s1_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s1.range_min}"
+    linea_2:
+        tag: 'calc_sum_s2_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s2.range_min}"
+    linea_3:
+        tag: 'calc_sum_s3_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s3.range_min}"
+    linea_4:
+        tag: 'calc_sum_s4_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s4.range_min}"
+    linea_5:
+        tag: 'calc_sum_s5_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s5.range_min}"
+    linea_6:
+        tag: 'calc_sum_s6_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s6.range_min}"
+    linea_7:
+        tag: 'calc_sum_s7_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s7.range_min}"
+    linea_8:
+        tag: 'calc_sum_s8_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s8.range_min}"
+    linea_9:
+        tag: 'calc_sum_s9_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s9.range_min}"
+    linea_10:
+        tag: 'calc_sum_s10_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s10.range_min}"
+    linea_11:
+        tag: 'calc_sum_s11_tph'
+        off_when: 'less_than'    #'greater_than'
+        value: "${s11.range_min}"
+    fa0_celda1:
+        tag: 'fa0_4kl0001hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda2:
+        tag: 'fa0_4kl0002hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda3:
+        tag: 'fa0_4kl0003hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda4:
+        tag: 'fa0_4kl0004hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda5:
+        tag: 'fa0_4kl0005hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda6:
+        tag: 'fa0_4kl0006hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda7:
+        tag: 'fa0_4kl0007hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda8:
+        tag: 'fa0_4kl0008hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda9:
+        tag: 'fa0_4kl0009hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda10:
+        tag: 'fa0_4kl0010hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda11:
+        tag: 'fa0_4kl0011hs'
+        off_when: 'less_than'
+        value: 0.5
+    fa0_celda12:
+        tag: 'fa0_4kl0012hs'
+        off_when: 'less_than'
+        value: 0.5
+    ma0_ct_a_s1:
+        tag: 'ma0_2ffic10a_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s2:
+        tag: 'ma0_2ffic10b_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s3:
+        tag: 'ma0_2ffic10c_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s4:
+        tag: 'ma0_2ffic10d_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s5:
+        tag: 'ma0_2ffic10e_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s6:
+        tag: 'ma0_2ffic10f_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s7:
+        tag: 'ma0_2ffic10g_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s8:
+        tag: 'ma0_2ffic10h_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s9:
+        tag: 'ma0_2ffic10j_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s10:
+        tag: 'ma0_2ffic10k_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s11:
+        tag: 'ma0_2ffic10l_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_a_s12:
+        tag: 'ma0_2ffic10m_op'
+        off_when: 'greater_than'
+        value: 98
+    fa0_ct_a_s0:
+        tag: 'ma0_2ffic10z_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s1:
+        tag: 'ma0_2fc11a_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s2:
+        tag: 'ma0_2fc11b_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s3:
+        tag: 'ma0_2fc11c_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s4:
+        tag: 'ma0_2fc11d_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s5:
+        tag: 'ma0_2fc11e_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s6:
+        tag: 'ma0_2fc11f_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s7:
+        tag: 'ma0_2fc11g_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s8:
+        tag: 'ma0_2fc11h_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s9:
+        tag: 'ma0_2fc11j_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s10:
+        tag: 'ma0_2fc11k_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s11:
+        tag: 'ma0_2fc11l_op'
+        off_when: 'greater_than'
+        value: 98
+    ma0_ct_b_s12:
+        tag: 'ma0_2fc11m_op'
+        off_when: 'greater_than'
+        value: 98
+    fa0_all_off:
+        tag: 'calc_mean_fa0_agitadores'
+        off_when: 'less_than'
+        value: 0.3
+    linea_1_fa0:
+        tag: 'calc_mean_fa0_l1_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+    linea_2_fa0:
+        tag: 'calc_mean_fa0_l2_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+
+s0_psi_sensor: ['ma0_2ai29z']
+s1_psi_sensor: ['ma0_2ai29aa']
+s2_psi_sensor: ['ma0_2ai29ab']
+s3_psi_sensor: ['ma0_2ai29cc']
+s4_psi_sensor: ['ma0_2ai29cd']
+s5_psi_sensor: ['ma0_2ai29ee']
+s6_psi_sensor: ['ma0_2ai29ef']
+s7_psi_sensor: ['ma0_2ai29gg']
+s8_psi_sensor: ['ma0_2ai29gh']
+s9_psi_sensor: ['ma0_2ai29jj']
+s10_psi_sensor: ['ma0_2ai29jk']
+s11_psi_sensor: ['ma0_2ai29ll']
+s12_psi_sensor: ['ma0_2ai29lm']
+
+
+on_off_A0_PSIsensors:
+    perc_error_th: 0.10
+    sections:
+        s0: ['ma0_2ai29z', 'ma0_2ai29zv']
+        s1: ['ma0_2ai29aa', 'ma0_2ai29av']
+        s2: ['ma0_2ai29ab', 'ma0_2ai29bv']
+        s3: ['ma0_2ai29cc', 'ma0_2ai29cv']
+        s4: ['ma0_2ai29cd', 'ma0_2ai29dv']
+        s5: ['ma0_2ai29ee', 'ma0_2ai29ev']
+        s6: ['ma0_2ai29ef', 'ma0_2ai29fv']
+        s7: ['ma0_2ai29gg', 'ma0_2ai29gv']
+        s8: ['ma0_2ai29gh', 'ma0_2ai29hv']
+        s9: ['ma0_2ai29jj', 'ma0_2ai29jv']
+        s10: ['ma0_2ai29jk', 'ma0_2ai29kv']
+        s11: ['ma0_2ai29ll', 'ma0_2ai29lv']
+        s12: ['ma0_2ai29lm', 'ma0_2ai29mv']

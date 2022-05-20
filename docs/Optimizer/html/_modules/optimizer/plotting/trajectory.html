@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.plotting.trajectory &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>optimizer.plotting.trajectory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimizer.plotting.trajectory</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 - present</span>
+<span class="c1"># QuantumBlack Visual Analytics Ltd (a McKinsey company).</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software framework contains the confidential and proprietary information</span>
+<span class="c1"># of QuantumBlack, its affiliates, and its licensors. Your use of these</span>
+<span class="c1"># materials is governed by the terms of the Agreement between your organisation</span>
+<span class="c1"># and QuantumBlack, and any unauthorised use is forbidden. Except as otherwise</span>
+<span class="c1"># stated in the Agreement, this software framework is for your internal use</span>
+<span class="c1"># only and may only be shared outside your organisation with the prior written</span>
+<span class="c1"># permission of QuantumBlack.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Best solution at each iteration plots.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">inset_axes</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="kn">from</span> <span class="nn">optimizer.constraint</span> <span class="kn">import</span> <span class="n">InequalityConstraint</span><span class="p">,</span> <span class="n">Penalty</span>
+<span class="kn">from</span> <span class="nn">optimizer.loggers</span> <span class="kn">import</span> <span class="n">BestTrajectoryLogger</span>
+<span class="kn">from</span> <span class="nn">optimizer.problem</span> <span class="kn">import</span> <span class="n">StatefulOptimizationProblem</span>
+<span class="kn">from</span> <span class="nn">optimizer.types</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+
+
+<span class="k">def</span> <span class="nf">_construct_penalties_matrix</span><span class="p">(</span>
+    <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Computes absolute values for all penalties on the given solutions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        solutions: solutions that will be evaluated</span>
+<span class="sd">        penalties: penalties considered</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vector of penalty values.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">p</span><span class="p">(</span><span class="n">solutions</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">penalties</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_construct_slack_matrix</span><span class="p">(</span><span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute slack (distance between function and boundary) for the</span>
+<span class="sd">    InequalityConstraints in the penalties list.</span>
+<span class="sd">    If negative, it means that the constraint wasn&#39;t violated. If positive, then the</span>
+<span class="sd">    constraint is off bounds.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        solutions: solutions for which slack will be computed</span>
+<span class="sd">        penalties: list of penalties whose constraints are of type</span>
+<span class="sd">            InequalityConstraints.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vector containing distance from boundary for each solution. If negative, then</span>
+<span class="sd">        the solution does not violate constraint. If positive, the bound was violated.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: if there is at least one Penalty with constraint other than</span>
+<span class="sd">        InequalityConstraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">InequalityConstraint</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">penalties</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Trying to compute slack for a penalty of type other than &quot;</span>
+            <span class="s2">&quot;InequalityConstraint.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">solutions</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">penalties</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_minmax_bounds_scale</span><span class="p">(</span><span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Scales solution variables using the bounds for each of them. Thus, if</span>
+<span class="sd">    x = max_bound_x, then it will be 1; and if x = min_bound_x the outcome will be 0.</span>
+<span class="sd">    If x is outside its bounds, then the result will be outside the range [0,1].</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        solutions: unscaled solution variables</span>
+<span class="sd">        bounds: Matrix where row i contains the lower and upper bound for variable</span>
+<span class="sd">        i (column i in the solution matrix)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Matrix of shape solutions.shape with variables scaled by using the bounds</span>
+<span class="sd">        (if no bound is violated, then the range of this matrix is [0,1])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="n">solutions</span> <span class="o">-</span> <span class="n">bounds</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">bounds</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">bounds</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">scaled</span>
+
+
+<span class="k">def</span> <span class="nf">_min_zero_scale</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Map values of each variable in m (variable=column) from [min to 0] into [0 to 1].</span>
+<span class="sd">     This works well only if the column of m has at least one negative value. If this</span>
+<span class="sd">     does not hold, then the output becomes &lt;= 0 for the entire column; and we actually</span>
+<span class="sd">     never use the output of this function because we filter it in _plot_slack by other</span>
+<span class="sd">    means. Finally, when some value in m is above 0 (and the column has a negative</span>
+<span class="sd">    value), then this value is mapped to some point &gt;1.</span>
+
+<span class="sd">    This function is used for representing the slacks for different penalties in a</span>
+<span class="sd">    normalized color range in a heatmap. If the slack &lt;= 0, then it means that there is</span>
+<span class="sd">    room to increase the constraint and get closer to the bound. We want to capture the</span>
+<span class="sd">    closeness to 0 with a higher value; while keeping unconstrained the highest distance</span>
+<span class="sd">    to boundary. That&#39;s why we compute this and use the values where the scaled range is</span>
+<span class="sd">    between 0 and 1, as the range between &#39;the least violated slack&#39; to &#39;the almost</span>
+<span class="sd">    violated slack&#39;; if we didn&#39;t have a negative value in some column in m, this means</span>
+<span class="sd">    that we always violated the boundary and we color the heatmap with some other color.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m: matrix</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Matrix whose columns containing a negative value are scaled between 0 and 1 for</span>
+<span class="sd">        values in min-0 range, and &gt;1</span>
+<span class="sd">        for values above 0. If a column contains no negative value, returns a &lt;= 0 value</span>
+<span class="sd">        for each entry in the column.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">scaled</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_slack</span><span class="p">(</span>
+    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Plots heatmap with color-coded distances for evaluated constraints to the bounds.</span>
+<span class="sd">    The darked the blue, the smaller the slack / room the constraint has until reaching</span>
+<span class="sd">    the bound (i.e., the tighter the constraint). Penalties that are not</span>
+<span class="sd">    InequalityConstraint based will be silently ommited. The rationale is that we might</span>
+<span class="sd">    receive a problem that has more than one type of penalties and we don&#39;t want to</span>
+<span class="sd">    alert more than needed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fig: Figure in which this will be drawn</span>
+<span class="sd">        ax: Axes on which this will be drawn</span>
+<span class="sd">        solutions: Solutions for which slack will be computed and plotted</span>
+<span class="sd">        penalties: Penalties from which InequalityContraints are extracted and evaluated</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        plt.Axes with the plot on it. This is the same object as the received by</span>
+<span class="sd">        parameter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inequality_penalties</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">penalties</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">InequalityConstraint</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inequality_penalties</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Slack Values: No inequality constraints&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span>
+    <span class="n">slack_values</span> <span class="o">=</span> <span class="n">_construct_slack_matrix</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">inequality_penalties</span><span class="p">)</span>
+    <span class="n">slack_scaled_values</span> <span class="o">=</span> <span class="n">_min_zero_scale</span><span class="p">(</span><span class="n">slack_values</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">slack_scaled_values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">slack_values</span><span class="o">.</span><span class="n">T</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>  <span class="c1"># .7 is makes a nice red shade</span>
+        <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Slack Values&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">slack_values</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;p_</span><span class="si">{i}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">inequality_penalties</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;1%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">borderpad</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+        <span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="n">slack_scaled_values</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mi">1</span><span class="p">],</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span>
+    <span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s2">&quot;Far from Bound&quot;</span><span class="p">,</span> <span class="s2">&quot;Close to Bound&quot;</span><span class="p">])</span>
+
+    <span class="n">patch</span> <span class="o">=</span> <span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Violated&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">patch</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.91</span><span class="p">,</span> <span class="mf">1.07</span><span class="p">),</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_penalties</span><span class="p">(</span>
+    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span>
+    <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">],</span>
+    <span class="n">normalize_penalties</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Plots heatmap with penalties color-coded. Blue means that penalty was not</span>
+<span class="sd">    violated.</span>
+<span class="sd">    If a penalty was triggered, then the darker the red the bigger the penalty.</span>
+<span class="sd">    If normalize_penalties is True, the red shades will be scaled independently for each</span>
+<span class="sd">    penalty.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fig: plt.Figure on which the plot is displayed</span>
+<span class="sd">        ax: plt.Axes used for the plot</span>
+<span class="sd">        solutions: Solutions matrix that will be analysed</span>
+<span class="sd">        penalties: List of penalties to evaluate on solutions</span>
+<span class="sd">        normalize_penalties: set to True for making a relative coloring for each of the</span>
+<span class="sd">        penalties independently. Note that if True, the plot will will have intense reds</span>
+<span class="sd">        for penalties that might be penalizing little relative to other penalties that</span>
+<span class="sd">        are actually damaging our objective value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        plt.Axes with the plot on it. This is the same object as the received as</span>
+<span class="sd">        parameter</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">penalties</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Penalty constraint violations: No penalties available&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span>
+    <span class="n">penalty_values</span> <span class="o">=</span> <span class="n">_construct_penalties_matrix</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">penalties</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalize_penalties</span><span class="p">:</span>
+        <span class="n">penalty_values</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">penalty_values</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">penalty_values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">penalty_values</span><span class="o">.</span><span class="n">T</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="p">),</span>  <span class="c1"># the .7 makes a nice shade of blue</span>
+        <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Penalty constraint violations&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">penalty_values</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;p_</span><span class="si">{i}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">penalties</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;1%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">borderpad</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+        <span class="n">im</span><span class="p">,</span>
+        <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span>
+        <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="n">penalty_values</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">penalty_values</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span>
+        <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s2">&quot;Low&quot;</span><span class="p">,</span> <span class="s2">&quot;High&quot;</span><span class="p">])</span>
+
+    <span class="n">patch</span> <span class="o">=</span> <span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Non Violated&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">patch</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.91</span><span class="p">,</span> <span class="mf">1.07</span><span class="p">),</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_convergence</span><span class="p">(</span><span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">Vector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Plots a time series with the objective values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ax: Axes on which the time series will be plotted</span>
+<span class="sd">        objective_values: Objective function values</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        plt.Axes with the plot on it. This is the same object as the received as</span>
+<span class="sd">        parameter</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">objective_values</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s2">&quot;steps-post&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Convergence Plot&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Objective Value&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_solutions</span><span class="p">(</span>
+    <span class="n">fig</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span>
+    <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">variable_labels</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Plots heatmap with variable values color coded: the darker the color, the closer</span>
+<span class="sd">    the value to it&#39;s upper bound.</span>
+<span class="sd">    If the value for some variable is out of bounds, then it will be colored by red or</span>
+<span class="sd">    blue in the heatmap.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        fig: Figure on which this will be plotted</span>
+<span class="sd">        ax: Axes on which this will be plotted</span>
+<span class="sd">        solutions: Matrix where each row is a solution to be plotted</span>
+<span class="sd">        bounds: Matrix where each row i contains the bounds for variable i (ith column</span>
+<span class="sd">        on the solutions matrix)</span>
+<span class="sd">        variable_labels: Labels to display on the left of the heatmap. If not provided,</span>
+<span class="sd">        the label will be the index</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        plt.Axes with the plot on it. This is the same object as the received as</span>
+<span class="sd">        parameter</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">_minmax_bounds_scale</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greens&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">T</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+        <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># The .7 makes a nice shade of red</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">T</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+        <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># The .7 makes a nice shade of blue</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Optimized Variables&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">variable_labels</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">variable_labels</span><span class="p">)</span>
+
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;1%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">borderpad</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s2">&quot;Lower Bound&quot;</span><span class="p">,</span> <span class="s2">&quot;Higher Bound&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">_estimate_plot_size</span><span class="p">(</span>
+    <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">],</span>
+    <span class="n">height_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">time_series_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Estimate the total height and the ratios of the axes for plotting. It parses the</span>
+<span class="sd">    input and does the estimation based on the amount of variables, penalties and the</span>
+<span class="sd">    amount of penalties with slack. If you wish to increment/reduce the plot size, pass</span>
+<span class="sd">    a different height_scale factor.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        solutions: matrix containing the solutions</span>
+<span class="sd">        penalties: list of penalties</span>
+<span class="sd">        height_scale: multiplier of the height</span>
+<span class="sd">        time_series_size: factor that indicates how many heatmap row heights contains</span>
+<span class="sd">        the time series plot (approx.) Default value is 7, that it, the time series</span>
+<span class="sd">        height is equivalent to 7 heatmap rows.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (total_height, height_ratios), where total_height is an estimation of</span>
+<span class="sd">        the figure total height, while the height_ratios is a list that&#39;s useful as</span>
+<span class="sd">        height_ratios entry in matplotlib&#39;s gridspec_kw dictionary. The ratios are in</span>
+<span class="sd">        the following order: [convergence time series, variables heatmap,</span>
+<span class="sd">        slack heatmap, penalties heatmap]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">time_series_size</span><span class="p">,</span>
+        <span class="nb">max</span><span class="p">(</span><span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="nb">max</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">penalties</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">InequalityConstraint</span><span class="p">)]</span>
+            <span class="p">),</span>
+            <span class="mi">2</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">penalties</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">*</span> <span class="n">height_scale</span><span class="p">,</span> <span class="n">sizes</span>
+
+
+<div class="viewcode-block" id="best_trajectory_problem_plot"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.plotting.html#optimizer.plotting.trajectory.best_trajectory_problem_plot">[docs]</a><span class="k">def</span> <span class="nf">best_trajectory_problem_plot</span><span class="p">(</span>
+    <span class="n">best_trajectory_logger</span><span class="p">:</span> <span class="n">BestTrajectoryLogger</span><span class="p">,</span>
+    <span class="n">problem</span><span class="p">:</span> <span class="n">StatefulOptimizationProblem</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">],</span>
+    <span class="n">normalize_penalties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a plot on how the optimization was executed, containing 4 charts:</span>
+
+<span class="sd">        - The first chart is the objective value as function of the iteration in logger</span>
+<span class="sd">        - The second captures how far from its bounds were the optimizable varibles in</span>
+<span class="sd">          a heatmap. The darker the shade, the closer the value to the upper bound.</span>
+<span class="sd">        - The third captures the distance of each constraint to it&#39;s bound (inequality</span>
+<span class="sd">          penalty). The darker the shade, the closer the constraint was to the bound</span>
+<span class="sd">          –– in other words, the tighter the constraint. If the bound is violated, then</span>
+<span class="sd">          the occurrence is colored in red.</span>
+<span class="sd">        - The fourth captures the impact of the penalties on the objective value. The</span>
+<span class="sd">          darker the shade, the more this penalty contributed to the objective value.</span>
+<span class="sd">          If the penalty was not triggered (value = 0), then the occurrence is</span>
+<span class="sd">          colored in blue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        best_trajectory_logger: The logger that logged during the optimization</span>
+<span class="sd">            execution.</span>
+<span class="sd">        problem: A StatefulOptimizationProblem. This plotting function will use the</span>
+<span class="sd">            problem penalties to build the plots.</span>
+<span class="sd">        bounds: A list of (min_bound, max_bound) for each of the variables. This has to</span>
+<span class="sd">            be in the same order as the solutions columns.</span>
+<span class="sd">        normalize_penalties: If True, this will make a normalization for each Penalty.</span>
+<span class="sd">            This might be useful if at some iteration one of the penalties happens to</span>
+<span class="sd">            be very large and thus the shades in the heatmap towards the end of the</span>
+<span class="sd">            run get very light. To read it better, it could be interesting to normalize</span>
+<span class="sd">            these svalues.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (plt.Figure, List[plt.Axes]) with the plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_best_trajectory_plot</span><span class="p">(</span>
+        <span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">solutions</span><span class="p">,</span>
+        <span class="n">problem</span><span class="o">.</span><span class="n">substitute_parameters</span><span class="p">(</span><span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">solutions</span><span class="p">),</span>
+        <span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">objective_values</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">,</span>
+        <span class="n">problem</span><span class="o">.</span><span class="n">penalties</span><span class="p">,</span>
+        <span class="n">variable_labels</span><span class="o">=</span><span class="n">problem</span><span class="o">.</span><span class="n">optimizable_columns</span><span class="p">,</span>
+        <span class="n">normalize_penalties</span><span class="o">=</span><span class="n">normalize_penalties</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="best_trajectory_plot"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.plotting.html#optimizer.plotting.trajectory.best_trajectory_plot">[docs]</a><span class="k">def</span> <span class="nf">best_trajectory_plot</span><span class="p">(</span>
+    <span class="n">best_trajectory_logger</span><span class="p">:</span> <span class="n">BestTrajectoryLogger</span><span class="p">,</span>
+    <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">],</span>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">],</span>
+    <span class="n">normalize_penalties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">variable_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a plot on how the optimization was executed, containing 4 charts:</span>
+
+<span class="sd">        - The first chart is the objective value as function of the iteration in logger</span>
+<span class="sd">        - The second captures how far from its bounds were the optimizable varibles</span>
+<span class="sd">          in a heatmap. The darker the shade, the closer the value to the upper bound.</span>
+<span class="sd">        - The third captures the distance of each constraint to it&#39;s bound (inequality</span>
+<span class="sd">          penalty). The darker the shade, the closer the constraint was to the bound</span>
+<span class="sd">          –– in other words, the tighter the constraint. If the bound is violated,</span>
+<span class="sd">          then the occurrence is colored in red.</span>
+<span class="sd">        - The fourth captures the impact of the penalties on the objective value. The</span>
+<span class="sd">          darker the shade, the more this penalty contributed to the objective value.</span>
+<span class="sd">          If the penalty was not triggered (value = 0), then the occurrence is colored</span>
+<span class="sd">          in blue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        best_trajectory_logger: The logger that logged during the optimization</span>
+<span class="sd">            execution.</span>
+<span class="sd">        penalties: A list of Penalty objects used for slack and penalty plots.</span>
+<span class="sd">        bounds: A list of (min_bound, max_bound) for each of the variables. This has to</span>
+<span class="sd">            be in the same order as the solutions columns.</span>
+<span class="sd">        normalize_penalties: If True, this will make a normalization for each Penalty.</span>
+<span class="sd">            This might be useful if at some iteration one of the penalties happens to</span>
+<span class="sd">            be very large and thus the shades in the heatmap towards the end of the</span>
+<span class="sd">            run get very light. To read it better, it could be interesting to normalize</span>
+<span class="sd">            these values.</span>
+<span class="sd">        variable_labels: labels list for adding them on the y axis of the variable vs.</span>
+<span class="sd">            their bounds plot.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (plt.Figure, List[plt.Axes]) with the plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_best_trajectory_plot</span><span class="p">(</span>
+        <span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">solutions</span><span class="p">,</span>
+        <span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">solutions</span><span class="p">,</span>
+        <span class="n">best_trajectory_logger</span><span class="o">.</span><span class="n">objective_values</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">,</span>
+        <span class="n">penalties</span><span class="p">,</span>
+        <span class="n">normalize_penalties</span><span class="p">,</span>
+        <span class="n">variable_labels</span><span class="o">=</span><span class="n">variable_labels</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_best_trajectory_plot</span><span class="p">(</span>
+    <span class="n">solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">contextual_solutions</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span>
+    <span class="n">objective_values</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">],</span>
+    <span class="n">penalties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Penalty</span><span class="p">],</span>
+    <span class="n">normalize_penalties</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">variable_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a plot on how the optimization was executed, containing 4 charts:</span>
+<span class="sd">        - The first chart is the objective value as function of the iteration in logger</span>
+<span class="sd">        - The second captures how far from its bounds were the optimizable varibles in a</span>
+<span class="sd">        heatmap. The darker the shade, the closer the value to the upper bound.</span>
+<span class="sd">        - The third captures the distance of each constraint to it&#39;s bound (inequality</span>
+<span class="sd">        penalty). The darker the shade, the closer the constraint was to the bound –– in</span>
+<span class="sd">         other words, the tighter the constraint. If the bound is violated, then the</span>
+<span class="sd">         occurrence is colored in red.</span>
+<span class="sd">        - The fourth captures the impact of the penalties on the objective value. The</span>
+<span class="sd">        darker the shade, the more this penalty contributed to the objective value. If</span>
+<span class="sd">        the penalty was not triggered (value = 0), then the occurrence is colored in</span>
+<span class="sd">        blue.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        solutions: Solutions that will be plotted in the optimized variables heatmap</span>
+<span class="sd">        (2nd plot)</span>
+<span class="sd">        contextual_solutions: Solutions that will be used to evaluate the panalties and</span>
+<span class="sd">        slacks. Note that contextual_solutions and solutions can be the same if the</span>
+<span class="sd">        penalties are based only on the optimized variables and are not labeled.</span>
+<span class="sd">        objective_values: Values that will appear in the convergence plot</span>
+<span class="sd">        penalties: This can be either a list of Penalty objects, or a</span>
+<span class="sd">        StatefulOptimizationProblem. In the latter case, this plotting function will use</span>
+<span class="sd">         the problem penalties to build the plots.</span>
+<span class="sd">        - bounds: A list of (min_bound, max_bound) for each of the variables. This has</span>
+<span class="sd">        to be in the same order as the solutions columns.</span>
+<span class="sd">        normalize_penalties: If True, this will make a normalization for each Penalty.</span>
+<span class="sd">        This might be useful if at some iteration one of the penalties happens to be</span>
+<span class="sd">        very large and thus the shades in the heatmap towards the end of the run get</span>
+<span class="sd">        very light. To read it better, it could be interesting to normalize these</span>
+<span class="sd">        values.</span>
+<span class="sd">        variable_labels: labels list for adding them on the y axis of the variable vs.</span>
+<span class="sd">        their bounds plot.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (plt.Figure, List[plt.Axes]) with the plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">height</span><span class="p">,</span> <span class="n">height_ratios</span> <span class="o">=</span> <span class="n">_estimate_plot_size</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">penalties</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
+        <span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="n">height_ratios</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">_plot_convergence</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">objective_values</span><span class="p">)</span>
+    <span class="n">_plot_solutions</span><span class="p">(</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">bounds</span><span class="p">),</span> <span class="n">variable_labels</span><span class="o">=</span><span class="n">variable_labels</span>
+    <span class="p">)</span>
+    <span class="n">_plot_slack</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">contextual_solutions</span><span class="p">,</span> <span class="n">penalties</span><span class="p">)</span>
+    <span class="n">_plot_penalties</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">contextual_solutions</span><span class="p">,</span> <span class="n">penalties</span><span class="p">,</span> <span class="n">normalize_penalties</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

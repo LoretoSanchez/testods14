@@ -1,0 +1,1494 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.experimental.solvers package &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="optimizer.loggers package" href="optimizer.loggers.html" />
+    <link rel="prev" title="optimizer.experimental.loggers package" href="optimizer.experimental.loggers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimizer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimizer.html">optimizer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimizer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">optimizer</a> &raquo;</li>
+        
+          <li><a href="optimizer.html">optimizer package</a> &raquo;</li>
+        
+          <li><a href="optimizer.experimental.html">optimizer.experimental package</a> &raquo;</li>
+        
+      <li>optimizer.experimental.solvers package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://git.mckinsey-solutions.com/opm/optimus" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-optimizer.experimental.solvers">
+<span id="optimizer-experimental-solvers-package"></span><h1>optimizer.experimental.solvers package<a class="headerlink" href="#module-optimizer.experimental.solvers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.</code><code class="descname">RandomSearchSolver</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>maxiter=1000</em>, <em>popsize=None</em>, <em>init='random'</em>, <em>epsilon_decay_rate=0.005</em>, <em>min_epsilon=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.ScaledSolver" title="optimizer.solvers.base.ScaledSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.solvers.base.ScaledSolver</span></code></a></p>
+<p>Random Search (RS) solver.</p>
+<p>The algorithm works as follows:</p>
+<ol class="arabic simple">
+<li>Initialize the population with a set of solutions (depends on the init param to
+to the constructor)</li>
+<li>For each solution s, sample a neighboring solution s’ from a uniform hypercube
+centered on s. The size of this hypercube is 2*epsilon (eps) in each dimension</li>
+<li>Evaluate the objective value on s’ (user responsibility)</li>
+<li>If s’ is better than s, then update s.</li>
+<li>Repeat from 2 to 4 iteratively.</li>
+</ol>
+<p>As the iterations go on, epsilon is decreased. This is to explicitly address the
+exploration-exploitation trade-off: at the beginning the hypercube is large, and
+thus we explore more broadly the search space. In late iterations epsilon is
+smaller, this forcing us to search intensively in a neighborhood of a (presumably)
+already good-enough solution set.</p>
+<p>The decrease of epsilon is exponential, meaning that in each iteration we update it
+with the rule: eps = (1-decay rate) * eps. There is a possibility to assign a
+minimum threshold below which epsilon is not allowed to decrease.</p>
+<p>If the decay is very high, then we might lose the opportunity to arrive near a
+global optima.
+If the decay is too low, then we’ll need more iterations to actually converge to a
+optima.</p>
+<p>The choosing of the epsilon_decay_rate and the min_epsilon is problem specific.</p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>maxiter=1000</em>, <em>popsize=None</em>, <em>init='random'</em>, <em>epsilon_decay_rate=0.005</em>, <em>min_epsilon=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bounds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>]) – list of tuples describing the boundaries of the problem.</li>
+<li><strong>seed</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – optional random seed for the solver.</li>
+<li><strong>maxiter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – maximum number of updates.</li>
+<li><strong>popsize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – optional population size.
+If not specified, will be 15 * dimension.</li>
+<li><strong>init</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – optional initial population.</li>
+<li><strong>epsilon_decay_rate</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – epsilon is multiplied by (1-rate) in each ask call.</li>
+<li><strong>min_epsilon</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – the minimum epsilon that once reached stops the exponential
+decay</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">InitializationError</span></code> – if popsize and the row count for the provided initial
+population are not equal.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if the provided initialization function is invalid.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.ask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current parameters of population.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.array of current population values.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MaxIterationError</span></code> – when called after maximum iterations.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.best">
+<code class="descname">best</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best solution found so far.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector and float, the solution vector and its objective value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters getter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.ndarray of current particles.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the search has reached max iterations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if we should stop searching.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.RandomSearchSolver.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>parameters</em>, <em>objective_values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.tell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.RandomSearchSolver.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the population and objective values.
+Updates best histories and global best.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix of parameter values representing the population.</li>
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objective values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.</code><code class="descname">AdaptiveDifferentialEvolutionSolver</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>popsize=10</em>, <em>maxiter=100</em>, <em>init='latinhypercube'</em>, <em>mutator_strategy_picker=None</em>, <em>crossover_strategy_picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.ScaledSolver" title="optimizer.solvers.base.ScaledSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.solvers.base.ScaledSolver</span></code></a></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>popsize=10</em>, <em>maxiter=100</em>, <em>init='latinhypercube'</em>, <em>mutator_strategy_picker=None</em>, <em>crossover_strategy_picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bounds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>]) – list of tuples, upper and lower bounds for each dimension.</li>
+<li><strong>sense</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – string, optional sense string for “minimize” or “maximize”.</li>
+<li><strong>seed</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – int, optional random seed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.ask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current trial population to evaluate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.array of current trial solutions.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MaxIterationError</span></code> – when called after maximum iterations.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.best">
+<code class="descname">best</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best solution and its objective value.
+Internal sorting takes care of moving the best solution to the 0 index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector and float, the solution vector and its objective value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current parameter values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix of current parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if we should stop iterating the Ask and Tell loop.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean, True if we should stop.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>parameters</em>, <em>objective_values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.tell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.tell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set the population and objective values.</dt>
+<dd>Updates the internal population based on which individuals are
+performing better.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix of parameter values representing the population.</li>
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objective values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-optimizer.experimental.solvers.adaptive_differential_evolution">
+<span id="optimizer-experimental-solvers-adaptive-differential-evolution-module"></span><h2>optimizer.experimental.solvers.adaptive_differential_evolution module<a class="headerlink" href="#module-optimizer.experimental.solvers.adaptive_differential_evolution" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">AdaptiveDifferentialEvolutionSolver</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>popsize=10</em>, <em>maxiter=100</em>, <em>init='latinhypercube'</em>, <em>mutator_strategy_picker=None</em>, <em>crossover_strategy_picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.ScaledSolver" title="optimizer.solvers.base.ScaledSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.solvers.base.ScaledSolver</span></code></a></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>popsize=10</em>, <em>maxiter=100</em>, <em>init='latinhypercube'</em>, <em>mutator_strategy_picker=None</em>, <em>crossover_strategy_picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bounds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>]) – list of tuples, upper and lower bounds for each dimension.</li>
+<li><strong>sense</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – string, optional sense string for “minimize” or “maximize”.</li>
+<li><strong>seed</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – int, optional random seed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.ask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current trial population to evaluate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.array of current trial solutions.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MaxIterationError</span></code> – when called after maximum iterations.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.best">
+<code class="descname">best</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best solution and its objective value.
+Internal sorting takes care of moving the best solution to the 0 index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector and float, the solution vector and its objective value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current parameter values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix of current parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if we should stop iterating the Ask and Tell loop.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean, True if we should stop.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>parameters</em>, <em>objective_values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveDifferentialEvolutionSolver.tell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveDifferentialEvolutionSolver.tell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set the population and objective values.</dt>
+<dd>Updates the internal population based on which individuals are
+performing better.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix of parameter values representing the population.</li>
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objective values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">AdaptiveParameter</code><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.give_feedback">
+<code class="descname">give_feedback</code><span class="sig-paren">(</span><em>previous_objective</em>, <em>new_objective</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveParameter.give_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.give_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Receives the feedback provided by the user of this parameter. This method</dt>
+<dd>processes the feedback for tuning the logic of how the next value() call
+will generate the current value of the parameter.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>previous_objective</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – values of the current solutions that the optimizer has.</li>
+<li><strong>new_objective</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – values of the trial solutions that the optimizer obtained
+after using the current value of the parameter.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveParameter.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the current value of the parameter</p>
+<p>Returns: float, the current value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">AdaptiveStrategy</code><span class="sig-paren">(</span><em>strategies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveStrategy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>strategies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveStrategy.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.get_strategy">
+<code class="descname">get_strategy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveStrategy.get_strategy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.get_strategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the strategy as suggested by the adaptive method. This can be a non
+deterministic function.</p>
+<p>Returns: Tuple, with the name of the strategy and the strategy itself.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover" title="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover"><code class="xref py py-class docutils literal notranslate"><span class="pre">Crossover</span></code></a>, <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutator</span></code></a>]]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.give_feedback">
+<code class="descname">give_feedback</code><span class="sig-paren">(</span><em>strategy</em>, <em>previous_objective</em>, <em>new_objective</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#AdaptiveStrategy.give_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy.give_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Receives the feedback provided by the optimization engine. This does two main</dt>
+<dd>things:</dd>
+</dl>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Forwards the feedback to the picked strategy. The typical use case would be</dt>
+<dd>that this strategy uses this feedback to adjust some adaptive parameter.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Processes the feedback for tuning of the AdaptiveStrategy by calling an</dt>
+<dd>overridden method.</dd>
+</dl>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>strategy</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – str, indicating the name of the strategy picked. It has to be a
+value in the keys of strategies dictionary given in the constructor.</li>
+<li><strong>previous_objective</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – values of the current solutions that the optimizer has.</li>
+<li><strong>new_objective</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – values of the trial solutions that the optimizer obtained
+after applying the strategy.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Best1Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Best1Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Best1Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Best1Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Mutator</span></code></a></p>
+<p>Implements DE/best/1 mutator</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Best2Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Best2Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Best2Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Best2Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Mutator</span></code></a></p>
+<p>Implements DE/best/2 mutator</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.BinomialCrossover">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">BinomialCrossover</code><span class="sig-paren">(</span><em>cr</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#BinomialCrossover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.BinomialCrossover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover" title="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Crossover</span></code></a></p>
+<p>Binomial crossover implementation.</p>
+<p>For each pair (solution, mutant), the combination works as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt>Compute a random value in [0,1] for each dimension j of the solution, let’s</dt>
+<dd>call value r_j.</dd>
+</dl>
+</li>
+<li>Take one random dimension k</li>
+<li>Define each dimension j of the combined solution as:
+- out_j = mutant_j if (r_j &lt; cr) or (j=k)
+- out_j = solution_j otherwise</li>
+</ul>
+</div></blockquote>
+<p>The purpose of the special dimension k is to enforce that the newly generated
+solution will differ in at least something with respect to the current solution.</p>
+<p>Keep in mind that these generated offsprings are trials, and if they improve the
+objective value we then update the current solutions.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">ConstantAdaptiveParameter</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#ConstantAdaptiveParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter" title="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter</span></code></a></p>
+<p>Implements a constant parameter.</p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#ConstantAdaptiveParameter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#ConstantAdaptiveParameter.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.ConstantAdaptiveParameter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the current value of the parameter</p>
+<p>Returns: float, the current value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Crossover</code><span class="sig-paren">(</span><em>cr</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Crossover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interface for crossover implementations.</p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>cr</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Crossover.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cr</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter" title="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdaptiveParameter</span></code></a>]) – crossover random threshold. Used in randomized approaches to combine
+existing solutions and mutated solutions. Typically it captures how much
+of the mutant and how much of the current goes into the trial solution.
+Different concrete implementations might have different usages for this
+parameter.
+We kept this name since it’s the typically used name in the literature.</li>
+<li><strong>seed</strong> – Random seed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.give_feedback">
+<code class="descname">give_feedback</code><span class="sig-paren">(</span><em>previous_objective</em>, <em>new_objective</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Crossover.give_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover.give_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forwards feedback to adaptive parameter cr.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.CurrentToBest1Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">CurrentToBest1Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#CurrentToBest1Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.CurrentToBest1Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Mutator</span></code></a></p>
+<p>Implements DE/current to best/1 mutator</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Mutator.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>f</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter" title="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdaptiveParameter</span></code></a>]) – A bigger f implies a more aggressive exploration. f should be between 0
+and 2.</li>
+<li><strong>seed</strong> – random seed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.give_feedback">
+<code class="descname">give_feedback</code><span class="sig-paren">(</span><em>previous_objective</em>, <em>new_objective</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Mutator.give_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator.give_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forwards feedback to adaptive parameter f.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">NormalAdaptiveParameter</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#NormalAdaptiveParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter" title="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveParameter</span></code></a></p>
+<p>Implements a sampled parameter from a normal distribution with mu and sigma.
+Ignores feedback since these parameters are fixed. Each call to value() will
+generate a new sample.</p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>mu</em>, <em>sigma</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#NormalAdaptiveParameter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#NormalAdaptiveParameter.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.NormalAdaptiveParameter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the current value of the parameter</p>
+<p>Returns: float, the current value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Rand1Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Rand1Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Rand1Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Rand1Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Mutator</span></code></a></p>
+<p>Implements DE/rand/1 mutator</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.Rand2Mutator">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">Rand2Mutator</code><span class="sig-paren">(</span><em>f</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#Rand2Mutator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Rand2Mutator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.Mutator</span></code></a></p>
+<p>Implements DE/rand/2 mutator</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.adaptive_differential_evolution.</code><code class="descname">RandomAdaptiveStrategy</code><span class="sig-paren">(</span><em>strategies</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#RandomAdaptiveStrategy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy" title="optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.experimental.solvers.adaptive_differential_evolution.AdaptiveStrategy</span></code></a></p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>strategies</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#RandomAdaptiveStrategy.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.get_strategy">
+<code class="descname">get_strategy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/adaptive_differential_evolution.html#RandomAdaptiveStrategy.get_strategy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.adaptive_differential_evolution.RandomAdaptiveStrategy.get_strategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the strategy as suggested by the adaptive method. This can be a non
+deterministic function.</p>
+<p>Returns: Tuple, with the name of the strategy and the strategy itself.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Crossover" title="optimizer.experimental.solvers.adaptive_differential_evolution.Crossover"><code class="xref py py-class docutils literal notranslate"><span class="pre">Crossover</span></code></a>, <a class="reference internal" href="#optimizer.experimental.solvers.adaptive_differential_evolution.Mutator" title="optimizer.experimental.solvers.adaptive_differential_evolution.Mutator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutator</span></code></a>]]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.experimental.solvers.monte_carlo_solver">
+<span id="optimizer-experimental-solvers-monte-carlo-solver-module"></span><h2>optimizer.experimental.solvers.monte_carlo_solver module<a class="headerlink" href="#module-optimizer.experimental.solvers.monte_carlo_solver" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of MonteCarloSolver solver</p>
+<dl class="class">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.monte_carlo_solver.</code><code class="descname">MonteCarloSolver</code><span class="sig-paren">(</span><em>control_features</em>, <em>sphere_df</em>, <em>n_samples</em>, <em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.Solver" title="optimizer.solvers.base.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.solvers.base.Solver</span></code></a></p>
+<p>Implementation of MC optimizer for a single subarea.
+This algorithm uses historical distribution to generate random
+samples and the best one is selected at the end. This allows the algorithm to
+implicitly model underlying dependencies between the controls (i.e. if water
+level goes up, usually feed increases as well)</p>
+<p>This algorithm is less generic than other ones in this package and mainly
+written for Optimus AI use case. However, it can be adapted to other use cases.</p>
+<p>This class uses scipy <cite>multivariate_normal</cite> sampler, however other libraries
+have been successfully used in the past, such as <cite>emcee.EnsembleSampler</cite>.
+Sampling can be changed by overriding <cite>_generate_samples</cite> method, if
+another sampler produces better results.</p>
+<p>This algorithm is best fitted to handle low number of controls, typically
+less than 10, due to the curse of dimensionality. If more controls present,
+splitting it into independent sub-problems typically produces great results.</p>
+<dl class="docutils">
+<dt>Algorithm works as follows (Optimus AI specific steps):</dt>
+<dd><ol class="first last arabic simple">
+<li><dl class="first docutils">
+<dt>Before algorithm is run, historical samples are calculated using HSS</dt>
+<dd>(Historical Similarity Sphere), see <cite>NeighbourhoodCalculator</cite> class</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Historical samples are taken as a prior, so that sampler can draw</dt>
+<dd>from the same distribution. Mean and covariance are calculated</dd>
+</dl>
+</li>
+<li>Samples are generated using sampling algorithm (scipy in this case)</li>
+<li><dl class="first docutils">
+<dt>Samples are de-duped and filtered by boundary conditions. If this step</dt>
+<dd>filters too many samples, try changing sampling algorithm to MCMC
+or relax boundary conditions</dd>
+</dl>
+</li>
+<li>Samples are evaluated (outside of the ask/tell framework of this class)</li>
+<li>Samples are repaired (outside of the ask/tell framework of this class)</li>
+<li>Samples are filtered based on hard constraints. (outside ask-tell loop).</li>
+<li><dl class="first docutils">
+<dt>Additional filtering is beneficial but based on the use case, that</dt>
+<dd>removed objective value components (such as throughput and recovery)
+that are extreme. This is usually done by filtering in P70-P95 range
+(outside of the ask/tell framework of this class)</dd>
+</dl>
+</li>
+<li>Best solution is selected based on best objective function</li>
+</ol>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">hss_calc</span> <span class="o">=</span> <span class="n">NeighbourhoodCalculator</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">granular_df</span><span class="p">,</span>
+<span class="o">...</span>                                    <span class="n">distance_dims</span><span class="o">=</span><span class="n">input_dims</span><span class="p">)</span>
+ <span class="n">sphere_df</span> <span class="o">=</span> <span class="n">hss_calc</span><span class="o">.</span><span class="n">get_points</span><span class="p">(</span><span class="n">current_plant_state</span><span class="p">,</span>
+<span class="o">...</span>        <span class="n">n_historical</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+ <span class="n">problem</span> <span class="o">=</span> <span class="n">MillOptimisationProblem</span><span class="p">(</span> <span class="c1"># Defined separately, by the user</span>
+<span class="o">...</span>     <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">model_features</span><span class="o">=</span><span class="n">model_features</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">current_plant_state</span><span class="o">=</span><span class="n">current_plant_state</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">optimizable_columns</span><span class="o">=</span><span class="n">control_features</span>
+<span class="o">...</span> <span class="p">)</span>
+
+ <span class="n">mc_solver</span> <span class="o">=</span> <span class="n">MonteCarloSolver</span><span class="p">(</span>
+<span class="o">...</span>     <span class="n">control_features</span><span class="o">=</span><span class="n">control_features</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">sphere_df</span><span class="o">=</span><span class="n">sphere_df</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="o">...</span> <span class="p">)</span>
+
+ <span class="k">while</span> <span class="ow">not</span> <span class="n">mc_solver</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+     <span class="n">solutions</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+     <span class="n">objectives</span><span class="p">,</span> <span class="n">solutions</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">solutions</span><span class="p">)</span>
+     <span class="n">mc_solver</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">objectives</span><span class="p">)</span>
+
+ <span class="n">solution</span><span class="p">,</span> <span class="n">objective</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="o">.</span><span class="n">best</span><span class="p">()</span>
+ <span class="n">solution_dataframe</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="o">.</span><span class="n">best_as_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>control_features</em>, <em>sphere_df</em>, <em>n_samples</em>, <em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>control_features</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – control features</li>
+<li><strong>sphere_df</strong> (<em>pd.DataFrame</em>) – neighbourhood sphere that is used
+to create distribution</li>
+<li><strong>n_samples</strong> (<em>int</em>) – number of samples to create</li>
+<li><strong>bounds</strong> (<em>List</em><em>[</em><em>Tuple</em><em>]</em>) – control variable bounds</li>
+<li><strong>sense</strong> (<em>str</em><em>, </em><em>optional</em>) – minimization or maximization problem.
+Defaults to “minimize”.</li>
+<li><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – random seed. Defaults to None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SolutionNotFoundError</span></code> – When no viable solution found from samples.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.ask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask step of the algorithm</p>
+<p>Returns: current parameter values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.best">
+<code class="descname">best</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver.best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current best solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the best solution and its objective value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Tuple[np.ndarray, float]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current parameter matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix of parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the solver should terminate or not.
+For this solver, it always stops after one iteration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Bool, True is the solver should terminate.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>parameters</em>, <em>objective_values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/monte_carlo_solver.html#MonteCarloSolver.tell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.monte_carlo_solver.MonteCarloSolver.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell step of the solver</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix of updated solution values to pass to the solver.</li>
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of updated objective values to pass to the solver.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.experimental.solvers.random_search">
+<span id="optimizer-experimental-solvers-random-search-module"></span><h2>optimizer.experimental.solvers.random_search module<a class="headerlink" href="#module-optimizer.experimental.solvers.random_search" title="Permalink to this headline">¶</a></h2>
+<p>Random Search Optimization code.</p>
+<dl class="class">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver">
+<em class="property">class </em><code class="descclassname">optimizer.experimental.solvers.random_search.</code><code class="descname">RandomSearchSolver</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>maxiter=1000</em>, <em>popsize=None</em>, <em>init='random'</em>, <em>epsilon_decay_rate=0.005</em>, <em>min_epsilon=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.ScaledSolver" title="optimizer.solvers.base.ScaledSolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.solvers.base.ScaledSolver</span></code></a></p>
+<p>Random Search (RS) solver.</p>
+<p>The algorithm works as follows:</p>
+<ol class="arabic simple">
+<li>Initialize the population with a set of solutions (depends on the init param to
+to the constructor)</li>
+<li>For each solution s, sample a neighboring solution s’ from a uniform hypercube
+centered on s. The size of this hypercube is 2*epsilon (eps) in each dimension</li>
+<li>Evaluate the objective value on s’ (user responsibility)</li>
+<li>If s’ is better than s, then update s.</li>
+<li>Repeat from 2 to 4 iteratively.</li>
+</ol>
+<p>As the iterations go on, epsilon is decreased. This is to explicitly address the
+exploration-exploitation trade-off: at the beginning the hypercube is large, and
+thus we explore more broadly the search space. In late iterations epsilon is
+smaller, this forcing us to search intensively in a neighborhood of a (presumably)
+already good-enough solution set.</p>
+<p>The decrease of epsilon is exponential, meaning that in each iteration we update it
+with the rule: eps = (1-decay rate) * eps. There is a possibility to assign a
+minimum threshold below which epsilon is not allowed to decrease.</p>
+<p>If the decay is very high, then we might lose the opportunity to arrive near a
+global optima.
+If the decay is too low, then we’ll need more iterations to actually converge to a
+optima.</p>
+<p>The choosing of the epsilon_decay_rate and the min_epsilon is problem specific.</p>
+<dl class="method">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>bounds</em>, <em>sense='minimize'</em>, <em>seed=None</em>, <em>maxiter=1000</em>, <em>popsize=None</em>, <em>init='random'</em>, <em>epsilon_decay_rate=0.005</em>, <em>min_epsilon=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bounds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>]) – list of tuples describing the boundaries of the problem.</li>
+<li><strong>seed</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – optional random seed for the solver.</li>
+<li><strong>maxiter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – maximum number of updates.</li>
+<li><strong>popsize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – optional population size.
+If not specified, will be 15 * dimension.</li>
+<li><strong>init</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – optional initial population.</li>
+<li><strong>epsilon_decay_rate</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – epsilon is multiplied by (1-rate) in each ask call.</li>
+<li><strong>min_epsilon</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – the minimum epsilon that once reached stops the exponential
+decay</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">InitializationError</span></code> – if popsize and the row count for the provided initial
+population are not equal.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if the provided initialization function is invalid.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.ask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current parameters of population.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.array of current population values.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MaxIterationError</span></code> – when called after maximum iterations.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.best">
+<code class="descname">best</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best solution found so far.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector and float, the solution vector and its objective value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters getter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">np.ndarray of current particles.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the search has reached max iterations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if we should stop searching.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.experimental.solvers.random_search.RandomSearchSolver.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>parameters</em>, <em>objective_values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/experimental/solvers/random_search.html#RandomSearchSolver.tell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.experimental.solvers.random_search.RandomSearchSolver.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the population and objective values.
+Updates best histories and global best.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]) – Matrix of parameter values representing the population.</li>
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objective values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="optimizer.loggers.html" class="btn btn-neutral float-right" title="optimizer.loggers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="optimizer.experimental.loggers.html" class="btn btn-neutral float-left" title="optimizer.experimental.loggers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

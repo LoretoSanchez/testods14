@@ -1,0 +1,52 @@
+optimizer.stoppers package
+==========================
+
+.. automodule:: optimizer.stoppers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.stoppers.base module
+------------------------------
+
+.. automodule:: optimizer.stoppers.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.stoppers.no\_improvement module
+-----------------------------------------
+
+.. automodule:: optimizer.stoppers.no_improvement
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.stoppers.satisfied\_constraint module
+-----------------------------------------------
+
+.. automodule:: optimizer.stoppers.satisfied_constraint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.stoppers.utils module
+-------------------------------
+
+.. automodule:: optimizer.stoppers.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.stoppers.wall\_time module
+------------------------------------
+
+.. automodule:: optimizer.stoppers.wall_time
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

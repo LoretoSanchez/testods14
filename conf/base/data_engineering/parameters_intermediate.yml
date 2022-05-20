@@ -1,0 +1,6 @@
+#--- Default Create Features Parameters ---#
+
+rev_cal:
+    tag_prefix: 'calc_'
+
+profit_matrices: 'TAGS'

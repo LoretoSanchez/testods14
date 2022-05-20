@@ -1,0 +1,638 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Optimization problem\n",
+    "\n",
+    "The `OptimizationProblem` class is meant to act as a container for an objective and constraints that handles things like throwing errors for bad inputs and doing checks for minimizing/maximizing the problem at hand. The constructor for `OptimizationProblem` simply takes a callable or an object with a `predict` method. If we use our objective as the [Rastrigin function](https://en.wikipedia.org/wiki/Rastrigin_function) again, we can set up a simple optimization problem. We'll solve the following:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "& \\text{min} & \\text{rastrigin}(\\mathbf{x}) \\\\\n",
+    "& \\text{s.t.} & x_1^2 + x_2^2 \\leq 25 \\\\\n",
+    "& & -10 \\leq x_3 + x_4 \\\\\n",
+    "& & x_5 \\in \\mathbb{Z}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "for $\\mathbf{x} \\in [-5.12, 5.12]^5$. First, we'll handle our constraints."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "\n",
+    "from optimizer.constraint.sets import Integers\n",
+    "from optimizer.testing.problems import Rastrigin\n",
+    "from optimizer import OptimizationProblem, penalty, repair\n",
+    "from optimizer.solvers import DifferentialEvolutionSolver\n",
+    "from optimizer.utils.functional import column\n",
+    "\n",
+    "np.set_printoptions(precision=4, suppress=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "penalties = []\n",
+    "\n",
+    "penalties.append(\n",
+    "    penalty(lambda x: x[:, 0] ** 2 + x[:, 1] ** 2, \"<=\", 25)\n",
+    ")\n",
+    "\n",
+    "penalties.append(\n",
+    "    penalty(-10, \"<=\", lambda x: x[:, 2] + x[:, 3])\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "repairs = []\n",
+    "\n",
+    "repairs.append(\n",
+    "    repair(column(4), \"in\", Integers())\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now we can pass `constraints` and an instance of `Rastrigin` to the `OptimizationProblem` constructor."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "problem = OptimizationProblem(\n",
+    "    objective=Rastrigin(),\n",
+    "    penalties=penalties,\n",
+    "    repairs=repairs\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "`OptimizationProblem` is a callable class that returns the penalized objective values (objective values plus constraint penalties) for a given parameter matrix. We can instantiate a solver and generate some parameter matrices to see this."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dimension = 5\n",
+    "bounds = Rastrigin.bounds(dimension)\n",
+    "\n",
+    "solver = DifferentialEvolutionSolver(bounds)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A call to the `problem` object will return two objects: a vector of objective values and a matrix of parameter values. If some repair functions were provided, the parameters returned will have those functions applied."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "parameters = solver.ask()\n",
+    "\n",
+    "f_x, x_repaired = problem(parameters)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 53.5907,  97.9159,  68.1107,  95.7703,  89.3896, 118.6607,\n",
+       "        88.2011,  70.376 ,  85.1644,  53.4502, 119.9258, 115.0518,\n",
+       "       131.345 ,  42.5676, 131.0608,  81.0201,  78.7646,  69.8107,\n",
+       "       100.7281,  80.5623,  39.0403,  81.7579,  70.5302,  59.1679,\n",
+       "       114.3739,  43.5258,  80.2784,  62.9012, 115.2225,  74.601 ,\n",
+       "        92.7177,  59.2313,  63.2261,  59.7277,  49.9848,  93.6712,\n",
+       "        58.5202,  63.1925, 112.9208,  91.5175, 113.0017, 114.7643,\n",
+       "        82.313 ,  68.791 , 106.7777,  58.8742,  98.6065,  91.4505,\n",
+       "        94.7726,  77.4005,  85.786 ,  79.0614, 111.2694,  81.2349,\n",
+       "        67.5581, 114.944 ,  61.7012,  66.2477,  74.6177,  67.3688,\n",
+       "        85.0399, 123.9718,  63.3162,  65.8301,  98.3959,  55.0279,\n",
+       "        72.3359,  79.9526, 121.8052, 102.7808, 106.4935,  95.8754,\n",
+       "       122.1789,  77.6234,  84.8869])"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "f_x"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[-0.8788,  2.7325,  3.0661, -0.494 ,  1.    ],\n",
+       "       [-0.1477, -0.8661,  4.6614, -4.6664, -4.    ],\n",
+       "       [ 4.2041, -1.778 ,  2.1072, -4.9308, -0.    ],\n",
+       "       [ 2.5349, -0.2951,  3.65  ,  2.8674, -4.    ],\n",
+       "       [-2.311 , -3.9011,  1.2054,  1.3877, -5.    ],\n",
+       "       [-4.1095,  3.9314, -1.5095, -5.1123,  5.    ],\n",
+       "       [-4.346 , -4.0576,  3.8005, -0.1442, -1.    ],\n",
+       "       [-2.0808, -1.4671, -2.6571,  4.0221, -2.    ],\n",
+       "       [ 3.5365,  3.1796,  2.2017, -1.4346,  2.    ],\n",
+       "       [-2.1587, -3.0931, -2.2381, -2.245 ,  2.    ]])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x_repaired[:10, :]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can then use the `OptimizationProblem` object in our solver loop:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Best solution: [-0.  0.  0. -0.  0.]\n",
+      "\n",
+      "Best objective: 0.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "solver = DifferentialEvolutionSolver(bounds, seed=0)\n",
+    "\n",
+    "while not solver.stop():\n",
+    "    parameters = solver.ask()\n",
+    "    \n",
+    "    objectives, repaired_parameters = problem(parameters)\n",
+    "    \n",
+    "    solver.tell(repaired_parameters, objectives)\n",
+    "    \n",
+    "print(\"Best solution: {}\\n\\nBest objective: {}\".format(*solver.best()))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "##  Maximizing a problem\n",
+    "\n",
+    "To demonstrate maximizing a problem, we'll simply negate the Rastrigin using a utility wrapper class. Both `Solver` and `OptimizationProblem` objects have `sense` keyword arguments used to specify if we are minimizing or maximizing the current problem."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from optimizer.testing.problems.base import Negated"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "negative_rastrigin = Negated(Rastrigin())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can then set up our `OptimizationProblem` object setting `sense='maximize'`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "problem = OptimizationProblem(\n",
+    "    objective=negative_rastrigin,\n",
+    "    penalties=penalties,\n",
+    "    repairs=repairs,\n",
+    "    sense='maximize'\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "By default, `Solver` objects will minimize the current problem. It takes both the `OptimizationProblem` and `Solver` objects set to `maximize` for this to operate properly. `OptimizationProblem` will negate penalty values to properly apply constraints and `Sovler` will negate incoming objective values to properly search for new parameters."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can then solve the optimization problem:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "& \\text{max} & -\\text{rastrigin}(\\mathbf{x}) \\\\\n",
+    "& \\text{s.t.} & x_1^2 + x_2^2 \\leq 25 \\\\\n",
+    "& & -10 <= x_3 + x_4 \\\\\n",
+    "& & x_5 \\in \\mathbb{Z}\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Best solution: [-0.  0.  0. -0.  0.]\n",
+      "\n",
+      "Best objective: -0.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "solver = DifferentialEvolutionSolver(bounds, sense=\"maximize\", seed=0)\n",
+    "\n",
+    "while not solver.stop():\n",
+    "    parameters = solver.ask()\n",
+    "    \n",
+    "    objectives, repaired_parameters = problem(parameters)\n",
+    "    \n",
+    "    solver.tell(repaired_parameters, objectives)\n",
+    "    \n",
+    "print(\"Best solution: {}\\n\\nBest objective: {}\".format(*solver.best()))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The `StatefulOptimizationProblem`\n",
+    "\n",
+    "Some optimization problems include a mix of parameters that can be optimized and features of the system that are out of the user's control. For example, imagine out objective is a model that accepts the speed of a machine (something we control) as well as the current atmospheric temperature (something we do not control). Optimizer supports this functionality through the `StatefulOptimizationProblem` class."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from optimizer import StatefulOptimizationProblem"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### `StatefulOptimizationProblem` with `Numpy`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "state = np.arange(5, dtype=float)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This means that the first three columns are not optimizable and the last two are."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stateful_problem = StatefulOptimizationProblem(\n",
+    "    objective=Rastrigin(),\n",
+    "    state=state,\n",
+    "    optimizable_columns=[3, 4]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "parameters = np.random.randn(6, 2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Before applying the objective function, `StatefulOptimizationProblem` first calls `substitute_parameters` which will sub in any optimizable columns to the current state."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 0.    ,  1.    ,  2.    , -0.6075,  1.6735],\n",
+       "       [ 0.    ,  1.    ,  2.    ,  0.139 , -1.0284],\n",
+       "       [ 0.    ,  1.    ,  2.    , -0.6844,  0.6928],\n",
+       "       [ 0.    ,  1.    ,  2.    , -0.9782,  0.4971],\n",
+       "       [ 0.    ,  1.    ,  2.    ,  0.3973,  0.061 ],\n",
+       "       [ 0.    ,  1.    ,  2.    , -0.1134, -0.3484]])"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "stateful_problem.substitute_parameters(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### `StatefulOptimizationProblem` with `Pandas`\n",
+    "\n",
+    "Note: when working with `Pandas`, `state` must either be a `Series` all with the same numeric type or a sinlge row `DataFrame` to retain multiple columns of different type."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>input_0</th>\n",
+       "      <th>input_1</th>\n",
+       "      <th>input_2</th>\n",
+       "      <th>control_1</th>\n",
+       "      <th>control_2</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   input_0  input_1  input_2  control_1  control_2\n",
+       "0      0.0      1.0      2.0        3.0        4.0"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "optimizable_columns = [\"control_{}\".format(i + 1) for i in range(2)]\n",
+    "state = pd.DataFrame([state], columns=[\"input_{}\".format(i) for i in range(3)] + optimizable_columns)\n",
+    "state"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Then we construct our `StatefulOptimizationProblem` as before:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stateful_problem = StatefulOptimizationProblem(\n",
+    "    objective=Rastrigin(),\n",
+    "    state=state,\n",
+    "    optimizable_columns=optimizable_columns\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>input_0</th>\n",
+       "      <th>input_1</th>\n",
+       "      <th>input_2</th>\n",
+       "      <th>control_1</th>\n",
+       "      <th>control_2</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>-0.607482</td>\n",
+       "      <td>1.673483</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>0.138999</td>\n",
+       "      <td>-1.028442</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>-0.684433</td>\n",
+       "      <td>0.692824</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>-0.978200</td>\n",
+       "      <td>0.497050</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>0.397308</td>\n",
+       "      <td>0.060985</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>-0.113382</td>\n",
+       "      <td>-0.348436</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   input_0  input_1  input_2  control_1  control_2\n",
+       "0      0.0      1.0      2.0  -0.607482   1.673483\n",
+       "1      0.0      1.0      2.0   0.138999  -1.028442\n",
+       "2      0.0      1.0      2.0  -0.684433   0.692824\n",
+       "3      0.0      1.0      2.0  -0.978200   0.497050\n",
+       "4      0.0      1.0      2.0   0.397308   0.060985\n",
+       "5      0.0      1.0      2.0  -0.113382  -0.348436"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "stateful_problem.substitute_parameters(parameters)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

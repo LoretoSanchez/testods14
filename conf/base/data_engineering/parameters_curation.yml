@@ -1,0 +1,38 @@
+curation:
+  stop_if_no_go: False  # If True, code execution will be stopped if DQ tests are not passed for all model variables
+  replace_outliers_by_value: # This is commonly known as clipping
+    tag_list:
+      "ma2_3zi2700":
+        high_value: 50 #Check this value with experts
+        low_value: 0
+      "ma2_3zi2800":
+        high_value: 50
+        low_value: 0
+      "ma2_3zi2900":
+        high_value: 50
+        low_value: 0
+      "ma2_3kic0105":
+        high_value: 90
+        low_value: 0
+      "ma2_3xi2700":
+        high_value: 60
+        low_value: 0
+
+  ffill:
+    group_grade:
+      ref_param: False   # If false, means that I give the list
+      limit: 4
+      tag_list: ["rx_cop_cur118_rx", "rx_co_a0_cur101", "rx_co_a1_cur402", "rx_ap_cuc131_rx", 
+                  "rx_co_a2_cur103", "rx_ap_cuc132_rx"]
+    group_agitador_a0:
+      ref_param: True   # If true, I give the reference for parameters
+      limit: 
+      tag_list: fa0_agitadores
+    group_agitador_a1:
+      ref_param: True
+      limit: 
+      tag_list: fa1_agitadores
+    group_agitador_a2:
+      ref_param: True
+      limit: 
+      tag_list: fa2_agitadores

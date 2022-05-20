@@ -1,0 +1,303 @@
+train_model: &train_model
+
+    regressor:
+        class: xgboost.XGBRegressor
+        kwargs:
+            random_state: 1234
+            objective: reg:squarederror
+            verbose: False
+            n_jobs: 1
+
+    cv:
+        class: sklearn.model_selection.TimeSeriesSplit
+        kwargs:
+            n_splits: 5
+
+    tuner:
+        class: sklearn.model_selection.RandomizedSearchCV
+        kwargs:
+            n_jobs: -1
+            refit: rmse
+            verbose: 1
+            random_state: 1234
+            n_iter: 500
+            param_distributions:
+                regressor__n_estimators: [32, 64, 128]
+                regressor__max_depth: [3, 4, 6]
+                regressor__learning_rate: [0.01, 0.05, 0.1, 0.2, 0.3]
+                regressor__subsample: [0.3, 0.5, 0.8]
+                regressor__colsample_bytree: [0.1, 0.3, 0.5]
+                regressor__gamma: [0, 0.5, 1, 1.5]
+                regressor__reg_alpha: [0, 0.5, 1, 1.5]
+            scoring:
+                mae: neg_mean_absolute_error
+                rmse: neg_root_mean_squared_error
+                r2: r2
+
+    xgb_tune:
+        #p_eval: 0.1  # proportion of data set aside for early stopping
+        #early_stopping_rounds: 100
+        active: False
+    sensitivity_plots:
+        points: 100
+        num_shifts: 10
+    report: "src/project_clisham/optimus_core/reporting_html/performance_report_template.ipynb"
+    report_dir: "data/08_reporting/"
+
+train_model_ea: &train_model_ea
+    <<: *train_model
+    xgb_tune:
+        p_eval: 0.2  # proportion of data set aside for early stopping
+        early_stopping_rounds: 10
+        active: True
+        random_state: 1234
+        eval_metric: rmse
+
+# linea A2
+s16.train_model:
+    <<: *train_model
+    namespace: "s16"
+    dict_model_feature: "${s16.model_feature}"   # see globals
+    dict_model_target: "${s16.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s16/"
+
+s17.train_model:
+    <<: *train_model
+    namespace: "s17"
+    dict_model_feature: "${s17.model_feature}"   # see globals
+    dict_model_target: "${s17.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s17/"
+    
+fa2l1.train_model:
+    <<: *train_model_ea
+    namespace: "fa2l1"
+    dict_model_feature: "${fa2l1.model_feature}"   # see globals
+    dict_model_target: "${fa2l1.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa2l1/"
+
+fa2l2.train_model:
+    <<: *train_model_ea
+    namespace: "fa2l2"
+    dict_model_feature: "${fa2l2.model_feature}"   # see globals
+    dict_model_target: "${fa2l2.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa2l2/"
+
+fa2l3.train_model:
+    <<: *train_model_ea
+    namespace: "fa2l3"
+    dict_model_feature: "${fa2l3.model_feature}"   # see globals
+    dict_model_target: "${fa2l3.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa2l3/"
+
+fa2lg.train_model:
+    <<: *train_model_ea
+    namespace: "fa2lg"
+    dict_model_feature: "${fa2lg.model_feature}"   # see globals
+    dict_model_target: "${fa2lg.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa2lg/"
+
+# linea A1
+s13.train_model:
+    <<: *train_model
+    namespace: "s13"
+    dict_model_feature: "${s13.model_feature}"   # see globals
+    dict_model_target: "${s13.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s13/"
+
+s14.train_model:
+    <<: *train_model
+    namespace: "s14"
+    dict_model_feature: "${s14.model_feature}"   # see globals
+    dict_model_target: "${s14.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s14/"
+
+s15.train_model:
+    <<: *train_model
+    namespace: "s15"
+    dict_model_feature: "${s15.model_feature}"   # see globals
+    dict_model_target: "${s15.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s15/"
+    
+fa1l1.train_model:
+    <<: *train_model_ea
+    namespace: "fa1l1"
+    dict_model_feature: "${fa1l1.model_feature}"   # see globals
+    dict_model_target: "${fa1l1.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa1l1/"
+
+fa1l2.train_model:
+    <<: *train_model
+    namespace: "fa1l2"
+    dict_model_feature: "${fa1l2.model_feature}"   # see globals
+    dict_model_target: "${fa1l2.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa1l2/"
+
+fa1lg.train_model:
+    <<: *train_model_ea
+    namespace: "fa1lg"
+    dict_model_feature: "${fa1lg.model_feature}"   # see globals
+    dict_model_target: "${fa1lg.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa1lg/"
+
+
+# linea A0
+params_a0: &params_a0
+    tuner:
+        class: sklearn.model_selection.RandomizedSearchCV
+        kwargs:
+            n_jobs: -1
+            refit: rmse
+            verbose: 1
+            random_state: 1234
+            n_iter: 500
+            param_distributions:
+                regressor__n_estimators: [86, 128, 186]
+                regressor__max_depth: [3, 4, 6, 8]
+                regressor__learning_rate: [0.01, 0.05, 0.1, 0.2, 0.3]
+                regressor__subsample: [0.3, 0.5, 0.6, 0.8]
+                regressor__colsample_bytree: [0.5, 0.8, 1]
+                # regressor__gamma: [0, 0.5, 1, 1.5]
+                regressor__reg_alpha: [0, 0.5, 1, 1.5]
+            scoring:
+                mae: neg_mean_absolute_error
+                rmse: neg_root_mean_squared_error
+                r2: r2
+
+train_model_ea_a0: &train_model_ea_a0
+    <<: *params_a0
+    xgb_tune:
+        p_eval: 0.1  # proportion of data set aside for early stopping
+        early_stopping_rounds: 100
+        active: True
+        random_state: 1234
+        eval_metric: rmse
+
+s1.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s1"
+    dict_model_feature: "${s1.model_feature}"   # see globals
+    dict_model_target: "${s1.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s1/"
+
+s2.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s2"
+    dict_model_feature: "${s2.model_feature}"   # see globals
+    dict_model_target: "${s2.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s2/"
+
+s3.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s3"
+    dict_model_feature: "${s3.model_feature}"   # see globals
+    dict_model_target: "${s3.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s3/"
+
+s4.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s4"
+    dict_model_feature: "${s4.model_feature}"   # see globals
+    dict_model_target: "${s4.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s4/"
+
+s5.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s5"
+    dict_model_feature: "${s5.model_feature}"   # see globals
+    dict_model_target: "${s5.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s5/"
+
+s6.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s6"
+    dict_model_feature: "${s6.model_feature}"   # see globals
+    dict_model_target: "${s6.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s6/"
+    
+s7.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s7"
+    dict_model_feature: "${s7.model_feature}"   # see globals
+    dict_model_target: "${s7.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s7/"
+
+s8.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s8"
+    dict_model_feature: "${s8.model_feature}"   # see globals
+    dict_model_target: "${s8.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s8/"
+
+s9.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s9"
+    dict_model_feature: "${s9.model_feature}"   # see globals
+    dict_model_target: "${s9.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s9/"
+
+s10.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s10"
+    dict_model_feature: "${s10.model_feature}"   # see globals
+    dict_model_target: "${s10.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s10/"
+    
+
+s11.train_model:
+    <<: *train_model
+    <<: *params_a0
+    namespace: "s11"
+    dict_model_feature: "${s11.model_feature}"   # see globals
+    dict_model_target: "${s11.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/s11/"
+
+fa0l1.train_model:
+    <<: *train_model
+    <<: *train_model_ea_a0
+    namespace: "fa0l1"
+    dict_model_feature: "${fa0l1.model_feature}"   # see globals
+    dict_model_target: "${fa0l1.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa0l1/"
+
+fa0l2.train_model:
+    <<: *train_model
+    <<: *train_model_ea_a0
+    namespace: "fa0l2"
+    dict_model_feature: "${fa0l2.model_feature}"   # see globals
+    dict_model_target: "${fa0l2.model_target}"     # see globals
+    timestamp_col: "${timestamp_col_name}"      # see globals
+    report_dir: "data/08_reporting/fa0l2/"

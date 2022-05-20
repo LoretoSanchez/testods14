@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.solvers.discrete_localsearch &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>optimizer.solvers.discrete_localsearch</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimizer.solvers.discrete_localsearch</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 - present</span>
+<span class="c1"># QuantumBlack Visual Analytics Ltd (a McKinsey company).</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software framework contains the confidential and proprietary information</span>
+<span class="c1"># of QuantumBlack, its affiliates, and its licensors. Your use of these</span>
+<span class="c1"># materials is governed by the terms of the Agreement between your organisation</span>
+<span class="c1"># and QuantumBlack, and any unauthorised use is forbidden. Except as otherwise</span>
+<span class="c1"># stated in the Agreement, this software framework is for your internal use</span>
+<span class="c1"># only and may only be shared outside your organisation with the prior written</span>
+<span class="c1"># permission of QuantumBlack.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Discrete local search Solver</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Real</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+
+<span class="kn">from</span> <span class="nn">optimizer.exceptions</span> <span class="kn">import</span> <span class="n">MaxIterationError</span>
+<span class="kn">from</span> <span class="nn">optimizer.solvers</span> <span class="kn">import</span> <span class="n">Solver</span>
+<span class="kn">from</span> <span class="nn">optimizer.types</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation details (for interested users)</span>
+
+<span class="sd">    The algorithm performs local search on each of the solutions in self._s, these are</span>
+<span class="sd">    referred to as &#39;current&#39; or &#39;local&#39; solutions throughout the code. The objective</span>
+<span class="sd">    values for these solutions are stored in self._obj_values.</span>
+
+<span class="sd">    In a single ask &amp; tell cycle we evaluate one single neighbor for each solution. If</span>
+<span class="sd">    the objective value for a neighbor is better, then we update self._s and</span>
+<span class="sd">    self._obj_values with this neighbor and it&#39;s objective value. If it does not improve</span>
+<span class="sd">    the solution, we continue exploring the neighborhood of that solution in further</span>
+<span class="sd">    iterations.</span>
+
+<span class="sd">    In this implementation a neighbor of a solution is defined by moving a single</span>
+<span class="sd">    variable one step. For example, if we have variables a, b and c; which can take</span>
+<span class="sd">    values a_1, ..., a_na; b_1, ..., b_nb; and c_1, ..., c_nc respectively, then a</span>
+<span class="sd">    neighbor of a solution (a_1, b_3, c_5) might be (a_2, b_3, c_5) or (a_1, b_3, c_4).</span>
+<span class="sd">    Therefore, to explore the entire neighborhood of a single solution takes at most</span>
+<span class="sd">    O(n_variables) ask &amp; tell iterations.</span>
+
+<span class="sd">    We do not look for the best neighbor possible to update a solution in self._s; it&#39;s</span>
+<span class="sd">    enough to improve the objective value.</span>
+
+<span class="sd">    As soon as we improve a solution or find a local optima, we check for the best</span>
+<span class="sd">    solutions we&#39;ve seen so far and update the solutions and values as needed. The best</span>
+<span class="sd">    seen solutions are stored in self._best_s and self._best_obj_values. These are then</span>
+<span class="sd">    used for returning the optimal value to the user via self.best().</span>
+
+<span class="sd">    The implementation is fully vectorized, and to achieve this we keep several index</span>
+<span class="sd">    matrices to make this efficiently. In what follows we describe briefly how this is</span>
+<span class="sd">    implemented.</span>
+
+<span class="sd">    The first observation is that self._s and self._best_s keep the solutions in an</span>
+<span class="sd">    indexed format. This means that entry s_(i, j) is an int, and tells us the position</span>
+<span class="sd">    in the domain of the j-th variable for the i-th solution. For example, if the domain</span>
+<span class="sd">    of variable x_3 is [100, 150, 200] and _s(1,3) = 1; this means that the solution 1</span>
+<span class="sd">    has x_3=150 (we&#39;re indexing from 0).</span>
+
+<span class="sd">    For each solution we might be exploring a different variable at the same point in</span>
+<span class="sd">    time. To keep track of what are we exploring we use the matrix self._cm (cm stands</span>
+<span class="sd">    for current moves). This is a {-1, 0, 1}-matrix, that we add to self._s to get the</span>
+<span class="sd">    current explored neighbor. Note that self._cm has only one 1 or -1 per row because</span>
+<span class="sd">    of our definition of neighborhood. Thus, in ask() we simply return self._s +</span>
+<span class="sd">    self._cm, transforming the index representation into a user-space domain.</span>
+
+<span class="sd">    We want to control the biases in which we explore the search space. We avoid</span>
+<span class="sd">    exploring variables in the same order for all solutions by having an indirection</span>
+<span class="sd">    index matrix in self._orders. Each row in this matrix corresponds to a solution slot</span>
+<span class="sd">    in self._s. If the row in self._orders is [3, 0, 2, 1], then we first explore moves</span>
+<span class="sd">    in the 3rd parameter column (x_3), then x_0, then x_2 and finally x_1. We keep track</span>
+<span class="sd">    of what column in self._orders we explore for each solution with the vector</span>
+<span class="sd">    self._cvars (cvars stands for current vars). Thus, for the given order as example,</span>
+<span class="sd">    we begin the local search by increasing or decreasing the x_3 value index in</span>
+<span class="sd">    self._cm. After that is completed, we explore increasing or decreasing x_0, and so</span>
+<span class="sd">    forth. When we finish with the exploration of x_1, and we were not able to improve</span>
+<span class="sd">    the corresponding solution in self._s, then it means that the solution is locally</span>
+<span class="sd">    optimal. We now reset the solution to a random one, set the counter in self._cvars</span>
+<span class="sd">    to 0, and start again with x_3 for this fresh solution. Note that other entries in</span>
+<span class="sd">    self._orders will yield different orders.</span>
+<span class="sd">&quot;&quot;&quot;</span>  <span class="c1"># pylint: disable=W0105</span>
+
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver">[docs]</a><span class="k">class</span> <span class="nc">DiscreteLocalSearchSolver</span><span class="p">(</span><span class="n">Solver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a local search algorithm for a given search space domain.</span>
+<span class="sd">    This is a more direct way of exploring discrete solutions than using a continuous</span>
+<span class="sd">    algorithm with repair functions. One iteration of this solver is typically faster</span>
+<span class="sd">    than one iteration of ParticleSwarm with repairs. However, it requires many more</span>
+<span class="sd">    iterations to find comparable solutions.</span>
+
+<span class="sd">    Since the solutions found by this algorithm are local optimas, under a coarse mesh</span>
+<span class="sd">    this algorithm is likely to find better solutions than continuous algorithms with</span>
+<span class="sd">    repairs. If the mesh or discrete domain is very fine-grained, then this algorithm</span>
+<span class="sd">    is not the best choice, since de-facto the solution space is continuous-like.</span>
+
+<span class="sd">    This solver does not support a modification of parameters in the self.tell function.</span>
+<span class="sd">    If parameters are modified with a repair function, this will raise an exception.</span>
+
+<span class="sd">    while not solver.stop():</span>
+<span class="sd">        # Ask the solver to generate new solutions (could be newly initialized).</span>
+<span class="sd">        solutions = solver.ask()</span>
+
+<span class="sd">        # Evaluate recently generated solutions.</span>
+<span class="sd">        updated_objectives = objective(solutions)</span>
+
+<span class="sd">        # Possibly apply penalty functions.</span>
+<span class="sd">        updated_objectives += penalties(solutions)</span>
+
+<span class="sd">        # Tell the solver about the objective value for the solutions.</span>
+<span class="sd">        solver.tell(solutions, updated_objectives)</span>
+
+<span class="sd">    # Output the best solution</span>
+<span class="sd">    return solver.best()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver.__init__"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">domain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">],</span>
+        <span class="n">sense</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;minimize&quot;</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">popsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            domain: a list of lists that tells which values can each dimension take.</span>
+<span class="sd">            sense: string, optional sense string for &quot;minimize&quot; or &quot;maximize&quot;.</span>
+<span class="sd">            seed: int, optional random seed.</span>
+<span class="sd">            popsize: int, number of solutions that are locally improving</span>
+<span class="sd">            maxiter: int, number of total iterations</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if bounds are not all numeric types.</span>
+<span class="sd">            ValueError: if bounds is not a list of tuples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># For supporting the abstract interface we infer bounds from domain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_bounds</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">,</span> <span class="n">sense</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">=</span> <span class="n">maxiter</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pop</span> <span class="o">=</span> <span class="n">popsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seed</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dom_lengths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_domain_lengths_vector</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_domain_matrix</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dom</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># The indices of the current solutions. Dimensions are pop x nvariables.</span>
+        <span class="c1"># The value of variable j for solution i is domain[j][s[i, j]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># Objective values for current s (without any moves, just as s is stored)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pop</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># keeps track of the best seen solutions, in the same format as self._s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># keeps track of the best objective values seen so far</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_obj_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pop</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># randomly initialize solutions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_solutions</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pop</span><span class="p">))</span>
+
+        <span class="c1"># current vars for each solution. This tells us which variable are we trying</span>
+        <span class="c1"># to move for improving locally the solution. cvars[i] = j means that we&#39;re</span>
+        <span class="c1"># moving dimension self._orders[i, j] for solution i.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pop</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># current moves: self._cm[i, j] = 1 means that we tell/told the user a set of</span>
+        <span class="c1"># parameters that increases by one the index s[i,j].</span>
+        <span class="c1"># Moves in current implementation are: -1, 0, 1. Most of matrix is 0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+        <span class="c1"># 10000 is to avoid being biased by using argsort to explore lower range of the</span>
+        <span class="c1"># variable indexes. If we call argsort on 0,0,0,0,0, we&#39;ll get 0,1,2,3,4;</span>
+        <span class="c1"># we thus need to increase the upper random bound so we reduce duplicates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orders</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span> <span class="o">*</span> <span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">dim</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_init_domain_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dom</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Creates a matrix with domains for each dimension. This is done for efficiency</span>
+<span class="sd">        purposes and enabling indexing with numpy interfaces.</span>
+<span class="sd">        If fills with NaNs the variables that have smaller domains than the biggest</span>
+<span class="sd">        domain. For example: the dom = [[1,3], [5,6,7,8]] is transformed into the matrix</span>
+<span class="sd">        [[1, 3, nan, nan],</span>
+<span class="sd">         [5, 6,   7,   8]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dom: Ordered list with ordered domain items for each variable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A numpy ndarray, that in ith row contains the domain for the ith variable.</span>
+<span class="sd">            If the variable has less discrete options than the dimension of the matrix,</span>
+<span class="sd">            the row is filled with np.nan.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dom</span><span class="p">)</span>
+        <span class="n">extended_domain_vectors</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dom</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">extended_domain_vectors</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_domain_lengths_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dom</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Build a vector containing the size of each domain.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            dom: Ordered list with ordered domain items for each variable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A numpy vector such that v_i = length of ith variable domain</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dom</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_init_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Infer bounds from domain list. This is used only to comply with the interface</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            domain: Ordered list with ordered domain items for each variable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ordered list with (min max) tuples for each variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">domain</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_convert_indices_into_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Converts an index-representation of solutions into user-space solutions.</span>
+<span class="sd">        Does this by looking at values in self._dom domain.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            s: numpy matrix representing the indexed solutions. s[i,j] = 3 means that</span>
+<span class="sd">               the jth variable of ith solution has value self._dom[j, 3]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy matrix of same dimensions as s, containing the actual (user-space)</span>
+<span class="sd">            values of the solutions in s.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dom</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dom</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">s</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_reset_solutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_index_vector</span><span class="p">:</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates random solutions in self._s for positions that are True in the</span>
+<span class="sd">        boolean_index_vector.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            boolean_index_vector: Boolean vector used as a mask for the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Disabling pylint unsubscriptable-object error, see</span>
+        <span class="c1"># https://github.com/PyCQA/pylint/issues/3139</span>
+        <span class="n">ncols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># pylint: disable=E1136</span>
+        <span class="n">nrows</span> <span class="o">=</span> <span class="n">boolean_index_vector</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="p">[</span><span class="n">boolean_index_vector</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dom_lengths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">[</span><span class="n">boolean_index_vector</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="k">def</span> <span class="nf">_reset_current_moves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_index_vector</span><span class="p">:</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears the current moves matrix self._cm in positions where the</span>
+<span class="sd">        boolean_index_vector is True.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            boolean_index_vector: Boolean vector used as a mask for the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">[</span><span class="n">boolean_index_vector</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">_reset_exploration_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean_index_vector</span><span class="p">:</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets to 0 the self._cvars on the positions where the boolean_index_vector is</span>
+<span class="sd">        True. This effectively resets the variable exploration for each solution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            boolean_index_vector: Boolean vector used as a mask for the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span><span class="p">[</span><span class="n">boolean_index_vector</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">_inc_dec_zero_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_neighbor</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Given a current neighbor move vector (this is a {-1, 0, 1}-vector), it</span>
+<span class="sd">        transitions each dimension from one exploration direction to the next one.</span>
+<span class="sd">        Currently, we go from 0 -&gt; 1 -&gt; -1 -&gt; 0. It is responsibility of the user of</span>
+<span class="sd">        this function to check the boundaries for each dimensions, this is just a helper</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_neighbor: an {-1, 0, 1}-ndarray</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Same dimension array with one transition step applied to all of its values.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">current_neighbor</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">current_neighbor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">current_neighbor</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">current_neighbor</span><span class="p">)</span>
+        <span class="n">current_neighbor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">current_neighbor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">current_neighbor</span><span class="p">)</span>
+        <span class="n">current_neighbor</span><span class="p">[</span><span class="n">completed</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">current_neighbor</span>
+
+    <span class="k">def</span> <span class="nf">_transition_current_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates self._cm (current moves matrix) based on the the currently explored</span>
+<span class="sd">        variables (by using self._cvars and self._order).</span>
+<span class="sd">        It also updates the counters in self._cvars for the variables that have been</span>
+<span class="sd">        locally explored (with moves (+-1)).</span>
+<span class="sd">        If no more moves are available for a solution, it will set the current move row</span>
+<span class="sd">        associated to that solution to 0. It is responsibility of the user to treat the</span>
+<span class="sd">        rows in 0, since the next call would generate all the moves again.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Disabling pylint unsubscriptable-object error, see</span>
+        <span class="c1"># https://github.com/PyCQA/pylint/issues/3139</span>
+        <span class="n">nsols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># pylint: disable=E1136</span>
+        <span class="n">z2n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nsols</span><span class="p">)</span>  <span class="c1"># zero to n vector, helper for indexing</span>
+        <span class="n">cur_dim_to_explore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orders</span><span class="p">[</span><span class="n">z2n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span><span class="p">]</span>
+        <span class="n">cur_domain_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="p">[</span><span class="n">z2n</span><span class="p">,</span> <span class="n">cur_dim_to_explore</span><span class="p">]</span>
+        <span class="n">current_dom_upper_bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dom_lengths</span><span class="p">[</span><span class="n">cur_dim_to_explore</span><span class="p">]</span>
+
+        <span class="c1"># Transition between 0, 1 and -1 to 1, -1, 0, respectively</span>
+
+        <span class="c1"># Make sure the transitions are within bounds: we transition at most 3 times</span>
+        <span class="c1"># each position. If after 3 transitions we&#39;re still out of bounds there&#39;s a</span>
+        <span class="c1"># state error and we&#39;ll raise an exception</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inc_dec_zero_move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">[</span><span class="n">z2n</span><span class="p">,</span> <span class="n">cur_dim_to_explore</span><span class="p">])</span>
+        <span class="n">within_domain</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+            <span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&lt;</span> <span class="n">current_dom_upper_bounds</span>
+        <span class="p">)</span>
+
+        <span class="n">tr</span><span class="p">[</span><span class="o">~</span><span class="n">within_domain</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inc_dec_zero_move</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="o">~</span><span class="n">within_domain</span><span class="p">])</span>
+        <span class="n">within_domain</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+            <span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&lt;</span> <span class="n">current_dom_upper_bounds</span>
+        <span class="p">)</span>
+
+        <span class="n">tr</span><span class="p">[</span><span class="o">~</span><span class="n">within_domain</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inc_dec_zero_move</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="o">~</span><span class="n">within_domain</span><span class="p">])</span>
+        <span class="n">within_domain</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+            <span class="n">tr</span> <span class="o">+</span> <span class="n">cur_domain_indices</span> <span class="o">&lt;</span> <span class="n">current_dom_upper_bounds</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">within_domain</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Transitioning in local search error. Were not able to&quot;</span>
+                <span class="s2">&quot;transition into a valid state. Some dimension is out of&quot;</span>
+                <span class="s2">&quot;domain bounds.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">[</span><span class="n">z2n</span><span class="p">,</span> <span class="n">cur_dim_to_explore</span><span class="p">]</span> <span class="o">=</span> <span class="n">tr</span>
+
+        <span class="c1"># If transition = 0, then the current dimension tried all it&#39;s moves.</span>
+        <span class="c1"># Increase search variable for that solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span><span class="p">[</span><span class="n">tr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Reset the search for the solution that exhausted all dimensions.</span>
+        <span class="n">exhausted_variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dom_lengths</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_solutions</span><span class="p">(</span><span class="n">exhausted_variables</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_exploration_indices</span><span class="p">(</span><span class="n">exhausted_variables</span><span class="p">)</span>
+
+        <span class="c1"># If all went well, the current moves matrix on exhausted searches must be all 0</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_cvars</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dom_lengths</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Arrived to an invalid state.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_current_solutions_and_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Based on the objective values for self._s and the ones just explored (given</span>
+<span class="sd">        by self._cm+self_s and the parameter objective_values), updates the improved</span>
+<span class="sd">        solutions in self._s and the improved objective values in self._obj_values.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            objective_values: numpy array with objective values for self._cm + self_s.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">improved_solutions</span> <span class="o">=</span> <span class="n">objective_values</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="n">objective_values</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_s</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">)[</span><span class="n">improved_solutions</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_update_best_solutions_and_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates best seen solutions and objective values (row-wise) by comparing them</span>
+<span class="sd">        with the current _obj_values and _s. If the best solution so far has a higher</span>
+<span class="sd">        objective value than the one stored in self._s, then update. Also update the</span>
+<span class="sd">        best objective value seen so far.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">improved_solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_obj_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_obj_values</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_s</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="p">[</span><span class="n">improved_solutions</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_incorporate_results_for_current_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given new objective values corresponding to the current exploration (self._s+</span>
+<span class="sd">        self._cm), incorporate this information by updating current solutions, current</span>
+<span class="sd">        objective values, best solutions and best objective values.</span>
+
+<span class="sd">        It also resets the exploration for each improved solution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            objective_values: numpy array with objective values for self._cm + self_s.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_improved_solutions</span> <span class="o">=</span> <span class="n">objective_values</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_current_solutions_and_objective</span><span class="p">(</span><span class="n">objective_values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_best_solutions_and_objective</span><span class="p">()</span>
+
+        <span class="c1"># Reset the search in improved (current) solutions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_current_moves</span><span class="p">(</span><span class="n">current_improved_solutions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_exploration_indices</span><span class="p">(</span><span class="n">current_improved_solutions</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver.ask"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.ask">[docs]</a>    <span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the current parameters of population.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array of current population values.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            MaxIterationError: when called after maximum iterations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">MaxIterationError</span><span class="p">(</span><span class="s2">&quot;Exceeded maximum number of iterations.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_indices_into_solution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_s</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver.tell"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.tell">[docs]</a>    <span class="k">def</span> <span class="nf">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the population and objective values. Note that parameters should match</span>
+<span class="sd">        the parameters obtained by the prior ask() call. If it doesn&#39;t match (which</span>
+<span class="sd">        might happen if a repair have been applied), then an exception will be raised.</span>
+
+<span class="sd">        This function also updates best seen solutions with their objective values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameter values representing the population.</span>
+<span class="sd">            objective_values: Vector of objective values.</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If parameters do not match with the ones obtained in the ask()</span>
+<span class="sd">            call. This algorithm does not support such behavior since it keeps internal</span>
+<span class="sd">            state that tracks the local search.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DiscreteLocalSearchSolver</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_told_parameters_and_objectives</span><span class="p">(</span>
+            <span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_convert_indices_into_solution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_s</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cm</span><span class="p">)</span> <span class="o">!=</span> <span class="n">parameters</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Modifying parameters is not supported by this algorithm. Please, make &quot;</span>
+                <span class="s2">&quot;sure that you do not modify parameters between ask and tell.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_incorporate_results_for_current_move</span><span class="p">(</span><span class="n">objective_values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transition_current_move</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">-=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver.stop"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Determine if the solver should terminate or not.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Bool, True is the solver should terminate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">&lt;=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DiscreteLocalSearchSolver.best"><a class="viewcode-back" href="../../../06_optimizer_api/optimizer.solvers.html#optimizer.solvers.discrete_localsearch.DiscreteLocalSearchSolver.best">[docs]</a>    <span class="k">def</span> <span class="nf">best</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get the best solution.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple, (np.ndarray, float), the best solution and its objective value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_best_obj_values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">best_idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_internal_objective_values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the best, not sense-checked objective values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector of objective values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_obj_values</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the best parameters matrix seen.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Matrix of parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_indices_into_solution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_best_s</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Real</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Bounds getter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of Tuples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

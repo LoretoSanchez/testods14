@@ -1,0 +1,17 @@
+optimizer.experimental package
+==============================
+
+.. automodule:: optimizer.experimental
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    optimizer.experimental.hss
+    optimizer.experimental.loggers
+    optimizer.experimental.solvers
+

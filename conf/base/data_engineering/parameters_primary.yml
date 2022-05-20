@@ -1,0 +1,10 @@
+#--- Default Create Features Parameters ---#
+
+create_primary: &create_features
+    pipeline_timezone: #"UTC" #"${pipeline_timezone}" # see globals
+    datetime_col: "${timestamp_col_name}" 
+    n_jobs: 6
+    grid:
+        frequency: "1H"
+        offset_start: "0H"
+        offset_end: "0H"

@@ -1,0 +1,558 @@
+
+# -------------------- Grinding Parameters -----------------#
+
+ma2_target_name: "calc_tph_ma2_total"
+
+ma2_tph_pebbles:
+    tag_prefix_target: 'calc_tph_'
+    tag_prefix_percentage: 'calc_perc_pebble_'
+    s16: 
+        feed_rate: 'ma2_3wic110'
+        pebbles_realimentados:  'ma2_3wi104'  
+        pebbles_recirculados:  'ma2_3wi116r'                      
+    s17: 
+        feed_rate: 'ma2_3wic210'
+        pebbles_realimentados: 'ma2_3wi103'   
+        pebbles_recirculados:  'ma2_3wi216r'   
+sag_16: 
+    tonelaje: ['ma2_3wic110', 'ma2_3wi116r']
+    potencia: ['ma2_3ji155']           
+sag_17: 
+    tonelaje: ['ma2_3wic210', 'ma2_3wi216r']
+    potencia: ['ma2_3ji255']
+
+ma2_jb_jc:
+    tag_prefix: 'calc_'
+    s16:
+        velocidad: 'ma2_3si154'
+        presion: 'ma2_3pi150'
+        presion_hl: 'ma2_3pi150_pvhitp'
+        cp: 'ma2_3kic118'
+        potencia: 'ma2_3ji155'
+    s17:
+        velocidad: 'ma2_3si254'
+        presion: 'ma2_3pi250'
+        presion_hl: 'ma2_3pi250_pvhitp'
+        cp: 'ma2_3kic218'
+        potencia: 'ma2_3ji255'
+
+ma2_jb_jc_const:
+    k1: 31.45 # Diametro del molino
+    k2: 3.28 # pies a metros
+    k3: 15 # Largo del molino
+    jc_ideal: 28
+    m_JC: [0.3333, 1.2] # Relacion entre JC y Presion de descansos, pendiente 1.2 Domingo, 0.33 SIP
+    Jfill: 0.6 # Llenado de mineral en interticios entre bolas y rocas lo que se llena de k17
+    k6: 76.6 # Convesion de % de velocidad critica
+    k7: 0.238 # Constante de modelo de potencias
+    k8: 1.065 # Constante del modelo de potencias
+    k9: 100 # Para convertir a %
+    k10: 2.8 # Densidad del mineral
+    k11: 7.75 # Dendidad del acero/bolas
+    k12: 2.5 # TODO En revision exp proceso
+    k13: 42 # Parametro alfa, 42 grados angulo que forma la carga
+    k14: 180 # Para convertir angulo k13 a radianes
+    k15: 0.9 # TODO En revision exp proceso
+    k16: 1000 # TODO En revision exp proceso
+    k17: 0.4 # Porcentaje de intericio entre bolas y rocas lo que queda vacio
+    k18: 0.6 # Diferencial de k17
+    min_vel: 8.5 # rango de validez de modelo
+    min_sol: 68 # rango de validez de modelo
+    max_sol: 85 # rango de validez de modelo
+    min_pres: 60 # rango de validez de modelo
+    max_pres: 68 # rango de validez de modelo
+    min_pot: 6.5 # rango de validez de modelo
+    min_jb: 0.08 # rango de validez de modelo
+
+m5_rest_pres: ["ma2_3ml0001_ci_sp21",
+                    "ma2_3ml0001_ci_sp22",
+                    "ma2_3ml0001_ci_sp23",
+                    "ma2_3ml0001_ci_sp24"]
+
+s16_water_add: ["ma2_3ffic118",
+                "ma2_3fi117",
+                "ma2_3fic121"]
+
+s17_water_add: ["ma2_3ffic218",
+                "ma2_3fic221"]
+
+m5_water_add: ["ma2_3fic0105",
+                "ma2_3fic0217"]
+
+s16_vel_bomba: ["ma2_3hic720_op",
+                "ma2_3hic730_op"]
+
+s17_vel_bomba: ["ma2_3hic760_op",
+                "ma2_3hic770_op"]
+
+ma2_tolva_102: ["ma2_3li587",
+                "ma2_3li589"]
+
+ma2_feeders:
+    tag_prefix: 'calc_norm_'
+    s16_gan_: ["ma2_hc311k", "ma2_hc316k", "ma2_hc321k"]           
+    s17_gan_: ["ma2_hc326k", "ma2_hc331k", "ma2_hc336k"]
+    s16_vel_: ["ma2_3hic105", "ma2_3hic106", "ma2_3hic107"]           
+    s17_vel_: ["ma2_3hic205", "ma2_3hic206", "ma2_3hic207"]
+    threshold: 0.5
+    threshold_min_sign_change: 0.05 
+
+ma2_feeders_norm:
+    s16_gan_: ["calc_norm_s16_gan_ma2_hc311k", 
+            "calc_norm_s16_gan_ma2_hc316k", 
+            "calc_norm_s16_gan_ma2_hc321k"]           
+    s17_gan_: ["calc_norm_s17_gan_ma2_hc326k",
+            "calc_norm_s17_gan_ma2_hc331k",
+            "calc_norm_s17_gan_ma2_hc336k"]      
+
+s16_sol:
+    water: ["ma2_3ffic118", "ma2_3fi117", "ma2_3fic121"]
+    sol: ["ma2_3wi116r", "ma2_3wic110"]
+
+s17_sol:
+    water: ["ma2_3ffic218", "ma2_3fic221"]
+    sol: ["ma2_3wi216r", "ma2_3wic210"]
+
+s16_sol_alim:
+    water: ["ma2_3ffic118", "ma2_3fi117"]
+    sol: ["ma2_3wi116r", "ma2_3wic110"]
+
+s17_sol_alim:
+    water: ["ma2_3ffic218"]
+    sol: ["ma2_3wi216r", "ma2_3wic210"]
+
+s16_pres_alim_bhc: ["ma2_3pic128", "ma2_3pic131"]
+s17_pres_alim_bhc: ["ma2_3pic228", "ma2_3pic231"]
+
+s16_sol_flot_bhc: ["ma2_3ps305a", "ma2_3ps305b"]
+s17_sol_flot_bhc: ["ma2_3ps306a", "ma2_3ps306b"]
+
+s16_densidad_bhc: ["ma2_3di123a", "ma2_3di123b"]
+s17_densidad_bhc: ["ma2_3di223a", "ma2_3di223b"]
+
+s16_tamano_part: ["ma2_3ai305a", "ma2_3ai305b"]
+s17_tamano_part: ["ma2_3ai306a", "ma2_3ai306b"]
+
+ma2_pot_especif: ["calc_pot_esp_sag_16", "calc_pot_esp_sag_17"]
+
+ma2_correas_feed: ["calc_04a_rt", "calc_04a_sin_rt"]
+# -------------------- Flotation Parameters -----------------#
+fa2_flotation_config:
+  n_lines: 3    # Number of flotation lines in the model
+  n_celdas: 8   # Number of celdas in each line
+  n_bancos: 4   # Number of bancos in each line
+
+fa2_flotation_tags:
+  flujo_aire_l1_tags: [
+      "fa2_3fc1312",
+      "fa2_3fc1313",
+      "fa2_3fc1315",
+      "fa2_3fc1316",
+      "fa2_3fc1318",
+      "fa2_3fc1319",
+      "fa2_3fc1321",
+      "fa2_3fc1322",
+  ]
+  flujo_aire_l2_tags: [
+      "fa2_3fc1324",
+      "fa2_3fc1325",
+      "fa2_3fc1327",
+      "fa2_3fc1328",
+      "fa2_3fc1330",
+      "fa2_3fc1331",
+      "fa2_3fc1333",
+      "fa2_3fc1334",
+  ]
+  flujo_aire_l3_tags: [
+      "fa2_3fc1336",
+      "fa2_3fc1337",
+      "fa2_3fc1339",
+      "fa2_3fc1340",
+      "fa2_3fc1342",
+      "fa2_3fc1343",
+      "fa2_3fc1345",
+      "fa2_3fc1346",
+  ]
+  vel_burbujas_l1_tags: [
+      "fa2_3ais1312",
+      "fa2_3ais1313",
+      "fa2_3ais1315",
+      "fa2_3ais1316",
+      "fa2_3ais1318",
+      "fa2_3ais1319",
+      "fa2_3ais1321",
+      "fa2_3ais1322",
+  ]
+  vel_burbujas_l2_tags: [
+      "fa2_3ais1324",
+      "fa2_3ais1325",
+      "fa2_3ais1327",
+      "fa2_3ais1328",
+      "fa2_3ais1330",
+      "fa2_3ais1331",
+      "fa2_3ais1333",
+      "fa2_3ais1334",
+  ]
+  vel_burbujas_l3_tags: [
+      "fa2_3ais1336",
+      "fa2_3ais1337",
+      "fa2_3ais1339",
+      "fa2_3ais1340",
+      "fa2_3ais1342",
+      "fa2_3ais1343",
+      "fa2_3ais1345",
+      "fa2_3ais1346",
+  ]
+  nivel_espuma_l1_tags: [
+    #  "fa2_3li1312",
+    #  "fa2_3li1313",
+    #  "fa2_3li1315",
+    #  "fa2_3li1316",
+    #  "fa2_3li1318",
+    #  "fa2_3li1319",
+    #  "fa2_3li1321",
+    #  "fa2_3li1322",
+  ]
+  nivel_espuma_l2_tags: [
+    #  "fa2_3li1324",
+    #  "fa2_3li1325",
+    #  "fa2_3li1327",
+    #  "fa2_3li1328",
+    #  "fa2_3li1330",
+    #  "fa2_3li1331",
+    #  "fa2_3li1333",
+    #  "fa2_3li1334",
+  ]
+  nivel_espuma_l3_tags: [
+    #  "fa2_3li1336",
+    #  "fa2_3li1337",
+    #  "fa2_3li1339",
+    #  "fa2_3li1340",
+    #  "fa2_3li1342",
+    #  "fa2_3li1343",
+    #  "fa2_3li1345",
+    #  "fa2_3li1346",
+  ]
+  nivel_pulpa_l1_tags: [
+      "fa2_3lc1314",
+      "fa2_3lc1317",
+      "fa2_3lc1320",
+      "fa2_3lc1323",
+  ]
+  nivel_pulpa_l2_tags: [
+      "fa2_3lc1326",
+      "fa2_3lc1329",
+      "fa2_3lc1332",
+      "fa2_3lc1335",
+  ]
+  nivel_pulpa_l3_tags: [
+      "fa2_3lc1338",
+      "fa2_3lc1341",
+      "fa2_3lc1344",
+      "fa2_3lc1347",
+  ]
+  tam_burbujas_l1_tags: [
+      "fa2_3aiz1312",
+      "fa2_3aiz1313",
+      "fa2_3aiz1315",
+      "fa2_3aiz1316",
+      "fa2_3aiz1318",
+      "fa2_3aiz1319",
+      "fa2_3aiz1321",
+      "fa2_3aiz1322",
+  ]
+  tam_burbujas_l2_tags: [
+      "fa2_3aiz1324",
+      "fa2_3aiz1325",
+      "fa2_3aiz1327",
+      "fa2_3aiz1328",
+      "fa2_3aiz1330",
+      "fa2_3aiz1331",
+      "fa2_3aiz1333",
+      "fa2_3aiz1334",
+  ]
+  tam_burbujas_l3_tags: [
+      "fa2_3aiz1336",
+      "fa2_3aiz1337",
+      "fa2_3aiz1339",
+      "fa2_3aiz1340",
+      "fa2_3aiz1342",
+      "fa2_3aiz1343",
+      "fa2_3aiz1345",
+      "fa2_3aiz1346",
+  ]
+
+fa2_flotation_target:
+    ley_alim_tag: ["rx_co_a2_cur103"]
+    ley_conc_tf_tag: ["fa2_3a0208cu"]
+    ley_conc_rx_tag: ["rx_ap_cuc132_rx"]
+    ley_cola_rx_tags: ["rx_cp_cuc115", "rx_cp_cuc116", "rx_co1l_cuc117"]  # L1, L2, L3 respectively
+    ley_cola_tf_tags: ["fa2_3a0223cu", "fa2_3a0224cu", "fa2_3a0225cu"] # Analizadores L1, L2, L3
+    weights_colas: [0.25, 0.25, 0.50]  # Sum of entries must be = 1
+    tph_tags: ["calc_tph_s16", "calc_tph_s17"]
+    recup_wt_name: "calc_fa2_recup_ponder"
+    cuf_obj_name: "calc_cuf_a2_xl"
+    ley_alim_bounds: [0.5, 2]
+
+fa2_fe_over_cu:
+  ley_fe_alim: "rx_co_a2_fer103"
+  ley_cu_alim: "rx_co_a2_cur103"
+
+fa2_sol_analizadores: [   # L1, L2, L3 y colas generales
+    "fa2_3a0223ps",
+    "fa2_3a0224ps",
+    "fa2_3a0225ps",
+    "fa2_3a0244ps"
+]
+
+fa2_reactivos:
+  tph: ["ma2_3wic110", "ma2_3wic210"]
+  react:
+    petroleo: "re_8fic34"
+    espumante: "re_8fic14"
+    xantato: "re_8fic94"
+
+fa2_blend:
+  tph_04a_tag: "ch1_wit_04a"
+  tph_srt04_tag: "ch1_srt_wit_208_out_pv"
+  tph_05a_tag: "derived_tph_correa_05a"
+  calc_04a_rt_name: "calc_04a_rt"
+  calc_04a_sin_rt_name: "calc_04a_sin_rt"
+
+fa2_agitadores: ['fa2_3kl1312','fa2_3kl1313', 'fa2_3kl1315', 'fa2_3kl1316',
+                'fa2_3kl1318', 'fa2_3kl1319', 'fa2_3kl1321', 'fa2_3kl1322',
+                'fa2_3kl1324', 'fa2_3kl1325', 'fa2_3kl1327', 'fa2_3kl1328',
+                'fa2_3kl1330', 'fa2_3kl1331', 'fa2_3kl1333', 'fa2_3kl1334',
+                'fa2_3kl1336', 'fa2_3kl1337', 'fa2_3kl1339', 'fa2_3kl1340',
+                'fa2_3kl1342', 'fa2_3kl1343', 'fa2_3kl1345', 'fa2_3kl1346']
+
+fa2_l1_agitadores: ['fa2_3kl1312','fa2_3kl1313', 'fa2_3kl1315', 'fa2_3kl1316',
+                    'fa2_3kl1318', 'fa2_3kl1319', 'fa2_3kl1321', 'fa2_3kl1322']
+
+fa2_l2_agitadores: ['fa2_3kl1324', 'fa2_3kl1325', 'fa2_3kl1327', 'fa2_3kl1328',
+                    'fa2_3kl1330', 'fa2_3kl1331', 'fa2_3kl1333', 'fa2_3kl1334']
+
+fa2_l3_agitadores: ['fa2_3kl1336', 'fa2_3kl1337', 'fa2_3kl1339', 'fa2_3kl1340',
+                    'fa2_3kl1342', 'fa2_3kl1343', 'fa2_3kl1345', 'fa2_3kl1346']
+
+# -------------------- ON/OFF A2 -----------------#
+on_off_A2:
+    bm_19:
+        tag: 'ma2_3ji19'
+        off_when: 'less_than'    #'greater_than'
+        value: 9000
+    chp_101:
+        tag: 'ma2_3ii2700'
+        off_when: 'less_than'
+        value: 40
+    chp_102:
+        tag: 'ma2_3ii2800'
+        off_when: 'less_than'
+        value: 40
+    chp_103:
+        tag: 'ma2_3ii2900'
+        off_when: 'less_than'
+        value: 40
+    bm_16a:
+        tag: 'ma2_3ji174'
+        off_when: 'less_than'
+        value: 3000
+    bm_16b:
+        tag: 'ma2_3ji187'
+        off_when: 'less_than'
+        value: 3000
+    sag_16:
+        tag: 'ma2_3ji155'
+        off_when: 'less_than'
+        value: 5
+    bm_17a:
+        tag: 'ma2_3ji274'
+        off_when: 'less_than'
+        value: 3000
+    bm_17b:
+        tag: 'ma2_3ji287'
+        off_when: 'less_than'
+        value: 3000
+    sag_17:
+        tag: 'ma2_3ji255'
+        off_when: 'less_than'
+        value: 5
+    linea_16:
+        tag: 'calc_tph_s16'
+        off_when: 'less_than'
+        value: "${s16.range_min}"
+    linea_17:
+        tag: 'calc_tph_s17'
+        off_when: 'less_than'
+        value: "${s17.range_min}"
+    m_A2:
+        tag: 'calc_tph_ma2_total'
+        off_when: 'less_than'
+        value: 1500
+    feeder_3:
+        tag: 'calc_norm_s16_gan_ma2_hc311k'
+        off_when: 'less_than'
+        value: 2
+    feeder_4:
+        tag: 'calc_norm_s16_gan_ma2_hc316k'
+        off_when: 'less_than'
+        value: 2
+    feeder_5:
+        tag: 'calc_norm_s16_gan_ma2_hc321k'
+        off_when: 'less_than'
+        value: 2
+    feeder_6:
+        tag: 'calc_norm_s17_gan_ma2_hc326k'
+        off_when: 'less_than'
+        value: 2
+    feeder_7:
+        tag: 'calc_norm_s17_gan_ma2_hc331k'
+        off_when: 'less_than'
+        value: 2
+    feeder_8:
+        tag: 'calc_norm_s17_gan_ma2_hc336k'
+        off_when: 'less_than'
+        value: 2
+    ruido_s16:
+        tag: 'ma2_3ai177'
+        off_when: 'greater_than'
+        value: 75
+    ruido_s17:
+        tag: 'ma2_3ai277'
+        off_when: 'greater_than'
+        value: 75
+    fa2_l1c1:
+        tag: 'fa2_3kl1312'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c2:
+        tag: 'fa2_3kl1313'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c3:
+        tag: 'fa2_3kl1315'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c4:
+        tag: 'fa2_3kl1316'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c5:
+        tag: 'fa2_3kl1318'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c6:
+        tag: 'fa2_3kl1319'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c7:
+        tag: 'fa2_3kl1321'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l1c8:
+        tag: 'fa2_3kl1322'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c1:
+        tag: 'fa2_3kl1324'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c2:
+        tag: 'fa2_3kl1325'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c3:
+        tag: 'fa2_3kl1327'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c4:
+        tag: 'fa2_3kl1328'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c5:
+        tag: 'fa2_3kl1330'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c6:
+        tag: 'fa2_3kl1331'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c6:
+        tag: 'fa2_3kl1333'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l2c7:
+        tag: 'fa2_3kl1334'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c1:
+        tag: 'fa2_3kl1336'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c2:
+        tag: 'fa2_3kl1337'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c3:
+        tag: 'fa2_3kl1339'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c4:
+        tag: 'fa2_3kl1340'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c5:
+        tag: 'fa2_3kl1342'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c6:
+        tag: 'fa2_3kl1343'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c7:
+        tag: 'fa2_3kl1345'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_l3c8:
+        tag: 'fa2_3kl1346'
+        off_when: 'less_than'
+        value: 0.5
+    fa2_agua_s16:
+        tag: 'ma2_3ffic118_op'
+        off_when: 'greater_than'
+        value: 98
+    fa2_agua_s17:
+        tag: 'ma2_3ffic218_op'
+        off_when: 'greater_than'
+        value: 98
+    fa2_all_off:
+        tag: 'calc_mean_fa2_agitadores'
+        off_when: 'less_than'
+        value: 0.3
+    linea_1_fa2:
+        tag: 'calc_mean_fa2_l1_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+    linea_2_fa2:
+        tag: 'calc_mean_fa2_l2_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+    linea_3_fa2:
+        tag: 'calc_mean_fa2_l3_agitadores'
+        off_when: 'less_than'
+        value: 0.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1038 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.experimental.solvers.adaptive_differential_evolution &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../06_optimizer_api/modules.html">optimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.html">optimizer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.stoppers.html">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../06_optimizer_api/optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>optimizer.experimental.solvers.adaptive_differential_evolution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for optimizer.experimental.solvers.adaptive_differential_evolution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 - present</span>
+<span class="c1"># QuantumBlack Visual Analytics Ltd (a McKinsey company).</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software framework contains the confidential and proprietary information</span>
+<span class="c1"># of QuantumBlack, its affiliates, and its licensors. Your use of these</span>
+<span class="c1"># materials is governed by the terms of the Agreement between your organisation</span>
+<span class="c1"># and QuantumBlack, and any unauthorised use is forbidden. Except as otherwise</span>
+<span class="c1"># stated in the Agreement, this software framework is for your internal use</span>
+<span class="c1"># only and may only be shared outside your organisation with the prior written</span>
+<span class="c1"># permission of QuantumBlack.</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy._lib._util</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="n">string_types</span>
+
+<span class="kn">from</span> <span class="nn">optimizer.exceptions</span> <span class="kn">import</span> <span class="n">MaxIterationError</span>
+<span class="kn">from</span> <span class="nn">optimizer.solvers.base</span> <span class="kn">import</span> <span class="n">ScaledSolver</span>
+<span class="kn">from</span> <span class="nn">optimizer.types</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">optimizer.utils.initializer</span> <span class="kn">import</span> <span class="n">latin_hypercube</span><span class="p">,</span> <span class="n">uniform_random</span>
+
+
+<div class="viewcode-block" id="AdaptiveParameter"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveParameter">[docs]</a><span class="k">class</span> <span class="nc">AdaptiveParameter</span><span class="p">:</span>
+<div class="viewcode-block" id="AdaptiveParameter.value"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveParameter.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the current value of the parameter</span>
+
+<span class="sd">        Returns: float, the current value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Override this method&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AdaptiveParameter.give_feedback"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveParameter.give_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">give_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Receives the feedback provided by the user of this parameter. This method</span>
+<span class="sd">            processes the feedback for tuning the logic of how the next value() call</span>
+<span class="sd">            will generate the current value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            previous_objective: values of the current solutions that the optimizer has.</span>
+<span class="sd">            new_objective: values of the trial solutions that the optimizer obtained</span>
+<span class="sd">                after using the current value of the parameter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">previous_objective</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">new_objective</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid objectives shapes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_feedback</span><span class="p">(</span><span class="n">previous_objective</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Override this method to implement a concrete tuning algorithm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Override this method&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConstantAdaptiveParameter"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.ConstantAdaptiveParameter">[docs]</a><span class="k">class</span> <span class="nc">ConstantAdaptiveParameter</span><span class="p">(</span><span class="n">AdaptiveParameter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements a constant parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ConstantAdaptiveParameter.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.ConstantAdaptiveParameter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="ConstantAdaptiveParameter.value"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.ConstantAdaptiveParameter.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NormalAdaptiveParameter"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.NormalAdaptiveParameter">[docs]</a><span class="k">class</span> <span class="nc">NormalAdaptiveParameter</span><span class="p">(</span><span class="n">AdaptiveParameter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements a sampled parameter from a normal distribution with mu and sigma.</span>
+<span class="sd">    Ignores feedback since these parameters are fixed. Each call to value() will</span>
+<span class="sd">    generate a new sample.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NormalAdaptiveParameter.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.NormalAdaptiveParameter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">=</span> <span class="n">mu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NormalAdaptiveParameter.value"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.NormalAdaptiveParameter.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sigma</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Mutator">[docs]</a><span class="k">class</span> <span class="nc">Mutator</span><span class="p">:</span>
+<div class="viewcode-block" id="Mutator.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Mutator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">AdaptiveParameter</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f: A bigger f implies a more aggressive exploration. f should be between 0</span>
+<span class="sd">               and 2.</span>
+<span class="sd">            seed: random seed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If down the road we experiment with Mutators that do not have a f parameter,</span>
+        <span class="c1"># then it is a good idea to refactor these classes, moving the f parameter to</span>
+        <span class="c1"># subclass __init__ functions. At the implementation time of this code we only</span>
+        <span class="c1"># considered mutations that have make use of the parameter f, that&#39;s why we&#39;ve</span>
+        <span class="c1"># left it in the parent class.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f</span> <span class="o">=</span> <span class="n">ConstantAdaptiveParameter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="k">else</span> <span class="n">f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Mutator.give_feedback"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Mutator.give_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">give_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Forwards feedback to adaptive parameter f.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">previous_objective</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">new_objective</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid objectives shapes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">give_feedback</span><span class="p">(</span><span class="n">previous_objective</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Need to override Mutator.__call__&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_mutation_parent_indexes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns a n x k matrix, where n is number of solutions and k is a parameter.</span>
+<span class="sd">        Each position is a value between 0 and n-1 (used for indexing the solutions).</span>
+<span class="sd">        The i-th row can have values 0...i-1,i+1...n-1</span>
+<span class="sd">        Finally, each row does not contain duplicated values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k has to be at most n-1, where n is row count&quot;</span><span class="p">)</span>
+
+        <span class="c1"># It&#39;s possible that a candidates approach isn&#39;t the efficient one.</span>
+        <span class="c1"># To be revised. It might be cheaper to fix the idx row by row.</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">candidates</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="c1"># As an example, candidates with n=6 is the following matrix.</span>
+        <span class="c1"># This is used for sampling, so we don&#39;t really care about the order</span>
+        <span class="c1">#     [[5 1 2 3 4]</span>
+        <span class="c1">#      [0 5 2 3 4]</span>
+        <span class="c1">#      [0 1 5 3 4]</span>
+        <span class="c1">#      [0 1 2 5 4]</span>
+        <span class="c1">#      [0 1 2 3 5]</span>
+        <span class="c1">#      [0 1 2 3 4]]</span>
+        <span class="c1">#     print(candidates)</span>
+
+        <span class="c1"># This creates an nxn random matrix and then sorts it. This is unlikely to be</span>
+        <span class="c1"># the best option. But it is faster than calling np.random.permutation on each</span>
+        <span class="c1"># candidates row. The 10000 number is to avoid having a strong bias towards</span>
+        <span class="c1"># solutions with lower indexes.</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))[:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="Rand1Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Rand1Mutator">[docs]</a><span class="k">class</span> <span class="nc">Rand1Mutator</span><span class="p">(</span><span class="n">Mutator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements DE/rand/1 mutator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutation_parent_indexes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">mutations</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutations</span></div>
+
+
+<div class="viewcode-block" id="Rand2Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Rand2Mutator">[docs]</a><span class="k">class</span> <span class="nc">Rand2Mutator</span><span class="p">(</span><span class="n">Mutator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements DE/rand/2 mutator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutation_parent_indexes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">mutations</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]])</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutations</span></div>
+
+
+<div class="viewcode-block" id="Best1Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Best1Mutator">[docs]</a><span class="k">class</span> <span class="nc">Best1Mutator</span><span class="p">(</span><span class="n">Mutator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements DE/best/1 mutator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">idx_best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutation_parent_indexes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">mutations</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx_best</span><span class="p">]</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutations</span></div>
+
+
+<div class="viewcode-block" id="Best2Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Best2Mutator">[docs]</a><span class="k">class</span> <span class="nc">Best2Mutator</span><span class="p">(</span><span class="n">Mutator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements DE/best/2 mutator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">idx_best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutation_parent_indexes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="n">mutations</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx_best</span><span class="p">]</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]])</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]])</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutations</span></div>
+
+
+<div class="viewcode-block" id="CurrentToBest1Mutator"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.CurrentToBest1Mutator">[docs]</a><span class="k">class</span> <span class="nc">CurrentToBest1Mutator</span><span class="p">(</span><span class="n">Mutator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements DE/current to best/1 mutator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">idx_best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutation_parent_indexes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">mutations</span> <span class="o">=</span> <span class="n">solutions</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx_best</span><span class="p">]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">)</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">solutions</span><span class="p">[</span><span class="n">idx</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]])</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutations</span></div>
+
+
+<div class="viewcode-block" id="Crossover"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Crossover">[docs]</a><span class="k">class</span> <span class="nc">Crossover</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Interface for crossover implementations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Crossover.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Crossover.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">AdaptiveParameter</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cr: crossover random threshold. Used in randomized approaches to combine</span>
+<span class="sd">                existing solutions and mutated solutions. Typically it captures how much</span>
+<span class="sd">                of the mutant and how much of the current goes into the trial solution.</span>
+<span class="sd">                Different concrete implementations might have different usages for this</span>
+<span class="sd">                parameter.</span>
+<span class="sd">                We kept this name since it&#39;s the typically used name in the literature.</span>
+<span class="sd">            seed: Random seed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If down the road we experiment with Crossover functions that do not have a cr</span>
+        <span class="c1"># parameter, then it is a good idea to refactor these classes, moving the cr to</span>
+        <span class="c1"># subclass __init__ functions. At the implementation time of this code we only</span>
+        <span class="c1"># considered crossovers that have the single parameter CR, that&#39;s why we have it</span>
+        <span class="c1"># in the parent class.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cr</span> <span class="o">=</span> <span class="n">ConstantAdaptiveParameter</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="k">else</span> <span class="n">cr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mutants</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Combines solutions with their corresponding mutants.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solutions: Current solutions (also called target variables or current</span>
+<span class="sd">                population in the literature)</span>
+<span class="sd">            mutants: Mutations corresponding to each solution. These are ty</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">solutions</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">mutants</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Solutions and mutants must have the same shape&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combine</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">mutants</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Crossover.give_feedback"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.Crossover.give_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">give_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Forwards feedback to adaptive parameter cr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cr</span><span class="o">.</span><span class="n">give_feedback</span><span class="p">(</span><span class="n">previous_objective</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mutants</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Need to override&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BinomialCrossover"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.BinomialCrossover">[docs]</a><span class="k">class</span> <span class="nc">BinomialCrossover</span><span class="p">(</span><span class="n">Crossover</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Binomial crossover implementation.</span>
+
+<span class="sd">    For each pair (solution, mutant), the combination works as follows:</span>
+
+<span class="sd">        - Compute a random value in [0,1] for each dimension j of the solution, let&#39;s</span>
+<span class="sd">            call value r_j.</span>
+<span class="sd">        - Take one random dimension k</span>
+<span class="sd">        - Define each dimension j of the combined solution as:</span>
+<span class="sd">          - out_j = mutant_j if (r_j &lt; cr) or (j=k)</span>
+<span class="sd">          - out_j = solution_j otherwise</span>
+
+<span class="sd">    The purpose of the special dimension k is to enforce that the newly generated</span>
+<span class="sd">    solution will differ in at least something with respect to the current solution.</span>
+
+<span class="sd">    Keep in mind that these generated offsprings are trials, and if they improve the</span>
+<span class="sd">    objective value we then update the current solutions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_generate_forced_crossover_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns a (n x k) boolean matrix, where each row has exactly one True value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">js_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="n">z</span><span class="p">[</span><span class="n">is_</span><span class="p">,</span> <span class="n">js_</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">z</span>
+
+    <span class="k">def</span> <span class="nf">_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mutants</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_forced_crossover_positions</span><span class="p">(</span><span class="o">*</span><span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">solutions</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">crossover_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">rand</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cr</span><span class="o">.</span><span class="n">value</span><span class="p">())</span> <span class="o">|</span> <span class="n">mut</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">crossover_mask</span><span class="p">,</span> <span class="n">mutants</span><span class="p">,</span> <span class="n">solutions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AdaptiveStrategy"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveStrategy">[docs]</a><span class="k">class</span> <span class="nc">AdaptiveStrategy</span><span class="p">:</span>
+<div class="viewcode-block" id="AdaptiveStrategy.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveStrategy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Crossover</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_strategies</span> <span class="o">=</span> <span class="n">strategies</span></div>
+
+<div class="viewcode-block" id="AdaptiveStrategy.get_strategy"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveStrategy.get_strategy">[docs]</a>    <span class="k">def</span> <span class="nf">get_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Crossover</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the strategy as suggested by the adaptive method. This can be a non</span>
+<span class="sd">        deterministic function.</span>
+
+<span class="sd">        Returns: Tuple, with the name of the strategy and the strategy itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Override this method&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AdaptiveStrategy.give_feedback"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveStrategy.give_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">give_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Receives the feedback provided by the optimization engine. This does two main</span>
+<span class="sd">            things:</span>
+
+<span class="sd">        - Forwards the feedback to the picked strategy. The typical use case would be</span>
+<span class="sd">            that this strategy uses this feedback to adjust some adaptive parameter.</span>
+<span class="sd">        - Processes the feedback for tuning of the AdaptiveStrategy by calling an</span>
+<span class="sd">            overridden method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            strategy: str, indicating the name of the strategy picked. It has to be a</span>
+<span class="sd">                value in the keys of strategies dictionary given in the constructor.</span>
+
+<span class="sd">            previous_objective: values of the current solutions that the optimizer has.</span>
+<span class="sd">            new_objective: values of the trial solutions that the optimizer obtained</span>
+<span class="sd">                after applying the strategy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">previous_objective</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">new_objective</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid objectives shapes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_strategies</span><span class="p">[</span><span class="n">strategy</span><span class="p">]</span><span class="o">.</span><span class="n">give_feedback</span><span class="p">(</span><span class="n">previous_objective</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_feedback</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method to implement the adaptive strategy updates to internal</span>
+<span class="sd">            states. These internal states might need an override of __init__ and they</span>
+<span class="sd">            are expected to be used to generate better strategy choices in the next</span>
+<span class="sd">            call to self.get_strategy().</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            strategy: str, indicating the name of the strategy picked. It has to be a</span>
+<span class="sd">                value in the keys of strategies dictionary given in the constructor.</span>
+<span class="sd">            previous_objective: values of the current solutions that the optimizer has.</span>
+<span class="sd">            new_objective: values of the trial solutions that the optimizer obtained</span>
+<span class="sd">                after applying the strategy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Override this method&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RandomAdaptiveStrategy"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomAdaptiveStrategy">[docs]</a><span class="k">class</span> <span class="nc">RandomAdaptiveStrategy</span><span class="p">(</span><span class="n">AdaptiveStrategy</span><span class="p">):</span>
+<div class="viewcode-block" id="RandomAdaptiveStrategy.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomAdaptiveStrategy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Crossover</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">]],</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">strategies</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RandomAdaptiveStrategy.get_strategy"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.RandomAdaptiveStrategy.get_strategy">[docs]</a>    <span class="k">def</span> <span class="nf">get_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Crossover</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">]]:</span>
+        <span class="n">strategy_picked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_strategies</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">strategy_picked</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strategies</span><span class="p">[</span><span class="n">strategy_picked</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_feedback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">previous_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">new_objective</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver">[docs]</a><span class="k">class</span> <span class="nc">AdaptiveDifferentialEvolutionSolver</span><span class="p">(</span><span class="n">ScaledSolver</span><span class="p">):</span>
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver.__init__"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">],</span>
+        <span class="n">sense</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;minimize&quot;</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">popsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">init</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;latinhypercube&quot;</span><span class="p">,</span>
+        <span class="n">mutator_strategy_picker</span><span class="p">:</span> <span class="n">AdaptiveStrategy</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">crossover_strategy_picker</span><span class="p">:</span> <span class="n">AdaptiveStrategy</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">sense</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popsize</span> <span class="o">=</span> <span class="n">popsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxiter</span> <span class="o">=</span> <span class="n">maxiter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">=</span> <span class="n">maxiter</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_population</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_popsize</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutator_picker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_mutators</span><span class="p">(</span><span class="n">mutator_strategy_picker</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crossover_picker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_crossovers</span><span class="p">(</span><span class="n">crossover_strategy_picker</span><span class="p">)</span>
+
+        <span class="c1"># Holds the current ask/tell mutation and crossover strategy.</span>
+        <span class="c1"># Used for giving feedback to adaptive strategy pickers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_mutation_strategy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_crossover_strategy</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_init_crossovers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">crossover_adaptive_strategy_picker</span><span class="p">:</span> <span class="n">AdaptiveStrategy</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AdaptiveStrategy</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">crossover_adaptive_strategy_picker</span><span class="p">:</span>
+            <span class="n">crossover_adaptive_strategy_picker</span> <span class="o">=</span> <span class="n">RandomAdaptiveStrategy</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_default_crossover_strategies</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crossover_adaptive_strategy_picker</span>
+
+    <span class="k">def</span> <span class="nf">_init_mutators</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mutator_adaptive_strategy_picker</span><span class="p">:</span> <span class="n">AdaptiveStrategy</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AdaptiveStrategy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mutator_adaptive_strategy_picker:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mutator_adaptive_strategy_picker</span><span class="p">:</span>
+            <span class="n">mutator_adaptive_strategy_picker</span> <span class="o">=</span> <span class="n">RandomAdaptiveStrategy</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_default_mutation_strategies</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mutator_adaptive_strategy_picker</span>
+
+    <span class="k">def</span> <span class="nf">_default_mutation_strategies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Default mutation dictionary is kept here. Each element in this dictionary</span>
+<span class="sd">            will be among the pool of mutator options available to the mutator picker.</span>
+
+<span class="sd">        Returns: The dict parameter for constructing the AdaptiveStrategy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">ConstantAdaptiveParameter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;Rand1Mutator&quot;</span><span class="p">:</span> <span class="n">Rand1Mutator</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="p">),</span>
+            <span class="s2">&quot;Best1Mutator&quot;</span><span class="p">:</span> <span class="n">Best1Mutator</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="p">),</span>
+            <span class="s2">&quot;CurrentToBest1Mutator&quot;</span><span class="p">:</span> <span class="n">CurrentToBest1Mutator</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_default_crossover_strategies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Default crossover dictionary is kept here. Each element in this dictionary</span>
+<span class="sd">            will be among the pool of options available to the crossover picker.</span>
+
+<span class="sd">        Returns: The dict parameter for constructing the AdaptiveStrategy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;BinomialCrossover&quot;</span><span class="p">:</span> <span class="n">BinomialCrossover</span><span class="p">(</span><span class="n">cr</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">_init_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;latinhypercube&quot;</span><span class="p">:</span>
+                <span class="n">solutions</span> <span class="o">=</span> <span class="n">latin_hypercube</span><span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_popsize</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;random&quot;</span><span class="p">:</span>
+                <span class="n">solutions</span> <span class="o">=</span> <span class="n">uniform_random</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_popsize</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialization function </span><span class="si">{init}</span><span class="s2"> not implemented.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popsize</span> <span class="o">!=</span> <span class="n">init</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Popsize does not match with initializing matrix.&quot;</span><span class="p">)</span>
+            <span class="n">solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_population_array</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">solutions</span>
+
+    <span class="k">def</span> <span class="nf">_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a set of mutants for later crossover with the current solutions.</span>
+<span class="sd">            This method picks a strategy according to the adaptive picker and calls it.</span>
+
+<span class="sd">        Returns: np.ndarray of same shape as self._solutions. These are the individuals</span>
+<span class="sd">            that will be blended with the current solutions to form up the trials.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mutator_name</span><span class="p">,</span> <span class="n">mutator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutator_picker</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">()</span>
+        <span class="n">mutants</span> <span class="o">=</span> <span class="n">mutator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_solutions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_mutation_strategy</span> <span class="o">=</span> <span class="n">mutator_name</span>
+        <span class="k">return</span> <span class="n">mutants</span>
+
+    <span class="k">def</span> <span class="nf">_crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutants</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given the mutants for each solution, perform the crossover by picking the</span>
+<span class="sd">            adaptive crossover logic that corresponds.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mutants: np.ndarray of shape self._solutions.shape</span>
+
+<span class="sd">        Returns: np.ndarray containing all trials, these are the solutions that the user</span>
+<span class="sd">            will evaluate next. Same shape as self._solutions.shape</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crossover_name</span><span class="p">,</span> <span class="n">crossover</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossover_picker</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">()</span>
+        <span class="n">trials</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_solutions</span><span class="p">,</span> <span class="n">mutants</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_crossover_strategy</span> <span class="o">=</span> <span class="n">crossover_name</span>
+        <span class="k">return</span> <span class="n">trials</span>
+
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver.ask"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.ask">[docs]</a>    <span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the current trial population to evaluate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array of current trial solutions.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            MaxIterationError: when called after maximum iterations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MaxIterationError</span><span class="p">(</span><span class="s2">&quot;No more iterations left&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="n">mutants</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate</span><span class="p">()</span>
+        <span class="n">trials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossover</span><span class="p">(</span><span class="n">mutants</span><span class="p">)</span>
+        <span class="n">trials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clip</span><span class="p">(</span><span class="n">trials</span><span class="p">)</span>
+        <span class="n">trials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform_parameters</span><span class="p">(</span><span class="n">trials</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">trials</span></div>
+
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver.stop"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Determine if we should stop iterating the Ask and Tell loop.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Boolean, True if we should stop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterations_left</span> <span class="o">&lt;=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver.best"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.best">[docs]</a>    <span class="k">def</span> <span class="nf">best</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get the best solution and its objective value.</span>
+<span class="sd">        Internal sorting takes care of moving the best solution to the 0 index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector and float, the solution vector and its objective value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">best_idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AdaptiveDifferentialEvolutionSolver.tell"><a class="viewcode-back" href="../../../../06_optimizer_api/optimizer.experimental.solvers.html#optimizer.experimental.solvers.AdaptiveDifferentialEvolutionSolver.tell">[docs]</a>    <span class="k">def</span> <span class="nf">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the population and objective values.</span>
+<span class="sd">            Updates the internal population based on which individuals are</span>
+<span class="sd">            performing better.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Matrix of parameter values representing the population.</span>
+<span class="sd">            objective_values: Vector of objective values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_told_parameters_and_objectives</span><span class="p">(</span>
+            <span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span>
+        <span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">parameters</span> <span class="o">==</span> <span class="n">parameters</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_give_feedback_to_mutation_picker</span><span class="p">(</span><span class="n">objective_values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_give_feedback_to_crossover_picker</span><span class="p">(</span><span class="n">objective_values</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_current_trial</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_give_feedback_to_mutation_picker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Pass current feedback to the AdaptiveStrategy that picks the mutator</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            objective_values: Values of the objective function on the trial population</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_mutation_strategy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mutator_picker</span><span class="o">.</span><span class="n">give_feedback</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_current_mutation_strategy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">,</span> <span class="n">objective_values</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Clear for safety, this is set in an ask() call.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_mutation_strategy</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_give_feedback_to_crossover_picker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Pass current feedback to the AdaptiveStrategy that picks the crossover</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            objective_values: Values of the objective function on the trial population</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_crossover_strategy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_crossover_picker</span><span class="o">.</span><span class="n">give_feedback</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_current_crossover_strategy</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">,</span>
+                <span class="n">objective_values</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Clear for safety, this is set in an ask() call.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_crossover_strategy</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_update_current_trial</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">objective_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates self._solutions and self._obj_values based on objective values</span>
+<span class="sd">            evaluated by the user.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: the trial solutions that were just evaluated by the user</span>
+<span class="sd">            objective_values: The objective values for these parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">improved</span> <span class="o">=</span> <span class="n">objective_values</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_solutions</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span> <span class="o">=</span> <span class="n">objective_values</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_internal_objective_values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the internal objective values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vector of the current objective values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj_values</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the current parameter values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Matrix of current parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_solutions</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

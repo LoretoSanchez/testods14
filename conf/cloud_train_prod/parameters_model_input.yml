@@ -1,0 +1,288 @@
+split: &split
+    datetime_col: "${timestamp_col_name}"      # see globals
+    type: frac  # "frac" or "date"
+    datetime_start: "${begin_train}"
+    datetime_val: "${begin_test}"      # see globals
+    datetime_end: "${end_test}"
+    auto_training: True
+    all_training_hours: "${all_training_hours}"
+    train_split_fract: 0.9
+    shut_down_dates: #empty to use all [["2019-01-01", "2019-10-05"], ["2020-01-15", "2020-04-05"]]
+    filter:
+        current: [0.04, 0.1]        # -1 for no filter
+        lag_p1:      # empty for no filter
+        count: 2
+
+## Area A2
+s16.model_input:
+    <<: *split
+    dict_model_feature: "${s16.model_feature}"   # see globals
+    dict_model_target: "${s16.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2019-10-10 00:00:00"
+    filter:
+        current: "${s16.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s17.model_input:
+    <<: *split
+    dict_model_feature: "${s17.model_feature}"   # see globals
+    dict_model_target: "${s17.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2019-10-10 00:00:00"
+    filter:
+        current: "${s17.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa2l1.model_input:
+    <<: *split
+    dict_model_feature: "${fa2l1.model_feature}"   # see globals
+    dict_model_target: "${fa2l1.model_target}"     # see globals
+    shut_down_dates: [["2020-06-29", "2020-07-05"]]  #empty to use all
+    datetime_start: !!timestamp "2020-07-01 00:00:00"
+    #datetime_val: !!timestamp "2021-02-17 00:00:00"
+    filter:
+        current: "${fa2l1.range}"   # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa2l2.model_input:
+    <<: *split
+    dict_model_feature: "${fa2l2.model_feature}"   # see globals
+    dict_model_target: "${fa2l2.model_target}"     # see globals
+    shut_down_dates:
+    datetime_start: !!timestamp "2020-07-01 00:00:00"
+    #datetime_val: !!timestamp #"2020-10-15 00:00:00"
+    filter:
+        current: "${fa2l2.range}"    # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa2l3.model_input:
+    <<: *split
+    dict_model_feature: "${fa2l3.model_feature}"   # see globals
+    dict_model_target: "${fa2l3.model_target}"     # see globals
+    shut_down_dates: [["2020-06-29", "2020-07-05"], ["2020-10-10", "2020-10-15"]]  #empty to use all
+    datetime_start: !!timestamp "2020-07-01 00:00:00"
+    #datetime_val: !!timestamp #"2020-10-15 00:00:00"
+    filter:
+        current: "${fa2l3.range}"   # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa2lg.model_input:
+    <<: *split
+    dict_model_feature: "${fa2lg.model_feature}"   # see globals
+    dict_model_target: "${fa2lg.model_target}"     # see globals
+    shut_down_dates: [["2020-06-29", "2020-07-14"]]  #empty to use all
+    datetime_start: !!timestamp "2020-07-01 00:00:00"
+    datetime_val: !!timestamp "2020-10-20 00:00:00"
+    filter:
+        current: "${fa2lg.range}"    # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+## Area A1
+s13.model_input:
+    <<: *split
+    dict_model_feature: "${s13.model_feature}"   # see globals
+    dict_model_target: "${s13.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    #datetime_val: !!timestamp "2021-02-25 00:00:00"
+    filter:
+        current: "${s13.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s14.model_input:
+    <<: *split
+    dict_model_feature: "${s14.model_feature}"   # see globals
+    dict_model_target: "${s14.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s14.range}"    # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s15.model_input:
+    <<: *split
+    dict_model_feature: "${s15.model_feature}"   # see globals
+    dict_model_target: "${s15.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s15.range}"    # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa1l1.model_input:
+    <<: *split
+    dict_model_feature: "${fa1l1.model_feature}"   # see globals
+    dict_model_target: "${fa1l1.model_target}"     # see globals
+    shut_down_dates:   #empty to use all
+    datetime_start: !!timestamp "2020-04-10 00:00:00"
+    #datetime_val: !!timestamp "2021-02-25 00:00:00"
+    filter:
+        current: "${fa1l1.range}"    # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+fa1l2.model_input:
+    <<: *split
+    dict_model_feature: "${fa1l2.model_feature}"   # see globals
+    dict_model_target: "${fa1l2.model_target}"     # see globals
+    shut_down_dates:   #empty to use all
+    datetime_start: !!timestamp "2020-04-10 00:00:00"
+    #datetime_val: !!timestamp "2020-09-01 00:00:00"
+    #datetime_end: !!timestamp "2020-09-15 00:00:00"
+    filter:
+        current: "${fa1l2.range}"   # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+## Area A0
+s1.model_input:
+    <<: *split
+    dict_model_feature: "${s1.model_feature}"   # see globals
+    dict_model_target: "${s1.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-02-01 00:00:00"
+    filter:
+        current: "${s1.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: -1         # -1 for no filter
+
+s2.model_input:
+    <<: *split
+    dict_model_feature: "${s2.model_feature}"   # see globals
+    dict_model_target: "${s2.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s2.range}"       # empty for no filter
+        lag_p1:      # empty for no filter
+        count: -1         # -1 for no filter
+
+s3.model_input:
+    <<: *split
+    dict_model_feature: "${s3.model_feature}"   # see globals
+    dict_model_target: "${s3.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s3.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s4.model_input:
+    <<: *split
+    dict_model_feature: "${s4.model_feature}"   # see globals
+    dict_model_target: "${s4.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s4.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s5.model_input:
+    <<: *split
+    dict_model_feature: "${s5.model_feature}"   # see globals
+    dict_model_target: "${s5.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    # datetime_val: !!timestamp "2021-02-25 00:00:00"
+    filter:
+        current: "${s5.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s6.model_input:
+    <<: *split
+    dict_model_feature: "${s6.model_feature}"   # see globals
+    dict_model_target: "${s6.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2019-12-01 00:00:00"
+    filter:
+        current: "${s6.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: -1         # -1 for no filter
+
+s7.model_input:
+    <<: *split
+    dict_model_feature: "${s7.model_feature}"   # see globals
+    dict_model_target: "${s7.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s7.range}"       # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+       
+s8.model_input:
+    <<: *split
+    dict_model_feature: "${s8.model_feature}"   # see globals
+    dict_model_target: "${s8.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-02-01 00:00:00"
+    filter:
+        current: "${s8.range}"       # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s9.model_input:
+    <<: *split
+    dict_model_feature: "${s9.model_feature}"   # see globals
+    dict_model_target: "${s9.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    datetime_start: !!timestamp "2020-01-01 00:00:00"
+    filter:
+        current: "${s9.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s10.model_input:
+    <<: *split
+    dict_model_feature: "${s10.model_feature}"   # see globals
+    dict_model_target: "${s10.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    filter:
+        current:  "${s10.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+
+s11.model_input:
+    <<: *split
+    dict_model_feature: "${s11.model_feature}"   # see globals
+    dict_model_target: "${s11.model_target}"     # see globals
+    shut_down_dates: #empty to use all
+    filter:
+        current:  "${s11.range}"      # empty for no filter
+        lag_p1:      # empty for no filter
+        count: 2         # -1 for no filter
+        
+fa0l1.model_input:
+    <<: *split
+    dict_model_feature: "${fa0l1.model_feature}"   # see globals
+    dict_model_target: "${fa0l1.model_target}"     # see globals
+    shut_down_dates:   #empty to use all
+    datetime_start: !!timestamp "2020-05-10 00:00:00"
+    # datetime_val: !!timestamp "2021-02-25 00:00:00"
+    filter:
+        current:  "${fa0l1.range}"   # empty for no filter
+        lag_p1:      # empty for no filter
+        count: -1         # -1 for no filter
+
+fa0l2.model_input:
+    <<: *split
+    dict_model_feature: "${fa0l2.model_feature}"   # see globals
+    dict_model_target: "${fa0l2.model_target}"     # see globals
+    shut_down_dates:   #empty to use all
+    datetime_start: !!timestamp "2020-04-10 00:00:00"
+    filter:
+        current: "${fa0l2.range}"     # empty for no filter
+        lag_p1:      # empty for no filter
+        count: -1         # -1 for no filter

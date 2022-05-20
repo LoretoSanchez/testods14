@@ -1,0 +1,16 @@
+backend_api:
+  REACT_APP_OPTIMUS_ANALYTICS_API: "https://minco-dch-dev08.azurewebsites.net/api/v1/process_data/"
+  REACT_APP_OPTIMUS_DATA_INSIGHT_API: "https://minco-dch-dev09.azurewebsites.net/api/v1/process_data/"
+  model_to_api_map:
+    ca2xl: "a2"
+    ca1xl: "a1"
+    ma2: "ma2"
+    ca0xl: "a0"
+
+group_shift_freq: "3H" # Adjust min counts per target below
+grouping_offset: "2H" # Hora de desplazamiento de agrupación, medida desde 00:00
+
+alarm_config:
+    service_conn: "Endpoint=sb://sb-core-eastus2-prod-02.servicebus.windows.net/;SharedAccessKeyName=SendOnlySharedAccessKey;SharedAccessKey=FcJ21scsY2Jzpmakktk1YskGhKwyKiovvFVWNxQG2So=;EntityPath=sbq-dch"
+    queue_name: "sbq-dch"
+    system: "dch_kedro_molienda"

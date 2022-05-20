@@ -1,0 +1,84 @@
+optimizer.loggers package
+=========================
+
+.. automodule:: optimizer.loggers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.loggers.base module
+-----------------------------
+
+.. automodule:: optimizer.loggers.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.base\_file module
+-----------------------------------
+
+.. automodule:: optimizer.loggers.base_file
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.basic module
+------------------------------
+
+.. automodule:: optimizer.loggers.basic
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.basic\_file module
+------------------------------------
+
+.. automodule:: optimizer.loggers.basic_file
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.best\_trajectory module
+-----------------------------------------
+
+.. automodule:: optimizer.loggers.best_trajectory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.n\_best module
+--------------------------------
+
+.. automodule:: optimizer.loggers.n_best
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.penalty module
+--------------------------------
+
+.. automodule:: optimizer.loggers.penalty
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.penalty\_file module
+--------------------------------------
+
+.. automodule:: optimizer.loggers.penalty_file
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.loggers.utils module
+------------------------------
+
+.. automodule:: optimizer.loggers.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

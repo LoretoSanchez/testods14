@@ -1,0 +1,190 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "# Repair \n",
+    "\n",
+    "Currently, repair can only handle the simple case of set membership constraints. Repair functions are defined similarly to [penalty](./01_penalty.ipynb) functions. The syntax is:\n",
+    "\n",
+    "```python\n",
+    "repair(lhs, comp, rhs)\n",
+    "```\n",
+    "\n",
+    "Where `lhs`, `comp`, and `rhs` have the [same rules](01_penalty.ipynb#Set-based-constraints) as the `penalty` function. However, instead of returning a penalty that is added to the calculated objective values, a repair functions return modified parameter values that satisfy the constraint they are handling. \n",
+    "\n",
+    "The default behavior for handling a set constraint, $x_i \\in S$, is to set $x_i$ to its nearest neighbor in $S$. So if we're enforcing the constraint that $x_i \\in \\{1, 2, 3\\}$ with a repair and $x_i = 0$, the result will be to set $x_i = 1$. \n",
+    "\n",
+    "The following are valid calls to `repair`:\n",
+    "\n",
+    "```python\n",
+    "repair(column(0), \"in\", Integers())\n",
+    "repair(\"column_a\", \"in\", [i * 10 for i in range(10)])\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## `MultipleOf` and `Integer` constraints\n",
+    "\n",
+    "Similarly to penalties, `repair` also accepts the special `ConstraintSet` classes `MultipleOf` and `Integer`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "from optimizer import repair\n",
+    "from optimizer.constraint.sets import Integers, MultiplesOf\n",
+    "from optimizer.utils.functional import column"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 15.        ,   3.39300727],\n",
+       "       [-11.        ,  17.05205838],\n",
+       "       [ -1.        ,   4.92168824],\n",
+       "       [  5.        ,   5.66215037],\n",
+       "       [ -6.        ,  20.55297422]])"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "parameters = np.random.randn(5, 2) * 10 + 5\n",
+    "\n",
+    "integer_repair = repair(column(0), \"in\", Integers())\n",
+    "integer_repair(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that the original parameters will be unchanged when applying a repair:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 15.20238957,   3.39300727],\n",
+       "       [-10.87560938,  17.05205838],\n",
+       "       [ -0.77795543,   4.92168824],\n",
+       "       [  5.38101382,   5.66215037],\n",
+       "       [ -6.02052822,  20.55297422]])"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "parameters"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 15.20238957,   3.        ],\n",
+       "       [-10.87560938,  18.        ],\n",
+       "       [ -0.77795543,   6.        ],\n",
+       "       [  5.38101382,   6.        ],\n",
+       "       [ -6.02052822,  21.        ]])"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "threes_repair = repair(column(1), \"in\", MultiplesOf(3))\n",
+    "threes_repair(parameters)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## User defined set constraints\n",
+    "\n",
+    "`MultipleOf` and `Integer` constraints are simple to define on the backend because they have closed forms to find the nearest neighbor in their sets. However, for a general list of values provided to `repair`, the distance from each element will have to be calculated. The minimum from these distances will then be used to repair the original parameters."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[13.        ,  3.39300727],\n",
+       "       [ 1.        , 17.05205838],\n",
+       "       [ 1.        ,  4.92168824],\n",
+       "       [ 5.        ,  5.66215037],\n",
+       "       [ 1.        , 20.55297422]])"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fibonacci_repair = repair(column(0), \"in\", [1, 2, 3, 5, 8, 13, 21, 34])\n",
+    "fibonacci_repair(parameters)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

@@ -1,0 +1,625 @@
+recommend: &recommend
+    datetime_col: "${timestamp_col_name}"
+    filter_timestamps:
+        begin_date: "${begin_test}" # see globals
+        end_date: "${end_test}" # see globals
+        type: "end" #"beginning" #"end"  #"date"
+        beginning: 60
+        end: 1
+        date: ["2021-06-03 13:00:00"]
+
+    solver:
+        class: optimizer.solvers.DifferentialEvolutionSolver
+        kwargs:
+            sense: "maximize"
+            seed: 0
+            maxiter: 1000
+            mutation: [0.5, 1.0]
+            recombination: 0.7
+            strategy: "best1bin"
+        # class: optimizer.solvers.ParticleSwarmSolver  # has init parameter: optional initial population
+        # kwargs:
+        #     sense: "maximize"
+        #     seed: 0
+        #     maxiter: 100
+        #     inertia: 0.5
+        #     social_parameter: 2.0
+        # #     cognitive_parameter: 2.0
+        # class: optimizer.solvers.SimulatedAnnealingSolver  # has initial_x parameter: optional vector for initial point
+        # kwargs:
+        #     sense: "maximize"
+        #     seed: 0
+        #     initial_temp: 1000
+        #     final_temp: 0.1
+        #     initial_neighborhood: 0.1
+        #     update_scale_steps: 20
+        #     reduce_temp_steps: 2
+        #     maxiter: 10000000000
+        #     max_acceptable_deterioration: 0.0001
+    stopper:
+        class: optimizer.stoppers.NoImprovementStopper
+        kwargs:
+            patience: 50
+            sense: "maximize"
+            min_delta: 0.1
+    n_jobs: 6
+    translator_layer:
+        min_percentage_change: 0.01
+
+recommend_uplift_report: &up_report
+    n_jobs: 6
+    template_path: src/project_clisham/optimus_core/reporting_html//uplift_report_template.ipynb
+    output_dir: data/08_reporting/
+    report_name: "uplift_report"
+    kernel: "python3"
+    timeout: 600
+    remove_code: True
+    timestamp: True
+
+## Area A2 - tph
+ma2.recommend:
+    <<: *recommend
+    <<: *up_report
+    namespace: "ma2"
+    model_features: ["${s16.model_feature}", "${s17.model_feature}"] # see globals
+    opt_target: "${ma2.opt_target}" # see globals
+    context_variables: ["ma2_3wi116", "ma2_3wi216"]
+    recommend_sensitivity:
+        n_points: 10 # Resolution/number of objective values to plot when the tagdict doesn't specify a constraint set of values.
+        unique_ids: # The unique columns which help to identify a set of recommendations.
+            - run_id
+            - "${timestamp_col_name}"
+        objective_kwargs: {} # When performing counterfactuals with neural networks, these may need to be specified.
+        sensitivity_app_data_mapping: # Datasets to map when using the streamlit application.
+            features: ma2.data_input_optim_uuid # Name of the dataset holding features to load.
+            model: ma2.optimization_function # Name of the dataset holding the objective to load.
+            recs: ma2.recommendations # Name of the dataset holding the recommendations to load.
+            sensitivity_data: ma2.sensitivity_plot_df # Dataframe of sensitivity data to load.
+            timestamp_col: "${timestamp_col_name}" # Column id of the timestamp column
+    output_dir: data/08_reporting/optimization/ma2/
+    timestamp_col: "${timestamp_col_name}"
+    # TODO: delete if not useful (commented on 2021/06/30) 
+    #validate_calibrated_phs_sensors:
+    #    tags: []
+    #    lt_threshold_clbrtd: 0.0
+    not_recommend_mv_in_range:
+        ma2_3si154: ["ma2_3sic154_splolm", "ma2_3sic154_sphilm"]
+        ma2_3si254: ["ma2_3sic254_splolm", "ma2_3sic254_sphilm"]
+        ma2_3kic118: ["ma2_3kic118_splolm", "ma2_3kic118_sphilm"]
+        ma2_3kic218: ["ma2_3kic218_splolm", "ma2_3kic218_sphilm"]
+        ma2_3fic0217: ["ma2_3fic0217_splolm", "ma2_3fic0217_sphilm"]
+    sag_mill_rampup_standard:
+        start_date_campaing_label: "start_date_campaing"
+        processed_tph_label: "processed_tph"
+        work_with_tph_label: "work_with_tph"
+        date_change_label: "date_change"
+        pdd_dif: 1.5
+        control_tags: 
+          vel: ["ma2_3si154", "ma2_3si254"]
+          pdd: ["ma2_3pi150", "ma2_3pi250"]
+        min_max_labels:
+          vel:
+            min: "min_velocity"
+            max: "max_velocity"
+          pdd:
+            min: "min_pdd"
+            max: "max_pdd"
+        tph_model_features:
+            s16:
+              cum_sum_tph_tag: "latest_ico_3wqrevest16"
+              revest_file_label: "s16_ucf"
+              vel: "ma2_3si154"
+              pdd: "ma2_3pi150"
+              pdd_hl: "latest_ma2_3pi150_pvhitp"
+            s17:
+              cum_sum_tph_tag: "latest_ico_3wqrevest17"
+              revest_file_label: "s17_ucf"
+              vel: "ma2_3si254"
+              pdd: "ma2_3pi250"
+              pdd_hl: "latest_ma2_3pi250_pvhitp"
+    no_intersection_tags:
+    control_to_context_tags: [
+        "ma2_3pi150",
+        "ma2_3pi250",
+        "ma2_3pic128",
+        "ma2_3pic131",
+        "ma2_3pic228",
+        "ma2_3pic231"
+    ]
+    
+
+## Area A2 - CuF por linea
+
+ca2xl.recommend:
+    <<: *recommend
+    <<: *up_report
+    namespace: "ca2xl"
+    model_features: [
+            "${s16.model_feature}",
+            "${s17.model_feature}",
+            "${fa2l1.model_feature}",
+            "${fa2l2.model_feature}",
+            "${fa2l3.model_feature}",
+        ] # see globals
+    opt_target: "${ca2xl.opt_target}" # see globals
+    context_variables: ["ma2_3wi116", "ma2_3wi216"]
+    recommend_sensitivity:
+        n_points: 10 # Resolution/number of objective values to plot when the tagdict doesn't specify a constraint set of values.
+        unique_ids: # The unique columns which help to identify a set of recommendations.
+            - run_id
+            - "${timestamp_col_name}"
+        objective_kwargs: {} # When performing counterfactuals with neural networks, these may need to be specified.
+        sensitivity_app_data_mapping: # Datasets to map when using the streamlit application.
+            features: ca2xl.data_input_optim_uuid # Name of the dataset holding features to load.
+            model: ca2xl.optimization_function # Name of the dataset holding the objective to load.
+            recs: ca2xl.recommendations # Name of the dataset holding the recommendations to load.
+            sensitivity_data: ca2xl.sensitivity_plot_df # Dataframe of sensitivity data to load.
+            timestamp_col: "${timestamp_col_name}" # Column id of the timestamp column
+    output_dir: data/08_reporting/optimization/ca2xl/
+    timestamp_col: "${timestamp_col_name}"
+    validate_calibrated_phs_sensors:
+        tags: ['fa2_3ai1301','fa2_3ai1302']
+        lt_threshold_clbrtd: 0.0
+        rotor_tags: ['calc_mean_fa2_l1_agitadores','calc_mean_fa2_l2_agitadores']
+        rotor_threshold: 0.6
+    not_recommend_mv_in_range:
+        ma2_3si154: ["ma2_3sic154_splolm", "ma2_3sic154_sphilm"]
+        ma2_3si254: ["ma2_3sic254_splolm", "ma2_3sic254_sphilm"]
+        ma2_3kic118: ["ma2_3kic118_splolm", "ma2_3kic118_sphilm"]
+        ma2_3kic218: ["ma2_3kic218_splolm", "ma2_3kic218_sphilm"]
+        ma2_3fic0217: ["ma2_3fic0217_splolm", "ma2_3fic0217_sphilm"]
+    not_recommend_lime_valvs_full:
+        lime_valvs_tags: ["ma2_3hic117_op", "ma2_3hic217_op"]
+        ph_line_tag: ["fa2_3ai1301","fa2_3ai1302"]
+        lime_valvs_th: 98.0
+    sag_mill_rampup_standard:
+        start_date_campaing_label: "start_date_campaing"
+        processed_tph_label: "processed_tph"
+        work_with_tph_label: "work_with_tph"
+        date_change_label: "date_change"
+        pdd_dif: 1.5
+        control_tags: 
+          vel: ["ma2_3si154", "ma2_3si254"]
+          pdd: ["ma2_3pi150", "ma2_3pi250"]
+        min_max_labels:
+          vel:
+            min: "min_velocity"
+            max: "max_velocity"
+          pdd:
+            min: "min_pdd"
+            max: "max_pdd"
+        tph_model_features:
+            s16:
+              cum_sum_tph_tag: "latest_ico_3wqrevest16"
+              revest_file_label: "s16_ucf"
+              vel: "ma2_3si154"
+              pdd: "ma2_3pi150"
+              pdd_hl: "latest_ma2_3pi150_pvhitp"
+            s17:
+              cum_sum_tph_tag: "latest_ico_3wqrevest17"
+              revest_file_label: "s17_ucf"
+              vel: "ma2_3si254"
+              pdd: "ma2_3pi250"
+              pdd_hl: "latest_ma2_3pi250_pvhitp"
+    ph_standard:
+        StartDate_label: "StartDate"
+        Limited_tag_label: "Limited_tag"
+        minRange_fe_cu_label: "minRange_fe_cu"
+        maxRange_fe_cu_label: "maxRange_fe_cu"
+        op_min_tag_label: "op_min_tag"
+        op_max_tag_label: "op_max_tag"
+        left_sense_label: "left_sense"
+        right_sense_label: "right_sense"
+        stands_left_label: "stands_left"
+        stands_right_label: "stands_right"
+        row_of_interest_label: "row_interest"
+        control_tags: # Left empty if there is no Standard info for plant A2
+        dependent_tag: # Left empty if there is no Standard info for plant A2
+    not_recommend_TPH_in_range:
+        tags_tph_sag: ["calc_tph_s16","calc_tph_s17"]
+        tags_HL_tph_sag: ["ma2_3wic110_sphilm","ma2_3wic210_sphilm"]
+        range_tph_SL: 100.0
+        range_tph_min: 50.0
+    no_intersection_tags: 
+    control_to_context_tags: [
+        "ma2_3pi150",
+        "ma2_3pi250",
+        "ma2_3pic128",
+        "ma2_3pic131",
+        "ma2_3pic228",
+        "ma2_3pic231"
+        ]
+    bm19_solids_control:
+        control_tag: "ma2_3fic0217"
+        solids_in_pulp: "ma2_3psabhc"
+        pool_water_level: "ma2_3lit0203"
+        solids_threshold: 70
+        level_buffer: 90
+    ma2_classification_control:
+        control_tags:
+          s16: ["ma2_3pic128", "ma2_3pic131"]
+          s17: ["ma2_3pic228", "ma2_3pic231"]
+        solids_in_pulp:
+          s16: ["ma2_3di123a", "ma2_3di123b"]
+          s17: ["ma2_3di223a", "ma2_3di223b"]
+        ore_size_feats:
+          s16: ["ma2_3ai305a", "ma2_3ai305b"]
+          s17: ["ma2_3ai306a", "ma2_3ai306b"] 
+          high_size_bounds: [28, 35] # [min_val, max_val]
+          low_size_bounds: [26, 28] # [min_val, max_val]
+        pond_water_level:
+          s16: "ma2_3lic122"
+          s17: "ma2_3lic222"
+        solids_threshold: [62, 75]
+        level_buffer: [40, 80]
+        excldd_frm_size_vldtn: None
+        
+## Area A1 - CuF por linea
+
+ca1xl.recommend:
+    <<: *recommend
+    <<: *up_report
+    namespace: "ca1xl"
+    model_features: [
+            "${s13.model_feature}",
+            "${s14.model_feature}",
+            "${s15.model_feature}",
+            "${fa1l1.model_feature}",
+            "${fa1l2.model_feature}",
+        ] # see globals
+    opt_target: "${ca1xl.opt_target}" # see globals
+    context_variables: [
+            "ma1_xji1317",
+            "ma1_xji1417",
+            "ma1_xji1517",
+            "ma1_xji1318",
+            "ma1_xji1418",
+            "ma1_xji1518",
+        ] #['ma2_3wi116', 'ma2_3wi216']
+    recommend_sensitivity:
+        n_points: 10 # Resolution/number of objective values to plot when the tagdict doesn't specify a constraint set of values.
+        unique_ids: # The unique columns which help to identify a set of recommendations.
+            - run_id
+            - "${timestamp_col_name}"
+        objective_kwargs: {} # When performing counterfactuals with neural networks, these may need to be specified.
+        sensitivity_app_data_mapping: # Datasets to map when using the streamlit application.
+            features: ca1xl.data_input_optim_uuid # Name of the dataset holding features to load.
+            model: ca1xl.optimization_function # Name of the dataset holding the objective to load.
+            recs: ca1xl.recommendations # Name of the dataset holding the recommendations to load.
+            sensitivity_data: ca1xl.sensitivity_plot_df # Dataframe of sensitivity data to load.
+            timestamp_col: "${timestamp_col_name}" # Column id of the timestamp column
+    output_dir: data/08_reporting/optimization/ca1xl/
+    timestamp_col: "${timestamp_col_name}"
+    validate_calibrated_phs_sensors:
+        tags: [fa1_7ai1200a, fa1_7ai1200b]
+        lt_threshold_clbrtd: 0.0
+        rotor_tags: ['calc_mean_fa1_l1_agitadores','calc_mean_fa1_l2_agitadores']
+        rotor_threshold: 0.6
+    not_recommend_mv_in_range:
+        ma1_xwc1304: ["ma1_xwc1304_splolm", "ma1_xwc1304_splolm"]
+        ma1_xwc1404: ["ma1_xwc1404_splolm", "ma1_xwc1404_splolm"]
+        ma1_xwc1506: ["ma1_xwc1506_splolm", "ma1_xwc1506_splolm"]
+    not_recommend_lime_valvs_full:
+        lime_valvs_tags: []
+        ph_line_tag:
+        lime_valvs_th:
+    sag_mill_rampup_standard:
+    ph_standard:
+        StartDate_label: "StartDate"
+        Limited_tag_label: "Limited_tag"
+        minRange_fe_cu_label: "minRange_fe_cu"
+        maxRange_fe_cu_label: "maxRange_fe_cu"
+        op_min_tag_label: "op_min_tag"
+        op_max_tag_label: "op_max_tag"
+        left_sense_label: "left_sense"
+        right_sense_label: "right_sense"
+        stands_left_label: "stands_left"
+        stands_right_label: "stands_right"
+        row_of_interest_label: "row_interest"
+        control_tags: ["fa1_7aic1200", "fa1_7lc1213", "fa1_7lc1219", "fa1_7lc1222", "fa1_7lc1228"]
+        dependent_tag: "calc_fa1_fe_over_cu"
+    malla_range:
+        tags_malla: ["ma1_xai1313v","ma1_xai1413v","ma1_xai1513v"]
+        min_range: 24.0
+        max_range: 33.0
+        tags_tph: ['ma1_xwc1304','ma1_xwc1404','ma1_xwc1506']
+    no_intersection_tags: ["fa1_7aic1200", "fa1_7lc1213", "fa1_7lc1219", "fa1_7lc1222", "fa1_7lc1228"]
+    control_to_context_tags: [
+        "ma1_xpi1312",
+        "ma1_xpi1412",
+        "ma1_xpi1515",
+    ]
+    tph_vs_tolva:
+        tags_tolva: 'ch1_existencia_real_tolva_conc'
+        min_range: 16_000
+        tags_tph: ['ma1_xwc1304','ma1_xwc1404','ma1_xwc1506']
+    bhc_and_water_logics:
+        s13:
+          bhc: ma1_xpi1312
+          water: ma1_xfc1308
+        s14:
+          bhc: ma1_xpi1412
+          water: ma1_xfc1408
+        s15:
+          bhc: ma1_xpi1515
+          water: ma1_xfc1510
+    ma1_classification_control:
+        control_tags: [
+          "ma1_xpi1312",
+          "ma1_xpi1412",
+          "ma1_xpi1515",
+        ]
+        solids_in_pulp: "calc_ma1_cyclon_solid_prop_bhc_s" # Prefix to get all tags
+        ore_size_feats:
+          s13: "ma1_xai1313"
+          s14: "ma1_xai1413"
+          s15: "ma1_xai1513"
+          high_size_bounds: [28, 35] # [min_val, max_val]
+          low_size_bounds: [26, 28] # [min_val, max_val]
+        pond_water_level:
+          s13: "ma1_xlc1309"
+          s14: "ma1_xlc1409"
+          s15: "ma1_xlc1507"
+        solids_threshold: [62, 75]
+        level_buffer: [40, 70]
+        excldd_frm_size_vldtn: ["ma1_xpi1412"]
+
+
+## Area A0 - CuF por linea
+
+ca0xl.recommend:
+    <<: *recommend
+    <<: *up_report
+    namespace: "ca0xl"
+    #TODO: Logica para sacar modelos
+    model_features: [
+            "${s2.model_feature}",
+            "${s4.model_feature}", #"${s1.model_feature}","${s3.model_feature}",
+            "${s5.model_feature}",
+            "${s7.model_feature}",
+            "${s8.model_feature}", #"${s6.model_feature}",
+            "${s9.model_feature}",
+            "${s10.model_feature}",
+            "${s11.model_feature}",
+            "${fa0l1.model_feature}",
+            "${fa0l2.model_feature}",
+        ] # see globals
+    opt_target: "${ca0xl.opt_target}" # see globals
+    context_variables: [] #['ma2_3wi116', 'ma2_3wi216']
+    recommend_sensitivity:
+        n_points: 10 # Resolution/number of objective values to plot when the tagdict doesn't specify a constraint set of values.
+        unique_ids: # The unique columns which help to identify a set of recommendations.
+            - run_id
+            - "${timestamp_col_name}"
+        objective_kwargs: {} # When performing counterfactuals with neural networks, these may need to be specified.
+        sensitivity_app_data_mapping: # Datasets to map when using the streamlit application.
+            features: ca0xl.data_input_optim_uuid # Name of the dataset holding features to load.
+            model: ca0xl.optimization_function # Name of the dataset holding the objective to load.
+            recs: ca0xl.recommendations # Name of the dataset holding the recommendations to load.
+            sensitivity_data: ca0xl.sensitivity_plot_df # Dataframe of sensitivity data to load.
+            timestamp_col: "${timestamp_col_name}" # Column id of the timestamp column
+    output_dir: data/08_reporting/optimization/ca0xl/
+    timestamp_col: "${timestamp_col_name}"
+    validate_calibrated_phs_sensors: 
+        tags: ['fa0_4ai0009', 'fa0_4ai0010']
+        lt_threshold_clbrtd: 1.0
+        rotor_tags: ['calc_mean_fa0_l1_agitadores','calc_mean_fa0_l2_agitadores']
+        rotor_threshold: 0.6
+    not_recommend_mv_in_range:
+        ma0_2pic27a_op: ["ma0_2pc27a_oplolm", "ma0_2pc27a_ophilm"]
+        ma0_2pic27b_op: ["ma0_2pc27b_oplolm", "ma0_2pc27b_ophilm"]
+        ma0_2pic27c_op: ["ma0_2pc27c_oplolm", "ma0_2pc27c_ophilm"]
+        ma0_2pic27d_op: ["ma0_2pc27d_oplolm", "ma0_2pc27d_ophilm"]
+        ma0_2pic27e_op: ["ma0_2pc27e_oplolm", "ma0_2pc27e_ophilm"]
+        ma0_2pic27f_op: ["ma0_2pc27f_oplolm", "ma0_2pc27f_ophilm"]
+        ma0_2pic27g_op: ["ma0_2pc27g_oplolm", "ma0_2pc27g_ophilm"]
+        ma0_2pic27h_op: ["ma0_2pc27h_oplolm", "ma0_2pc27h_ophilm"]
+        ma0_2pic27j_op: ["ma0_2pc27j_oplolm", "ma0_2pc27j_ophilm"]
+        ma0_2pic27k_op: ["ma0_2pc27k_oplolm", "ma0_2pc27k_ophilm"]
+        ma0_2pic27l_op: ["ma0_2pc27l_oplolm", "ma0_2pc27l_ophilm"]
+    not_recommend_lime_valvs_full:
+        lime_valvs_tags: []
+        ph_line_tag:
+        lime_valvs_th:
+    sag_mill_rampup_standard:
+    ph_standard:
+        StartDate_label: "StartDate"
+        Limited_tag_label: "Limited_tag"
+        minRange_fe_cu_label: "minRange_fe_cu"
+        maxRange_fe_cu_label: "maxRange_fe_cu"
+        op_min_tag_label: "op_min_tag"
+        op_max_tag_label: "op_max_tag"
+        left_sense_label: "left_sense"
+        right_sense_label: "right_sense"
+        stands_left_label: "stands_left"
+        stands_right_label: "stands_right"
+        row_of_interest_label: "row_interest"
+        control_tags: [
+            "fa0_4ai0009",
+            "fa0_4ai0010",
+            ]
+        dependent_tag: "calc_fa0_fe_over_cu"
+    malla_range:
+        tags_malla: ['ma0_2ai29av',
+        'ma0_2ai29cv',
+        'ma0_2ai29dv',
+        'ma0_2ai29ev',
+        'ma0_2ai29fv',
+        'ma0_2ai29gv',
+        'ma0_2ai29jv',
+        'ma0_2ai29kv',
+        'ma0_2ai29lv']
+        min_range: 24.0
+        max_range: 33.0
+        tags_tph: ['calc_sum_s1_tph',
+        'calc_sum_s3_tph',
+        'calc_sum_s4_tph',
+        'calc_sum_s5_tph',
+        'calc_sum_s6_tph',
+        'calc_sum_s7_tph',
+        'calc_sum_s9_tph',
+        'calc_sum_s10_tph',
+        'calc_sum_s11_tph']
+    no_intersection_tags: ["fa0_4ai0009","fa0_4ai0010",]
+    control_to_context_tags: [
+        "ma0_2pic27b_op",
+        "ma0_2pic27d_op",
+        "ma0_2pic27e_op",
+        "ma0_2pic27g_op",
+        "ma0_2pic27h_op",
+        "ma0_2pic27j_op",
+        "ma0_2pic27k_op",
+        "ma0_2pic27l_op"
+    ]
+    tph_vs_tolva:
+        tags_tolva: 'ch1_existencia_real_tolva_conc'
+        min_range: 16_000
+        tags_tph: ['calc_sum_s1_tph',
+        'calc_sum_s3_tph',
+        'calc_sum_s4_tph',
+        'calc_sum_s5_tph',
+        'calc_sum_s6_tph',
+        'calc_sum_s7_tph',
+        'calc_sum_s9_tph',
+        'calc_sum_s10_tph',
+        'calc_sum_s11_tph']
+    ma0_classification_control:
+        control_tags: [
+          "ma0_2pic27b_op",
+          "ma0_2pic27d_op",
+          "ma0_2pic27e_op",
+          "ma0_2pic27g_op",
+          "ma0_2pic27h_op",
+          "ma0_2pic27j_op",
+          "ma0_2pic27k_op",
+          "ma0_2pic27l_op"
+        ]
+        solids_in_pulp: "calc_ma0_cyclon_solid_prop_bhc_s" # Prefix to get all tags
+        ore_size_feats:
+          s2: "ma0_2ai29ab"
+          s4: "ma0_2ai29cd"
+          s5: "ma0_2ai29ee"
+          s7: "ma0_2ai29gg"
+          s8: "ma0_2ai29gh"
+          s9: "ma0_2ai29jj"
+          s10: "ma0_2ai29jk"
+          s11: "ma0_2ai29ll"
+          high_size_bounds: [28, 35] # [min_val, max_val]
+          low_size_bounds: [26, 28] # [min_val, max_val]
+        pond_water_level:
+          s2: "ma0_2lic31b"
+          s4: "ma0_2lic31d"
+          s5: "ma0_2lic31e"
+          s7: "ma0_2lic31g"
+          s8: "ma0_2lic31h"
+          s9: "ma0_2lic31j"
+          s10: "ma0_2lic31k"
+          s11: "ma0_2lic31l"
+        solids_threshold: [62, 75]
+        level_buffer: [40, 70]
+        excldd_frm_size_vldtn: None
+
+
+recalculate:
+    renormalize_ganancia_feeder: ["calc_norm_s16_gan_ma2_hc311k",
+                "calc_norm_s16_gan_ma2_hc316k",
+                "calc_norm_s16_gan_ma2_hc321k",
+                "calc_norm_s17_gan_ma2_hc326k",
+                "calc_norm_s17_gan_ma2_hc331k",
+                "calc_norm_s17_gan_ma2_hc336k"]
+    update_pres_bhc: ["calc_ma0_pres_bhc"]
+    translate_air: ["fa2_3fc1312", "fa2_3fc1321", "fa2_3fc1324", "fa2_3fc1333", "fa2_3fc1336", "fa2_3fc1345",
+      "fa1_7fc1211","fa1_7fc1217","fa1_7fc1220","fa1_7fc1226","fa0_4fic0111","fa0_4fic0131",
+      "fa0_4fic0141","fa0_4fic0161",
+      "calc_fa2_flujo_aire_l1_b1", 
+      "calc_fa2_flujo_aire_l2_b1", 
+      "calc_fa2_flujo_aire_l3_b1", ]
+
+# TODO: reuse definition of cell sin parametesrs a2
+translate_air:
+    a2l1:
+        delta: ["calc_fa2_delta_flujo_aire_l1_c7c1"]
+        promedio: ["calc_fa2_mean_flujo_aire_l1"]
+        celdas: [
+      "fa2_3fc1312",
+      "fa2_3fc1313",
+      "fa2_3fc1315",
+      "fa2_3fc1316",
+      "fa2_3fc1318",
+      "fa2_3fc1319",
+      "fa2_3fc1321",
+      "fa2_3fc1322",
+  ]
+    a2l2:
+        delta: ["calc_fa2_delta_flujo_aire_l2_c7c1"]
+        promedio: ["calc_fa2_mean_flujo_aire_l2"]
+        celdas: [
+      "fa2_3fc1324",
+      "fa2_3fc1325",
+      "fa2_3fc1327",
+      "fa2_3fc1328",
+      "fa2_3fc1330",
+      "fa2_3fc1331",
+      "fa2_3fc1333",
+      "fa2_3fc1334",
+  ]
+    a2l3:
+        delta: ["calc_fa2_delta_flujo_aire_l3_c7c1"]
+        promedio: ["calc_fa2_mean_flujo_aire_l3"]
+        celdas: [
+      "fa2_3fc1336",
+      "fa2_3fc1337",
+      "fa2_3fc1339",
+      "fa2_3fc1340",
+      "fa2_3fc1342",
+      "fa2_3fc1343",
+      "fa2_3fc1345",
+      "fa2_3fc1346",
+  ]
+    a1l1:
+        delta: ["calc_fa1_delta_flujo_aire_l1_c5c1"]
+        promedio: ["calc_fa1_mean_flujo_aire_l1"]
+        celdas: [
+      "fa1_7fc1211",
+      "fa1_7fc1212",
+      "fa1_7fc1214",
+      "fa1_7fc1215",
+      "fa1_7fc1217",
+      "fa1_7fc1218"
+  ]
+    a1l2:
+        delta: ["calc_fa1_delta_flujo_aire_l2_c5c1"]
+        promedio: ["calc_fa1_mean_flujo_aire_l2"]
+        celdas: [
+      "fa1_7fc1220",
+      "fa1_7fc1221",
+      "fa1_7fc1223",
+      "fa1_7fc1224",
+      "fa1_7fc1226",
+      "fa1_7fc1227"
+  ]
+    a0l1:
+        delta: ["calc_fa0_delta_flujo_aire_l1_c5c1"]
+        promedio: ["calc_fa0_mean_flujo_aire_l1"]
+        celdas: [
+      "fa0_4fic0111",
+      "fa0_4fic0116",
+      "fa0_4fic0121",
+      "fa0_4fic0126",
+      "fa0_4fic0131",
+      "fa0_4fic0136",
+  ]
+    a0l2:
+        delta: ["calc_fa0_delta_flujo_aire_l2_c5c1"]
+        promedio: ["calc_fa0_mean_flujo_aire_l2"]
+        celdas: [
+      "fa0_4fic0141",
+      "fa0_4fic0146",
+      "fa0_4fic0151",
+      "fa0_4fic0156",
+      "fa0_4fic0161",
+      "fa0_4fic0166",
+  ]
+
+
+

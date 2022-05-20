@@ -1,0 +1,36 @@
+optimizer.problem package
+=========================
+
+.. automodule:: optimizer.problem
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.problem.problem module
+--------------------------------
+
+.. automodule:: optimizer.problem.problem
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.problem.stateful\_contextual\_problem module
+------------------------------------------------------
+
+.. automodule:: optimizer.problem.stateful_contextual_problem
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+optimizer.problem.stateful\_problem module
+------------------------------------------
+
+.. automodule:: optimizer.problem.stateful_problem
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

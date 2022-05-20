@@ -1,0 +1,194 @@
+timestamp_col_name: "fecha"
+
+# Train/test dates for all models (edit time windows for each model in parameters_model_input.yml)
+begin_train: !!timestamp "2021-01-01" # Train start date
+end_train: !!timestamp "2021-11-06 23:00:00" # Train end date
+begin_test: !!timestamp "2021-11-07 01:00:00" # Test start date
+end_test: !!timestamp "2021-12-31" # Test end date
+n_iter_global: 500
+auto_training: False
+all_training_hours: 3000
+testing_hours: 720
+
+# Column of each model in the dictionary
+
+# Line A2
+s16:
+    model_feature: "s16_feature"
+    model_target: "s16_target"
+    range: [1500, 3200]
+    range_min: 1500
+s17:
+    model_feature: "s17_feature"
+    model_target: "s17_target"
+    range: [1000, 3100]
+    range_min: 1000
+ma2:
+    opt_target: "ma2_obj"
+
+fa2l1:
+    model_feature: "fa2l1_feature"
+    model_target: "fa2l1_target"
+    range: [0.05, 0.18]
+    range_min: 0.05
+
+fa2l2:
+    model_feature: "fa2l2_feature"
+    model_target: "fa2l2_target"
+    range: [0.05, 0.18]
+    range_min: 0.05
+
+fa2l3:
+    model_feature: "fa2l3_feature"
+    model_target: "fa2l3_target"
+    range: [0.05, 0.18]
+    range_min: 0.05
+
+fa2lg:
+    model_feature: "fa2lg_feature"
+    model_target: "fa2lg_target"
+    range: [0.05, 0.20]
+    range_min: 0.05
+
+ca2xl:
+    opt_target: "ca2xl_obj"
+
+ca2g:
+    opt_target: "ca2g_obj"
+
+# Line A1
+s13:
+    model_feature: "s13_feature"
+    model_target: "s13_target"
+    range: [350, 620]
+    range_min: 350
+
+s14:
+    model_feature: "s14_feature"
+    model_target: "s14_target"
+    range: [320, 630]
+    range_min: 320
+
+s15:
+    model_feature: "s15_feature"
+    model_target: "s15_target"
+    range: [350, 630]
+    range_min: 350
+
+ma1:
+    opt_target: "ma1_obj"
+
+fa1l1:
+    model_feature: "fa1l1_feature"
+    model_target: "fa1l1_target"
+    range: [0.05, 0.50]
+    range_min: 0.04
+
+fa1l2:
+    model_feature: "fa1l2_feature"
+    model_target: "fa1l2_target"
+    range: [0.05, 0.50]
+    range_min: 0.04
+
+fa1lg:
+    model_feature: "fa1lg_feature"
+    model_target: "fa1lg_target"
+
+ca1xl:
+    opt_target: "ca1xl_obj"
+
+# Line A0
+s1:
+    model_feature: "s1_feature"
+    model_target: "s1_target"
+    # range: [135, 280]
+    range: [0, 0.0001]
+    range_min: 135
+
+s2:
+    model_feature: "s2_feature"
+    model_target: "s2_target"
+    range: [135, 270]
+    range_min: 135
+
+s3:
+    model_feature: "s3_feature"
+    model_target: "s3_target"
+    range: [130, 260]
+    range_min: 130
+
+s4:
+    model_feature: "s4_feature"
+    model_target: "s4_target"
+    range: [140, 280]
+    range_min: 140
+
+s5:
+    model_feature: "s5_feature"
+    model_target: "s5_target"
+    range: [130, 270]
+    range_min: 130
+
+s6:
+    model_feature: "s6_feature"
+    model_target: "s6_target"
+    range: [140, 270]
+    range_min: 140
+
+s7:
+    model_feature: "s7_feature"
+    model_target: "s7_target"
+    range: [140, 270]
+    range_min: 140
+
+s8:
+    model_feature: "s8_feature"
+    model_target: "s8_target"
+    range: [140, 280]
+    range_min: 140
+
+s9:
+    model_feature: "s9_feature"
+    model_target: "s9_target"
+    range: [140, 270]
+    range_min: 140
+
+s10:
+    model_feature: "s10_feature"
+    model_target: "s10_target"
+    range: [110, 280]
+    range_min: 110
+
+s11:
+    model_feature: "s11_feature"
+    model_target: "s11_target"
+    range: [140, 270]
+    range_min: 140
+
+fa0l1:
+    model_feature: "fa0l1_feature"
+    model_target: "fa0l1_target"
+    range: [0.02, 0.3]
+    range_min: 0.02
+
+fa0l2:
+    model_feature: "fa0l2_feature"
+    model_target: "fa0l2_target"
+    range: [0.02, 0.30]
+    range_min: 0.02
+
+ca0xl:
+    opt_target: "ca0xl_obj"
+
+backend_api:
+    REACT_APP_OPTIMUS_ANALYTICS_API: "http://localhost:4000/api/v1/process_data/"
+    REACT_APP_OPTIMUS_DATA_INSIGHT_API: "http://localhost:4001/api/v1/process_data/"
+    model_to_api_map:
+        ca2xl: "a2"
+        ca1xl: "a1"
+        ma2: "ma2"
+        ca0xl: "a0"
+
+alarm_config:
+    service_conn: "Endpoint=sb://sb-mincodch-dev01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=G1N+fs/9hc4EWwBeFXNpHTKsDgimJsLIPNcOnTJwUzQ="
+    queue_name: "sbq-minco-dch-dev01"

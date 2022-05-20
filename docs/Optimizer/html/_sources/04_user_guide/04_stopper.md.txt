@@ -1,0 +1,49 @@
+# Stoppers
+
+Classes extending the `BaseStopper` mixin are meant to stop a search in the event that certain conditions are fulfilled. The suggested use of a stopper in the solver loop is:
+
+```python
+stopper = MyStopper()
+
+while not solver.stop() or stopper.stop():
+    parameters = solver.ask()
+    objective_values = f(parameters)
+    solver.tell(parameters, objective_values)
+
+    stopper.update(solver)
+```
+
+The `update` method will, of course, differ by stopper. In general, this method will use the stored parameters and/or objective values to make a decision about whether or not the search has stagnated. 
+
+See the rest of this section for more on Stopper classes implemented by Optimizer.
+
+## `NoImprovementStopper`
+
+As it's name suggests, this stopper will halt the search after the maximum objective seen does not improve after `patience` number of iterations. Where `patience` is an argument to the constructor. `NoImprovementStopper` also accepts the `min_delta` parameters. This defines how large a step in the appropriate direction is considered an "improvement". This delta can be increased for the first "best" solution found using the `first_delta` option. For example:
+
+```python
+stopper = NoImprovementStopper(10, "minimize", min_delta=0.1, first_delta=1.0)
+```
+
+would create a stopper that must first find a solution `1.0` better than the first best solution found. Once this occurs, `NoImprovementStopper` will use the `min_delta` argument to compare against newly found solutions. 
+
+## `WallTimeStopper`
+
+Wall time stopper can be used to stop a search after a given number of minutes. For example:
+
+```python
+stopper = WallTimeStopper(60)
+```
+
+will return `True` from `stopper.stop()` one hour after the first call to `stopper.update()`.
+
+## `SatisfiedConstraintStopper`
+
+The Satisfied constraint stopper can be used to stop a search once the best-performing solutions are not violating constraints. 
+For example:
+
+```python
+stopper = SatisfiedConstraintStopper(sense='maximize', top_n = 1)
+```
+
+will return `True` from `stopper.stop()` once the best-performing solution is not violating constraints.

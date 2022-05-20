@@ -1,0 +1,325 @@
+#--- train_model TPH S13 Train Model Catalog ---#
+
+#--- model input ---#
+s13.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/s13/master_filtered.pkl
+
+s13.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s13/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+s13.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s13/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+s13.regressor:
+    type: MemoryDataSet
+
+s13.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+s13.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/s13/train_model.pkl
+
+s13.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+s13.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s13/train_set_feature_importance.pkl
+
+s13.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s13/test_set_predictions.pkl
+
+s13.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s13/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+s13.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s13/train_set_predictions.pkl
+
+s13.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s13/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH S14 Train Model Catalog ---#
+
+#--- model input ---#
+s14.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/s14/master_filtered.pkl
+
+s14.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s14/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+s14.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s14/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+s14.regressor:
+    type: MemoryDataSet
+
+s14.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+s14.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/s14/train_model.pkl
+
+s14.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+s14.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s14/train_set_feature_importance.pkl
+
+s14.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s14/test_set_predictions.pkl
+
+s14.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s14/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+s14.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s14/train_set_predictions.pkl
+
+s14.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s14/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH S15 Train Model Catalog ---#
+
+#--- model input ---#
+s15.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/s15/master_filtered.pkl
+
+s15.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s15/train_set.csv
+
+s15.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/s15/test_set.csv
+
+s15.regressor:
+    type: MemoryDataSet
+
+s15.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+s15.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/s15/train_model.pkl
+
+s15.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+s15.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s15/train_set_feature_importance.pkl
+
+s15.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s15/test_set_predictions.pkl
+
+s15.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s15/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+s15.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/s15/train_set_predictions.pkl
+
+s15.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/s15/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA1L1 Train Model Catalog ---#
+
+#--- model input ---#
+fa1l1.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa1l1/master_filtered.pkl
+
+fa1l1.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa1l1/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa1l1.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa1l1/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa1l1.regressor:
+    type: MemoryDataSet
+
+fa1l1.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa1l1.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa1l1/train_model.pkl
+
+fa1l1.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa1l1.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l1/train_set_feature_importance.pkl
+
+fa1l1.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l1/test_set_predictions.pkl
+
+fa1l1.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa1l1/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa1l1.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l1/train_set_predictions.pkl
+
+fa1l1.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa1l1/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+#--- train_model TPH FA1L2 Train Model Catalog ---#
+
+#--- model input ---#
+fa1l2.master_filtered:
+    type: pickle.PickleDataSet
+    filepath: data/07_model_output/fa1l2/master_filtered.pkl
+
+fa1l2.train_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa1l2/train_set.csv
+    save_args:
+      index: True
+    load_args:
+      parse_dates: ["${timestamp_col_name}"]
+      index_col: 0
+
+fa1l2.test_set:
+    type: pandas.CSVDataSet
+    filepath: data/05_model_input/fa1l2/test_set.csv
+    save_args:
+        index: True
+    load_args:
+        parse_dates: ["${timestamp_col_name}"]
+        index_col: 0
+
+fa1l2.regressor:
+    type: MemoryDataSet
+
+fa1l2.regressor_pipeline:
+    type: MemoryDataSet
+
+#--- model output ---#
+fa1l2.train_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/fa1l2/train_model.pkl
+
+fa1l2.train_set_cv_results:
+    type: MemoryDataSet
+
+#--- reporting ---#
+fa1l2.train_set_feature_importance:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l2/train_set_feature_importance.pkl
+
+fa1l2.test_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l2/test_set_predictions.pkl
+
+fa1l2.test_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa1l2/test_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True
+
+fa1l2.train_set_predictions:
+    type: pickle.PickleDataSet
+    filepath: data/08_reporting/fa1l2/train_set_predictions.pkl
+
+fa1l2.train_set_metrics:
+    type: pandas.CSVDataSet
+    filepath: data/08_reporting/fa1l2/train_set_metrics.csv
+    load_args:
+        index_col: 0
+    save_args:
+        index: True

@@ -1,0 +1,20 @@
+optimizer.experimental.hss package
+==================================
+
+.. automodule:: optimizer.experimental.hss
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+optimizer.experimental.hss.neighbourhood\_calcs module
+------------------------------------------------------
+
+.. automodule:: optimizer.experimental.hss.neighbourhood_calcs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

@@ -1,0 +1,42 @@
+[MASTER]
+extension-pkg-whitelist=numpy,nose,nose.tools,numpy.testing, pathlib.PurePath, pathlib.PosixPath, pathlib.Path
+output-format=colorized
+
+[MESSAGES CONTROL]
+# disabled messages
+disable=C0330,
+        C0412,
+        C1801,
+        duplicate-code,
+        E0402,
+        E203,
+        W0611,
+        W1116,
+        W1203,
+        W1309,
+        fixme,
+        import-error,
+        invalid-name,
+        logging-format-interpolation,
+        missing-docstring,
+        no-else-return,
+        no-member,
+        no-self-use,
+        protected-access,
+        too-few-public-methods,
+        trailing-comma-tuple,
+
+[DESIGN]
+# Maximum arguments for a function.
+max-args=10
+max-attributes=14
+
+[TYPECHECK]
+ignored-modules = numpy, numpy.testing, pandas
+ignored-classes = numpy, numpy.testing, pandas
+
+good-names: X, x, y
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=88

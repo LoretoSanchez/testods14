@@ -1,0 +1,20 @@
+data_dch:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/master_table_09112020.csv
+  #data/01_raw/master_table_30102020.csv
+  #dbfs/mnt/refined/kedro_minco_cdh/data/01_raw/pi_mdt
+  # az://<bucket>/bla/data/01_raw/pi_mdt
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["Fecha"]
+
+revestimiento:
+  type: pandas.CSVDataSet
+  filepath:
+    data/01_raw/revestimiento.csv
+    #data/01_raw/revestimiento.csv
+  load_args:
+    index_col: 0
+  save_args:
+    index: False

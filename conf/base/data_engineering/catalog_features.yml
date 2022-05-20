@@ -1,0 +1,12 @@
+data_all_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_all_features.pkl
+
+
+data_general_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_general_features.pkl
+
+data_general_features_on_off:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_general_features_on_off.pkl

@@ -1,0 +1,14 @@
+data_clean:  # TODO: remove entry if file not useful
+ type: pickle.PickleDataSet
+ filepath: data/02_intermediate/data_clean.pkl
+
+
+#This is only used by the QA Pipeline.
+data_clean_intermediate_filtered_lasts_months:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/data_clean_intermediate_01.csv
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["${timestamp_col_name}"]
+    index_col: 0

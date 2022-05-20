@@ -1,0 +1,36 @@
+data_dch:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/pi_mdt.csv
+  save_args:
+    index: True
+  load_args:
+    parse_dates: ["Fecha"]
+
+# Stores
+data_primary:
+  type: pickle.PickleDataSet
+  filepath: data/03_primary/data_primary_1h.pkl
+
+profit_matrices_clean:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/matriz_ganacia_fixed_1h.csv
+
+data_all_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_all_features_1h.pkl
+
+data_general_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_general_features_1h.pkl
+
+data_general_features_on_off:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/data_general_features_on_off_1h.pkl
+
+# TODO Solve the credentials issue in test environment.
+stockpile_output_dashboard:
+  type: kedro.extras.datasets.pandas.SQLTableDataSet
+  credentials: mercury_credentials
+  table_name: stockpile_output_dashboard
+  save_args:
+    if_exists: append

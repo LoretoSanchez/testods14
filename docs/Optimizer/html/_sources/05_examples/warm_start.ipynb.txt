@@ -1,0 +1,184 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Warm start\n",
+    "\n",
+    "Perhaps you have a starting point for your problem that you know is a good solution and want to use that information. Warm start involves providing this prior information to the search with the intention of guiding it toward better solutions."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Problem setup\n",
+    "\n",
+    "We'll use `ParticleSwarmSolver` and the `Max` test function to demonstrate one approach to warm starting a search. First, we'll set up our problem."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "from optimizer.testing.problems import Max\n",
+    "from optimizer.solvers import ParticleSwarmSolver\n",
+    "from optimizer.utils.initializer import latin_hypercube\n",
+    "\n",
+    "seed = 0\n",
+    "dimension = 5"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[(0, 10000), (0, 10000), (0, 10000), (0, 10000), (0, 10000)]"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "f = Max()\n",
+    "bounds = f.bounds(dimension)\n",
+    "bounds"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Warm starting `ParticleSwarmSolver`\n",
+    "\n",
+    "Since the domain for this problem is pretty large, we'll help the search out by giving it a good solution to the \n",
+    "problem. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "warm_start = np.array([25 for _ in range(dimension)])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Then we'll give the solver our solution in before starting the usual `ask` and `tell` loop."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "solver = ParticleSwarmSolver(bounds, seed=0)\n",
+    "\n",
+    "initial_parameters = solver.ask()\n",
+    "\n",
+    "initial_parameters[0] = warm_start\n",
+    "initial_objectives = f(initial_parameters)\n",
+    "\n",
+    "solver.tell(initial_parameters, initial_objectives)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "25.0"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "min(initial_objectives)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Our provided solution was the best row in the initial parameters. Now the solver knows about our good solution and we can continue the search as normal."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "while not solver.stop():\n",
+    "    parameters = solver.ask()\n",
+    "    objective_values = f(parameters)\n",
+    "    solver.tell(parameters, objective_values)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(array([0., 0., 0., 0., 0.]), 0.0)"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "solver.best()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

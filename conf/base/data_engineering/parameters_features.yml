@@ -1,0 +1,138 @@
+
+group_shift_freq: "4H"  # Adjust min counts per target below
+grouping_offset: "5H"   # Hora de desplazamiento de agrupación, medida desde 00:00
+
+mean_grouping: 
+    tag_prefix: 'calc_mean_'
+
+    groups: ['m5_rest_pres', 's16_vel_bomba', 's17_vel_bomba', 'ma2_tolva_102',
+             "s16_pres_alim_bhc", "s17_pres_alim_bhc", "s16_sol_flot_bhc", "s17_sol_flot_bhc",
+             "s16_densidad_bhc", "s17_densidad_bhc", "s16_tamano_part", "s17_tamano_part", 
+             "mb13_temp", "mb14_temp", "mb15_temp", "ma1_presion_bhc", "ma1_sol_a_flot", "ma1_densidad_bhc",
+             "ma1_tamano_a_flot", "fa0_agitadores", "fa1_agitadores", "fa2_agitadores",
+             "fa0_l1_agitadores", "fa0_l2_agitadores", "fa1_l1_agitadores", "fa1_l2_agitadores",
+             "fa2_l1_agitadores", "fa2_l2_agitadores", "fa2_l3_agitadores"
+    ]
+
+sum_grouping: 
+    tag_prefix: 'calc_sum_'
+    groups: [s16_water_add, s17_water_add, m5_water_add, 
+             s0_tph, s1_tph, s2_tph, s3_tph, s4_tph, s5_tph, 
+             s6_tph, s7_tph, s8_tph, s9_tph, s10_tph, s11_tph, s12_tph,
+             s1_pot_bomba, s2_pot_bomba, s3_pot_bomba, s5_pot_bomba, 
+             s6_pot_bomba, s8_pot_bomba, s10_pot_bomba, s11_pot_bomba, s12_pot_bomba,
+             s1_vel_vdf_bhc, s2_vel_vdf_bhc, s3_vel_vdf_bhc, s4_vel_vdf_bhc, s5_vel_vdf_bhc,
+             s6_vel_vdf_bhc, s7_vel_vdf_bhc, s8_vel_vdf_bhc, s9_vel_vdf_bhc, s11_vel_vdf_bhc, s12_vel_vdf_bhc
+    ]
+
+last_val_grouping: 
+    tag_prefix: 'latest_'
+    tags: ['ma2_3pi150_pvhitp','ma2_3pi250_pvhitp',"ico_3wqrevest16","ico_3wqrevest17"]
+
+# TODO Figure out how to reference the 'sag_16.tonelaje' and 'sag_17.tonelaje'
+#      parameters from parameters_features_A2.yml:
+cumsum_grouping: 
+    tag_prefix: 'calc_cum_sum_'
+    groups: [['ma2_3wic110', 'ma2_3wi116r'], ['ma2_3wic210', 'ma2_3wi216r']]
+
+sol_grouping:
+    tag_prefix: 'calc_'
+    groups: ['s16_sol', 's17_sol', 's16_sol_alim', 's17_sol_alim', 's13_sol', 's14_sol', 's15_sol']
+
+specific_power_grouping:
+    tag_prefix: 'calc_pot_esp_'
+    groups: ['sag_16', 'sag_17', 'mbar_13', 'mbar_14', 'mbar_15']
+    threshold: 0.01
+    scale_to_mw_features: [['kw',0.001]]
+
+on_off:
+    tag_prefix: 'on_off_'
+    groups: ['on_off_A2', 'on_off_A1', 'on_off_A0']
+
+lag_grouping:  # ["list of tags to be lagged", number of shifts] (positive number of shifts: bring from past)
+    groups: [
+        ["ma2_pot_especif", 1 ],
+        ["fa2_sol_analizadores", 1],
+        ["ma1_sol", 1 ],
+        ["fa1_sol_analizadores", 1],
+        ["ma1_splits", 2],
+        ["ma1_correa_RT", 3],  
+        ["fa0_sol_analizadores", 1],
+        ["ma2_correas_feed", 1]
+    ]
+solid_proportion_in_cyclons:
+    ore_scale_density: 2.7
+    lower_solid_bound: 0
+    higher_solid_bound: 100
+
+conventional_lines: 16
+ma0_lines: 13
+
+densidad_bhc: ["ma0_2dic21z", "ma0_2dic21a", "ma0_2dic21b", "ma0_2dic21c", "ma0_2dic21d", "ma0_2dic21e", "ma0_2dic21f",
+                   "ma0_2dic21g", "ma0_2dic21h", "ma0_2dic21j", "ma0_2dic21k", "ma0_2dic21l", "ma0_2dic21m", "ma1_xdc1305",
+                   "ma1_xdc1405", "ma1_xdc1516"]
+
+conversion_reactivos:
+    carga_seca: 0.97
+    densidad:
+        petroleo: 0.833000004291534
+        espumante: 0.879999995231628
+        xantato: 1.11000001430511
+    min_max:
+        petroleo: [0, 15]
+        espumante: [0, 50]
+        xantato: [0, 80]
+    suffix: "dosif"
+    tags:
+        fa0: "fa0_reactivos"
+        fa1: "fa1_reactivos"
+        fa2: "fa2_reactivos"
+
+correccion_xantato:
+    fa0: "re_8sp41"
+    fa1: "re_8sp43"
+    fa2: "re_8sp44" 
+    timestamp_switch: "2021-07-01 07:00:00"
+        
+lower_bound_s17_calc_tph_s16_over_s17: 500.0
+
+data_trazabilidad:
+    desired_sources: ["tolva_a2", "tolva_grueso", "tolva_mina"]
+    porc_desired: ["_rt", "_subte"]
+    available_qualities: ["_cu", "_mo","_wi", "_spi","_fino","_intermedio","_grueso"]
+    prefix: "traza_"
+
+on_off_general_features:
+  equipments: ['linea_17','linea_15','linea_11']
+  percentages: [0.00,1.5] # less_than and greater than % to apply
+crushing_parameters:
+    lower_currents_bound: 0
+    lower_low_size_prop_bound: 0
+    higher_low_size_prop_bound: 100
+    
+    currents:
+        sec_crushers: ["ch23_ii_chs1", "ch23_ii_chs2", "ch23_ii_chs3", "ch23_ii_chs4", "ch23_ii_chs5"]
+        ter_crushers: ["ch23_ii_cht1", "ch23_ii_cht2", "ch23_ii_cht3", "ch23_ii_cht4", "ch23_ii_cht5", 
+                       "ch23_ii_cht6", "ch23_ii_cht7", "ch23_ii_cht8", "ch23_ii_cht9", "ch23_ii_cht10"]
+    
+    bow_levels:
+        ter_crushers: ["ch23_lit_cht1", "ch23_lit_cht2", "ch23_lit_cht3", "ch23_lit_cht4", "ch23_lit_cht5",
+                       "ch23_lit_cht6", "ch23_lit_cht7", "ch23_lit_cht8", "ch23_lit_cht9", "ch23_lit_cht10"]
+    
+    throughputs:
+        134_belts: ["ch23_wit_134a", "ch23_wit_134b", "ch23_wit_134c", "ch23_wit_134d", "ch23_wit_134e"]
+        135_belts: ["ch23_wit_135a", "ch23_wit_135b", "ch23_wit_135c", "ch23_wit_135d", "ch23_wit_135e"]
+        139_belt: "ch23_fit_139"
+    
+    
+    feature_names:
+        tag_prefix: "calc_weighted_sum_currents_"
+        currents_groups: ["ch2", "ch3"]
+        low_size_ore_name: "calc_low_size_ore_prop_to_milling"
+
+mapping_columns:
+  derived_status_f3_posicion_carro: "derived_status_correa_05a"
+  derived_tph_wit_corr2a: "derived_tph_correa_05a"
+  derived_status_zca_22cv2_pos_0: "derived_status_22cv2_pos_0"
+  derived_tph_wit_22cv2: "derived_tph_22cv2_c3"
+  derived_tph_wit_270_out_pv: "derived_tph_srt07_c3"

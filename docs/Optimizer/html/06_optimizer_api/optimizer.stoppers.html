@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>optimizer.stoppers package &mdash; optimizer 1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme-overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/optimizer.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="optimizer.testing package" href="optimizer.testing.html" />
+    <link rel="prev" title="optimizer.solvers package" href="optimizer.solvers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> optimizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html">What is Optimizer?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#using-optimizer">Using Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#is-optimizer-right-for-my-problem">Is Optimizer right for my problem?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#assumptions">Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_introduction/01_introduction.html#faq">FAQ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/01_prerequisites.html">Installation prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#python-virtual-environments">Python virtual environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#using-conda">Using <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../02_getting_started/01_prerequisites.html#installing-requirements">Installing requirements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../02_getting_started/02_install.html">Installation guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/01_solver_api.html">Solver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#ask-and-tell-pattern">Ask and Tell pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#standard-solve-pattern">Standard solve pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/01_solver_api.html#solving-with-ask-and-tell">Solving with Ask and Tell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/01_solver_api.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/02_toy_problem.html">Toy problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#The-Solver">The Solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#ask-method"><code class="docutils literal notranslate"><span class="pre">ask</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Evaluating">Evaluating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#tell-method"><code class="docutils literal notranslate"><span class="pre">tell</span></code> method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/02_toy_problem.html#Solver-loop">Solver loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/03_constraints.html">Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-penalty-functions">Constraints as penalty functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Constraints-as-repair-functions">Constraints as repair functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/03_constraints.html#Warning-about-pickling-constraints">Warning about pickling constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html">Optimization problem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#Maximizing-a-problem">Maximizing a problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#The-StatefulOptimizationProblem">The <code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Numpy"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Numpy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_tutorial/04_optimization_problem.html#StatefulOptimizationProblem-with-Pandas"><code class="docutils literal notranslate"><span class="pre">StatefulOptimizationProblem</span></code> with <code class="docutils literal notranslate"><span class="pre">Pandas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/01_penalty.html">Penalty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Constraint-types">Constraint types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Equality-constraints">Equality constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Model-based-constraints">Model-based constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Dealing-with-a-computationally-expensive-constraint">Dealing with a computationally expensive constraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Penalty-options">Penalty options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Changing-the-penalty-multiplier-(\lambda)">Changing the penalty multiplier (<span class="math notranslate nohighlight">\(\lambda\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/01_penalty.html#Set-based-constraints">Set-based constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/01_penalty.html#A-comment-on-set-constraints:">A comment on set constraints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/02_repair.html">Repair</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#MultipleOf-and-Integer-constraints"><code class="docutils literal notranslate"><span class="pre">MultipleOf</span></code> and <code class="docutils literal notranslate"><span class="pre">Integer</span></code> constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/02_repair.html#User-defined-set-constraints">User defined set constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/03_solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#basesolver"><code class="docutils literal notranslate"><span class="pre">BaseSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#scaledsolver"><code class="docutils literal notranslate"><span class="pre">ScaledSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#differentialevolutionsolver"><code class="docutils literal notranslate"><span class="pre">DifferentialEvolutionSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#evolutionarystrategiessolver"><code class="docutils literal notranslate"><span class="pre">EvolutionaryStrategiesSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#particleswarmsolver"><code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#simulatedannealingsolver"><code class="docutils literal notranslate"><span class="pre">SimulatedAnnealingSolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/03_solver.html#discretelocalsearchsolver"><code class="docutils literal notranslate"><span class="pre">DiscreteLocalSearchSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/04_stopper.html">Stoppers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#noimprovementstopper"><code class="docutils literal notranslate"><span class="pre">NoImprovementStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#walltimestopper"><code class="docutils literal notranslate"><span class="pre">WallTimeStopper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/04_stopper.html#satisfiedconstraintstopper"><code class="docutils literal notranslate"><span class="pre">SatisfiedConstraintStopper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/05_logger.html">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#basiclogger"><code class="docutils literal notranslate"><span class="pre">BasicLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#penaltylogger"><code class="docutils literal notranslate"><span class="pre">PenaltyLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#nbestlogger"><code class="docutils literal notranslate"><span class="pre">NBestLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/05_logger.html#file-based-logging">File-Based Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/06_plotting.html">Plotting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Convergence-plot">Convergence plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/06_plotting.html#Penalty-plot">Penalty plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/07_diagnostic.html">Optimization diagnostic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-optimization-model">The optimization model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#The-diagnostic">The diagnostic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Violated-soft-constraints">Violated soft constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Changing-the-inequality-bound">Changing the inequality bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Impact-we-can-achieve-on-objective-value-by-changing-inequality">Impact we can achieve on objective value by changing inequality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Extrapolation-pitfall">Extrapolation pitfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Complex-problem-support">Complex problem support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/07_diagnostic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/08_history_penalty.html">Historical penalties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is">What this is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#What-this-is-not">What this is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#The-historical-data-and-the-optimization-problem">The historical data and the optimization problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Using-the-historical-penalty">Using the historical penalty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Validating-that-history-is-constraining-our-solutions">Validating that history is constraining our solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Choosing-the-multiplier">Choosing the multiplier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pandas-support">Pandas support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/08_history_penalty.html#Pipeline-support">Pipeline support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html">Adaptive Differential Evolution example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Vanilla-DE-logic">Vanilla DE logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#What-can-we-define-and-tune?">What can we define and tune?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Adaptive-Differential-Evolution">Adaptive Differential Evolution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Some-setup">Some setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Sample-run-of-two-approaches">Sample run of two approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Picking-mutator-based-on-prior-success">Picking mutator based on prior success</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Using-an-adaptive-parameter">Using an adaptive parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../04_user_guide/09_adaptive_differential_evolution.html#Happy-hacking!">Happy hacking!</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/warm_start.html">Warm start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Problem-setup">Problem setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/warm_start.html#Warm-starting-ParticleSwarmSolver">Warm starting <code class="docutils literal notranslate"><span class="pre">ParticleSwarmSolver</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../05_examples/de_hyperparameters.html">Tuning differential evolution hyperparameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-strategy">Effect of <code class="docutils literal notranslate"><span class="pre">strategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-popsize">Effect of <code class="docutils literal notranslate"><span class="pre">popsize</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-mutation">Effect of <code class="docutils literal notranslate"><span class="pre">mutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_examples/de_hyperparameters.html#Effect-of-recombination">Effect of <code class="docutils literal notranslate"><span class="pre">recombination</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimizer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimizer.html">optimizer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimizer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimizer.constraint.html">optimizer.constraint package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.experimental.html">optimizer.experimental package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.loggers.html">optimizer.loggers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.plotting.html">optimizer.plotting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.problem.html">optimizer.problem package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.solvers.html">optimizer.solvers package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">optimizer.stoppers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.testing.html">optimizer.testing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimizer.utils.html">optimizer.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.exceptions">optimizer.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimizer.html#module-optimizer.types">optimizer.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optimizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">optimizer</a> &raquo;</li>
+        
+          <li><a href="optimizer.html">optimizer package</a> &raquo;</li>
+        
+      <li>optimizer.stoppers package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://git.mckinsey-solutions.com/opm/optimus" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-optimizer.stoppers">
+<span id="optimizer-stoppers-package"></span><h1>optimizer.stoppers package<a class="headerlink" href="#module-optimizer.stoppers" title="Permalink to this headline">¶</a></h1>
+<p>Stopper package.</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-optimizer.stoppers.base">
+<span id="optimizer-stoppers-base-module"></span><h2>optimizer.stoppers.base module<a class="headerlink" href="#module-optimizer.stoppers.base" title="Permalink to this headline">¶</a></h2>
+<p>Stoppers base module.</p>
+<dl class="class">
+<dt id="optimizer.stoppers.base.BaseStopper">
+<em class="property">class </em><code class="descclassname">optimizer.stoppers.base.</code><code class="descname">BaseStopper</code><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#BaseStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.BaseStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base class for stoppers.
+These classes offer an alternative way to stop the optimization.</p>
+<dl class="method">
+<dt id="optimizer.stoppers.base.BaseStopper.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#BaseStopper.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.BaseStopper.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop getter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool, True if the search should stop.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.base.BaseStopper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#BaseStopper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.BaseStopper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the internal stopping state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*args</strong> – list of arguments to pass to a stopper.</li>
+<li><strong>**kwargs</strong> – dictionary of keyword arguments to pass to a stopper.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optimizer.stoppers.base.MultiStopper">
+<em class="property">class </em><code class="descclassname">optimizer.stoppers.base.</code><code class="descname">MultiStopper</code><span class="sig-paren">(</span><em>stoppers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#MultiStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.MultiStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper for any number of Stoppers.</p>
+<dl class="method">
+<dt id="optimizer.stoppers.base.MultiStopper.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>stoppers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#MultiStopper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.MultiStopper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*stoppers</strong> – list of stoppers.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if the an element in stoppers is not an instance of BaseStopper.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.base.MultiStopper.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#MultiStopper.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.MultiStopper.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if any stored stoppers return True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool, True if the search should stop.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.base.MultiStopper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/base.html#MultiStopper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.base.MultiStopper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the internal stop state of all stored stoppers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*args</strong> – list of arguements to pass to a solver.</li>
+<li><strong>**kwargs</strong> – keyword arguments to pass to a solver.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool, True if the search should stop.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.stoppers.no_improvement">
+<span id="optimizer-stoppers-no-improvement-module"></span><h2>optimizer.stoppers.no_improvement module<a class="headerlink" href="#module-optimizer.stoppers.no_improvement" title="Permalink to this headline">¶</a></h2>
+<p>Maximum objective based stopper.</p>
+<dl class="class">
+<dt id="optimizer.stoppers.no_improvement.NoImprovementStopper">
+<em class="property">class </em><code class="descclassname">optimizer.stoppers.no_improvement.</code><code class="descname">NoImprovementStopper</code><span class="sig-paren">(</span><em>patience</em>, <em>sense</em>, <em>min_delta=0.0</em>, <em>first_delta=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/no_improvement.html#NoImprovementStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.no_improvement.NoImprovementStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.stoppers.base.BaseStopper" title="optimizer.stoppers.base.BaseStopper"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.stoppers.base.BaseStopper</span></code></a></p>
+<p>This class will stop the search after N iterations without improvement in
+the best objective value.</p>
+<dl class="method">
+<dt id="optimizer.stoppers.no_improvement.NoImprovementStopper.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>patience</em>, <em>sense</em>, <em>min_delta=0.0</em>, <em>first_delta=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/no_improvement.html#NoImprovementStopper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.no_improvement.NoImprovementStopper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>patience</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – number of iterations without improvement.</li>
+<li><strong>sense</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – “minimize” or “maximize”.</li>
+<li><strong>min_delta</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – <p>minimum difference to be considered an improvement.</p>
+<ul>
+<li>Zero means any improvement will be reset the patience counter.</li>
+<li>Must be positive, any improvement will be compared in the appropriate
+direction whether we are maximizing or minimizing.</li>
+</ul>
+</li>
+<li><strong>first_delta</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – <p>minimum difference between the first best solution to be
+considered an improvement.</p>
+<ul>
+<li>Counting up toward <cite>patience</cite> will not begin until a solution that
+is at least <cite>first_delta</cite> better than the first best solution.</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if sense is not “minimize” or “maximize”.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if min_delta is negative.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if first_delta is negative.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.no_improvement.NoImprovementStopper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>solver</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/no_improvement.html#NoImprovementStopper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.no_improvement.NoImprovementStopper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update internal state based on best objective value seen so far.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>solver</strong> (<a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.Solver" title="optimizer.solvers.base.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solver</span></code></a>) – Solver object.</li>
+<li><strong>**kwargs</strong> – unused keyword arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool, True if the search should stop.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.stoppers.satisfied_constraint">
+<span id="optimizer-stoppers-satisfied-constraint-module"></span><h2>optimizer.stoppers.satisfied_constraint module<a class="headerlink" href="#module-optimizer.stoppers.satisfied_constraint" title="Permalink to this headline">¶</a></h2>
+<p>Stopper which terminates when population meets constraints.</p>
+<dl class="class">
+<dt id="optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper">
+<em class="property">class </em><code class="descclassname">optimizer.stoppers.satisfied_constraint.</code><code class="descname">SatisfiedConstraintsStopper</code><span class="sig-paren">(</span><em>sense</em>, <em>top_n=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/satisfied_constraint.html#SatisfiedConstraintsStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.stoppers.base.BaseStopper" title="optimizer.stoppers.base.BaseStopper"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.stoppers.base.BaseStopper</span></code></a></p>
+<p>This class will stop the search if all constraints are met.
+It allows the optimization to stop when the <cite>top_n</cite>
+members of the parameter population satisfy <em>all</em> the constraints.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>top_n</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Number of best solutions to check for constraint violations</li>
+<li><strong>sense</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Whether to “minimize” or “maximize” the objective.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples
+&gt;&gt; stopper = SatisfiedConstraintsStopper(sense=’maximize’)
+&gt;&gt; while not solver.stop() or stopper.stop():
+&gt;&gt;      parameters = solver.ask()
+&gt;&gt;      objective_values = problem(parameters)
+&gt;&gt;      solver.tell(parameters, objective_values)
+&gt;&gt;      stopper.update(solver, problem)</p>
+<dl class="method">
+<dt id="optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>sense</em>, <em>top_n=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/satisfied_constraint.html#SatisfiedConstraintsStopper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>solver</em>, <em>problem</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/satisfied_constraint.html#SatisfiedConstraintsStopper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.satisfied_constraint.SatisfiedConstraintsStopper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop method.
+Returns True when constraints for the top_n best performing
+parameter sets are all met.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>solver</strong> (<a class="reference internal" href="optimizer.solvers.html#optimizer.solvers.base.Solver" title="optimizer.solvers.base.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solver</span></code></a>) – Solver object. Maintains signature with other stoppers</li>
+<li><strong>take Solver objects and kwargs.</strong> (<em>which</em>) – </li>
+<li><strong>problem</strong> (<a class="reference internal" href="optimizer.problem.html#optimizer.problem.problem.OptimizationProblem" title="optimizer.problem.problem.OptimizationProblem"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a>) – OptimizationProblem object (which contains</li>
+<li><strong>necessary constraints</strong><strong>)</strong> (<em>the</em>) – </li>
+<li><strong>**kwargs</strong> – unused keyword arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool, True if the search should stop.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.stoppers.utils">
+<span id="optimizer-stoppers-utils-module"></span><h2>optimizer.stoppers.utils module<a class="headerlink" href="#module-optimizer.stoppers.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="optimizer.stoppers.utils.get_best_maximize">
+<code class="descclassname">optimizer.stoppers.utils.</code><code class="descname">get_best_maximize</code><span class="sig-paren">(</span><em>objective_values</em>, <em>current_max</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/utils.html#get_best_maximize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.utils.get_best_maximize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best from a list of objectives and the current best value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objectives.</li>
+<li><strong>current_max</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – current maximum objective value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(Real, float), maximum found value and its difference with the current maximum.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.stoppers.utils.get_best_minimize">
+<code class="descclassname">optimizer.stoppers.utils.</code><code class="descname">get_best_minimize</code><span class="sig-paren">(</span><em>objective_values</em>, <em>current_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/utils.html#get_best_minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.utils.get_best_minimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best from a list of objectives and the current best value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objective_values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]) – Vector of objectives.</li>
+<li><strong>current_min</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>) – current minimum objective value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(Real, float), minimum found value and the current minimum minus this value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="optimizer.stoppers.utils.top_n_indices">
+<code class="descclassname">optimizer.stoppers.utils.</code><code class="descname">top_n_indices</code><span class="sig-paren">(</span><em>x</em>, <em>sense</em>, <em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/utils.html#top_n_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.utils.top_n_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility for find the indices of the <cite>top_n</cite>
+elements of a vector, when that vector is
+sorted according to <cite>sense</cite>.</p>
+<p>Argsort sorts in ascending order. For maximize,
+we take the last <cite>top_n</cite> elements.
+For minimization, we sort then take the first
+<cite>top_n</cite> elements.
+:type x: <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>]
+:param x: Vector of values to sort and find best idx for.
+:type sense: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param sense: Whether to maximize or minimize the function
+:type top_n: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>
+:param top_n: How many top solutions to check for constraint violations</p>
+<p>Returns: Callable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-optimizer.stoppers.wall_time">
+<span id="optimizer-stoppers-wall-time-module"></span><h2>optimizer.stoppers.wall_time module<a class="headerlink" href="#module-optimizer.stoppers.wall_time" title="Permalink to this headline">¶</a></h2>
+<p>Wall time based stopper.</p>
+<dl class="class">
+<dt id="optimizer.stoppers.wall_time.WallTimeStopper">
+<em class="property">class </em><code class="descclassname">optimizer.stoppers.wall_time.</code><code class="descname">WallTimeStopper</code><span class="sig-paren">(</span><em>minutes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/wall_time.html#WallTimeStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.wall_time.WallTimeStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimizer.stoppers.base.BaseStopper" title="optimizer.stoppers.base.BaseStopper"><code class="xref py py-class docutils literal notranslate"><span class="pre">optimizer.stoppers.base.BaseStopper</span></code></a></p>
+<p>This class will return True from <cite>stop</cite> if N minutes have overlapped since the
+first call to <cite>update</cite>.</p>
+<dl class="method">
+<dt id="optimizer.stoppers.wall_time.WallTimeStopper.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>minutes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/wall_time.html#WallTimeStopper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.wall_time.WallTimeStopper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>minutes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – number of minutes to wait before returning True in <cite>stop</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if <cite>minutes</cite> is negative.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.wall_time.WallTimeStopper.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/wall_time.html#WallTimeStopper.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.wall_time.WallTimeStopper.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop method override.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if enough time has passed or we have not yet called <cite>update</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="optimizer.stoppers.wall_time.WallTimeStopper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/optimizer/stoppers/wall_time.html#WallTimeStopper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optimizer.stoppers.wall_time.WallTimeStopper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the internal state based off how much time has elapsed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*args</strong> – unused positional arguments.</li>
+<li><strong>**kwargs</strong> – unused keyword arguments.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="optimizer.testing.html" class="btn btn-neutral float-right" title="optimizer.testing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="optimizer.solvers.html" class="btn btn-neutral float-left" title="optimizer.solvers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, QuantumBlack
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

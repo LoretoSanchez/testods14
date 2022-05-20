@@ -1,0 +1,2 @@
+group_shift_freq: "1H" # Adjust min counts per target below
+grouping_offset: "0H" # Hora de desplazamiento de agrupación, medida desde 00:00
